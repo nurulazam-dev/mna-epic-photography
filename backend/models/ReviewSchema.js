@@ -54,6 +54,6 @@ ReviewSchema.statics.calcAverageRatings = async function (photographerId) {
 };
 
 ReviewSchema.post("save", function () {
-  this.constructor.calcAverageRatings(this.doctor);
+  this.constructor.calcAverageRatings(this.photographer);
 });
 export default mongoose.model("Review", ReviewSchema);
