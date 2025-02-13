@@ -20,7 +20,7 @@ const PhotographerSchema = new mongoose.Schema({
   totalRating: { type: Number, default: 0 },
   isApproved: {
     type: String,
-    enum: ["pending", "approved", "rejected"],
+    enum: ["pending", "approved", "cancelled"],
     default: "pending",
   },
   bookings: [{ type: mongoose.Schema.Types.ObjectId, ref: "Booking" }],
