@@ -1,8 +1,7 @@
-# React + Vite
+## MNA Epic Photography
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+#### MNA Epic Photography will be a modern, user-friendly, and secure event photography booking platform.
 
-Currently, two official plugins are available:
+The website will offer a seamless experience for clients and photographers by utilizing React.js, Material UI, Node.js, Express.js, and MongoDB.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+The integration of Stripe for payments, Cloudinary for image management, and JWT for authentication will ensure reliability and security.
