@@ -4,4 +4,4 @@
 
 - The website will offer a seamless experience for clients and photographers by utilizing React.js, Material UI, Node.js, Express.js, and MongoDB.
 
-The integration of Stripe for payments, Cloudinary for image management, and JWT for authentication will ensure reliability and security.
+- The integration of Stripe for payments, Cloudinary for image management, and JWT for authentication will ensure reliability and security.
