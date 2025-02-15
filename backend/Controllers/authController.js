@@ -67,7 +67,7 @@ export const login = async (req, res) => {
   try {
     let user = null;
 
-    const patient = await User.findOne({ email });
+    const client = await User.findOne({ email });
     const photographer = await Photographer.findOne({ email });
 
     if (client) {
