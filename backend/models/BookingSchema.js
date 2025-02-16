@@ -11,6 +11,10 @@ const BookingSchema = new mongoose.Schema({
     ref: "User",
     required: true,
   },
+  programDate: {
+    type: Date,
+    required: true,
+  },
   servicePrice: {
     type: Number,
     required: [true, "Amount is required"],
