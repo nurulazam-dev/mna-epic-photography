@@ -14,7 +14,8 @@ const PhotographerSchema = new mongoose.Schema({
   },
   expertise: { type: String }, // Wedding, Event, Portrait, etc.
   experience: { type: Number, default: 0 },
-  availability: { type: Array }, // Available time slots for bookings
+  // availability: { type: Array }, // Available time slots for bookings
+  unavailableDates: [{ type: Date }], // Store booked dates
   reviews: [{ type: mongoose.Types.ObjectId, ref: "Review" }],
   averageRating: { type: Number, default: 0 },
   totalRating: { type: Number, default: 0 },
