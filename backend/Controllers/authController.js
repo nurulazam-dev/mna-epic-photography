@@ -37,6 +37,7 @@ export const register = async (req, res) => {
       user = new User({
         name,
         email,
+        phone,
         password: hashPassword,
         photo,
         role,
@@ -47,6 +48,7 @@ export const register = async (req, res) => {
       user = new Photographer({
         name,
         email,
+        phone,
         password: hashPassword,
         photo,
         role,
