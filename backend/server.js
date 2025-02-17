@@ -1,8 +1,9 @@
 import cookieParser from "cookie-parser";
 import cors from "cors";
-import dotenv from "dotenv";
-import express from "express";
-import mongoose from "mongoose";
+import { config } from "dotenv";
+import express, { json } from "express";
+import { set, connect } from "mongoose";
+
 import authRoute from "./routes/auth.js";
 import bookingRoute from "./routes/booking.js";
 import photographerRoute from "./routes/photographer.js";
