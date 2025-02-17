@@ -10,7 +10,7 @@ import photographerRoute from "./routes/photographer.js";
 import reviewRoute from "./routes/review.js";
 import userRoute from "./routes/user.js";
 
-dotenv.config();
+config();
 
 const app = express();
 const port = process.env.PORT || 8000;
@@ -24,14 +24,11 @@ app.get("/", (req, res) => {
 });
 
 // DB_Connection
-mongoose.set("strictQuery", false);
+set("strictQuery", false);
 const connectDB = async () => {
   try {
-    // await mongoose.connect(process.env.LOCAL_DATABASE);
-    await mongoose.connect(process.env.MONGODB_URL, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+    // connect(process.env.LOCAL_DATABASE);
+    connect(process.env.MONGODB_URL);
     console.log("MongoDB is connected");
   } catch (err) {
     console.log("MongoDB connection fail");
