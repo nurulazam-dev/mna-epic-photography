@@ -2,7 +2,7 @@ import { Box } from "@mui/material";
 
 const NotFound = () => {
   return (
-    <Box sx={{ mt: 12 }}>
+    <Box>
       <img
         src="https://i.ibb.co/q5F5b5v/404.png"
         alt="404 Not Found"

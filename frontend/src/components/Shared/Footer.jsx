@@ -57,9 +57,6 @@ const Footer = () => {
               Lorem ipsum dolor sit, amet consectetur adipisicing elit. Natus
               fuga nesciunt ullam hic corrupti mollitia aspernatur repudiandae.
               Natus beatae fugiat ratione sint error incidunt ipsa hic labore?
-              Delectus cumque autem, laboriosam ipsum quos iusto dolore numquam
-              deleniti eveniet nobis cupiditate eum, sapiente est! Sed nisi,
-              tenetur magni explicabo optio a.
             </Typography>
           </Grid>
 
