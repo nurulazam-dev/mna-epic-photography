@@ -17,6 +17,7 @@ import logo from "../assets/images/logo.png";
 
 const Login = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
+
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { dispatch } = useContext(authContext);
@@ -28,6 +29,7 @@ const Login = () => {
   const submitHandler = async (event) => {
     event.preventDefault();
     setLoading(true);
+
     try {
       const res = await fetch(`${BASE_URL}/auth/login`, {
         method: "POST",
