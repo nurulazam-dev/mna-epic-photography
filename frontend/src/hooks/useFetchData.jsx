@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { token } from "../config";
+import { token } from "../../config";
 
 const useFetchData = (url) => {
   const [data, setData] = useState([]);

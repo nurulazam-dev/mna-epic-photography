@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Error from "../../components/Shared/Error";
-import { BASE_URL } from "../../config";
+import { BASE_URL } from "../../../config";
 import useFetchData from "../../hooks/useFetchData";
 import PhotographerCard from "../../components/Photographers/PhotographerCard";
 import { TextField, Button, Container, Grid, Typography } from "@mui/material";
