@@ -1,99 +1,201 @@
+import { useState } from "react";
+import { CloudUpload } from "@mui/icons-material";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import {
+  Container,
+  Paper,
+  Grid,
+  Typography,
+  TextField,
+  Button,
+  Select,
+  MenuItem,
+  InputLabel,
+  FormControl,
+  CircularProgress,
+  Avatar,
+} from "@mui/material";
+import registerImg from "../assets/images/register.gif";
+import { BASE_URL } from "../config.js";
+import uploadImageToCloudinary from "../utils/uploadCloudinary.js";
+
 const Register = () => {
+  const [selectFile, setSelectFile] = useState(null);
+  const [previewURL, setPreviewURL] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+    photo: selectFile,
+    gender: "",
+    role: "client",
+  });
+  const navigate = useNavigate();
+
+  const handleInputChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleFileInputChange = async (event) => {
+    const file = event.target.files[0];
+    const data = await uploadImageToCloudinary(file);
+    setPreviewURL(data.url);
+    setSelectFile(data.url);
+    setFormData({ ...formData, photo: data.url });
+  };
+
+  const submitHandler = async (event) => {
+    event.preventDefault();
+    setLoading(true);
+    try {
+      const res = await fetch(`${BASE_URL}/auth/register`, {
+        method: "post",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      const { message } = await res.json();
+
+      if (!res.ok) throw new Error(message);
+
+      setLoading(false);
+      toast.success(message);
+      navigate("/login");
+    } catch (error) {
+      toast.error(error.message);
+      setLoading(false);
+    }
+  };
+
   return (
-    <div className="bg-[#A2ECDC] dark:bg-black px-[49px] py-[86px] min-h-screen">
-      <form className="max-w-[600px] mx-auto bg-[#FFFFFF] dark:bg-black px-[28px] py-[32px] border-none rounded-[20px] space-y-3 grid grid-cols-2">
-        <div className="col-span-full">
-          <h2 className="bg-transparent text-[#37b8a3] text-[28px] font-[bold] rounded-[6px] text-center">
-            Register
-          </h2>
-        </div>
-        <div className="col-span-full">
-          <label className="font-medium text-black pb-1.5 block">
-            Name<span className="text-[red]"> *</span>
-          </label>
-          <input
-            type="text"
-            name="text"
-            placeholder="Name"
-            className="bg-transparent px-[2px] py-2 border-b-[2px] border-[#a2ecdc] w-full p-2 focus:outline-none focus:border-blue-400"
-            required
-          />
-        </div>
-        <div className="col-span-full">
-          <label className="font-medium text-black pb-1.5 block">
-            Email<span className="text-[red]"> *</span>
-          </label>
-          <input
-            type="email"
-            name="email"
-            placeholder="Email"
-            className="bg-transparent px-[2px] py-2 border-b-[2px] border-[#a2ecdc] w-full p-2 focus:outline-none focus:border-blue-400"
-            required
-          />
-        </div>
-        <div className="col-span-full">
-          <label className="font-medium text-black pb-1.5 block">Phone</label>
-          <input
-            type="number"
-            name="number"
-            placeholder="Phone"
-            className="bg-transparent px-[2px] py-2 border-b-[2px] border-[#a2ecdc] w-full p-2 focus:outline-none focus:border-blue-400"
-          />
-        </div>
-        <div className="col-span-full">
-          <label className="font-medium text-black pb-1.5 block">
-            Password<span className="text-[red]"> *</span>
-          </label>
-          <input
-            type="password"
-            name="password"
-            placeholder="********"
-            className="bg-transparent px-[2px] py-2 border-b-[2px] border-[#a2ecdc] w-full p-2 focus:outline-none focus:border-blue-400"
-            required
-          />
-        </div>
-        <div className="col-span-full">
-          <label className="font-medium text-black pb-1.5 block">Select</label>
-          <select
-            name="select"
-            className="bg-transparent px-[2px] py-2 border-b-[2px] border-[#a2ecdc] w-full p-2 focus:outline-none focus:border-blue-400 rounded p-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400"
+    <Container maxWidth="md">
+      <Paper elevation={3} sx={{ p: 4, mt: 4 }}>
+        <Grid container spacing={3}>
+          {/* Image Section */}
+          <Grid
+            item
+            xs={12}
+            md={6}
+            sx={{ display: { xs: "none", md: "block" } }}
           >
-            <option value="1">Option 1</option>
-            <option value="2">Option 2</option>
-            <option value="3">Option 3</option>
-          </select>
-        </div>
-        <div className="col-span-full">
-          <label className="font-medium text-black pb-1.5 block">File</label>
-          <input
-            type="file"
-            name="file"
-            placeholder=""
-            className="bg-transparent px-[2px] py-2 border-b-[2px] border-[#a2ecdc] w-full p-2 focus:outline-none focus:border-blue-400"
-          />
-        </div>
-        <div className="col-span-full">
-          <label className="flex items-center gap-2">
-            <input
-              type="checkbox"
-              name="single check"
-              className="focus:ring focus:ring-blue-400"
+            <img
+              src={registerImg}
+              alt="Register"
+              style={{ width: "100%", borderRadius: "8px" }}
             />
-            <span>I accept terms & conditions</span>
-          </label>
-        </div>
-        <div className="col-span-full">
-          <div className="justify-center">
-            <button
-              type="submit"
-              className="bg-[#20c997] text-[#ffffff] text-[18px] rounded-[30px] px-[16px] py-[12px] w-[200px] text-center"
+          </Grid>
+          {/* Form Section */}
+          <Grid item xs={12} md={6}>
+            <Typography
+              variant="h4"
+              textAlign="center"
+              fontWeight="bold"
+              gutterBottom
             >
-              Create Account
-            </button>
-          </div>
-        </div>
-      </form>
-    </div>
+              Create An Account
+            </Typography>
+            <form onSubmit={submitHandler}>
+              <TextField
+                fullWidth
+                label="Full Name"
+                name="name"
+                value={formData.name}
+                onChange={handleInputChange}
+                margin="normal"
+                required
+              />
+              <TextField
+                fullWidth
+                label="Email"
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleInputChange}
+                margin="normal"
+                required
+              />
+              <TextField
+                fullWidth
+                label="Password"
+                type="password"
+                name="password"
+                value={formData.password}
+                onChange={handleInputChange}
+                margin="normal"
+                required
+              />
+              <Grid container spacing={2}>
+                <Grid item xs={6}>
+                  <FormControl fullWidth margin="normal">
+                    <InputLabel>Role</InputLabel>
+                    <Select
+                      name="role"
+                      value={formData.role}
+                      onChange={handleInputChange}
+                    >
+                      <MenuItem value="client">Client</MenuItem>
+                      <MenuItem value="photographer">Photographer</MenuItem>
+                    </Select>
+                  </FormControl>
+                </Grid>
+                <Grid item xs={6}>
+                  <FormControl fullWidth margin="normal">
+                    <InputLabel>Gender</InputLabel>
+                    <Select
+                      name="gender"
+                      value={formData.gender}
+                      onChange={handleInputChange}
+                    >
+                      <MenuItem value="">Select</MenuItem>
+                      <MenuItem value="Male">Male</MenuItem>
+                      <MenuItem value="Female">Female</MenuItem>
+                      <MenuItem value="Other">Other</MenuItem>
+                    </Select>
+                  </FormControl>
+                </Grid>
+              </Grid>
+              <Grid container alignItems="center" spacing={2}>
+                <Grid item>
+                  <Button
+                    variant="contained"
+                    component="label"
+                    startIcon={<CloudUpload />}
+                  >
+                    Upload Photo
+                    <input
+                      type="file"
+                      hidden
+                      onChange={handleFileInputChange}
+                      accept=".jpg, .png, .jpeg"
+                    />
+                  </Button>
+                </Grid>
+                {selectFile && (
+                  <Grid item>
+                    <Avatar src={previewURL} sx={{ width: 50, height: 50 }} />
+                  </Grid>
+                )}
+              </Grid>
+              <Button
+                type="submit"
+                variant="contained"
+                fullWidth
+                sx={{ mt: 3 }}
+                disabled={loading}
+              >
+                {loading ? <CircularProgress size={24} /> : "Register"}
+              </Button>
+            </form>
+            <Typography variant="body2" textAlign="center" mt={2}>
+              Already have an account? <Link to="/login">Login</Link>
+            </Typography>
+          </Grid>
+        </Grid>
+      </Paper>
+    </Container>
   );
 };
+
 export default Register;
