@@ -1,7 +1,37 @@
-import React from "react";
+/* eslint-disable react/prop-types */
+import { Box, Typography } from "@mui/material";
 
-const AboutPhotographer = () => {
-  return <div>about Photographer</div>;
+const AboutPhotographer = ({ about, experience }) => {
+  return (
+    <Box mb={10}>
+      <Box>
+        <Typography variant="body1" fontSize={{ xs: 14, lg: 16 }}>
+          {about ? (
+            about
+          ) : (
+            <Typography color="error" sx={{ animation: "pulse 1s infinite" }}>
+              Bio/About profile isn&apos;t updated. Please update your bio/about
+              profile.
+            </Typography>
+          )}
+        </Typography>
+      </Box>
+
+      <Box mt={5}>
+        <Typography variant="h6" fontWeight="bold" color="primary">
+          Experience
+        </Typography>
+        {experience ? (
+          experience
+        ) : (
+          <Typography color="error" sx={{ animation: "pulse 1s infinite" }}>
+            Experience profile isn&apos;t updated. Please update your experience
+            profile.
+          </Typography>
+        )}
+      </Box>
+    </Box>
+  );
 };
 
 export default AboutPhotographer;
