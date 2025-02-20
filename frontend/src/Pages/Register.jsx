@@ -17,7 +17,7 @@ import {
   Avatar,
 } from "@mui/material";
 import registerImg from "../assets/images/register.gif";
-import { BASE_URL } from "../config.js";
+import { BASE_URL } from "../../config.js";
 import uploadImageToCloudinary from "../utils/uploadCloudinary.js";
 
 const Register = () => {
