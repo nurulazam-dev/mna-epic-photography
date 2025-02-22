@@ -218,7 +218,7 @@ const PhotographerProfile = ({ photographerData }) => {
                 <option value="Wedding">Wedding</option>
                 <option value="Wedding">Wedding</option>
                 <option value="Wedding">Wedding</option>
-                <option value="Urology">Urology</option>
+                <option value="Urology">Wedding</option>
                 <option value="Orthopedics">Orthopedics</option>
               </select>
             </div>
