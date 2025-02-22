@@ -67,9 +67,6 @@ const UserAccount = () => {
               {userData?.phone}
             </Typography>
             <Typography variant="body2" color="textSecondary">
-              Blood Group: <b>{userData?.bloodGroup || "Not updated"}</b>
-            </Typography>
-            <Typography variant="body2" color="textSecondary">
               Gender: {userData?.gender}
             </Typography>
             <Button variant="contained" color="error" fullWidth sx={{ mt: 4 }}>
