@@ -215,7 +215,7 @@ const PhotographerProfile = ({ photographerData }) => {
                 className="form_input py-3.5"
               >
                 <option value="">Select</option>
-                <option value="Cardiology">Cardiology</option>
+                <option value="Cardiology">Wedding</option>
                 <option value="Neurology">Neurology</option>
                 <option value="Dentistry">Dentistry</option>
                 <option value="Urology">Urology</option>
