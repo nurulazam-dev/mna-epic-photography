@@ -1,5 +1,11 @@
 import { useState } from "react";
-import { AccountCircle, PlaylistAdd, Edit, Warning } from "@mui/icons-material";
+import {
+  AccountCircle,
+  PlaylistAdd,
+  Edit,
+  Warning,
+  Star,
+} from "@mui/icons-material";
 import {
   Button,
   Card,
@@ -9,7 +15,6 @@ import {
   Box,
   Alert,
 } from "@mui/material";
-import starIcon from "../../assets/images/icons/Star.png";
 import Error from "../../components/Shared/Error";
 import Loading from "../../components/Shared/Loading";
 import useGetProfile from "../../hooks/useFetchData";
@@ -118,7 +123,7 @@ const Dashboard = () => {
                       )}
                     </Typography>
                     <Box display="flex" alignItems="center" gap={1} mt={1}>
-                      <img src={starIcon} alt="rating" width={20} />
+                      startIcon={<Star />}
                       <Typography>
                         {data.averageRating} ({data.totalRating})
                       </Typography>
