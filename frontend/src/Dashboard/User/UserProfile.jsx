@@ -15,7 +15,7 @@ import {
   Box,
   CircularProgress,
 } from "@mui/material";
-import { BASE_URL, token } from "../../config.js";
+import { BASE_URL, token } from "../../../config.js";
 import uploadImageToCloudinary from "../../utils/uploadCloudinary.js";
 
 const defaultAvatar =
