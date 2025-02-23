@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
 import { GrUpdate } from "react-icons/gr";
-import { MdCloudUpload, MdMoreTime } from "react-icons/md";
+import { MdCloudUpload } from "react-icons/md";
 import { toast } from "react-toastify";
 import avatarImg from "../../assets/images/icons/avatar-icon.png";
 import Loading from "../../components/Shared/Loading";
@@ -21,7 +21,6 @@ const PhotographerProfile = ({ photographerData }) => {
     expertise: "",
     servicePrice: 0,
     experience: "",
-    // timeSlots: [],
     about: "",
     photo: null,
   });
@@ -36,7 +35,6 @@ const PhotographerProfile = ({ photographerData }) => {
       expertise: photographerData?.expertise,
       servicePrice: photographerData?.servicePrice,
       experience: photographerData?.experience,
-      // timeSlots: photographerData?.timeSlots,
       about: photographerData?.about,
       photo: photographerData?.photo,
     });
@@ -248,22 +246,9 @@ const PhotographerProfile = ({ photographerData }) => {
             name="experience"
             value={formData.experience}
             onChange={handleInputChange}
-            placeholder="100"
+            placeholder="Experience"
             className="form_input cursor-text"
           />
-        </div>
-        {/* ===================================
-                 Time_Slots details
-        ==================================== */}
-        <div className="mb-5">
-          <p className="form_label font-bold text-slate-800">Time Slots*</p>
-
-          <div className="flex justify-center items-center">
-            <button className="customBtn h-fit cursor-pointer bg-green-600 text-white text-[16px] p-3 rounded mb-[10px] flex justify-between items-center hover:bg-slate-900">
-              Add TimeSlot
-              <MdMoreTime className="h-6 w-6 ml-1" />
-            </button>
-          </div>
         </div>
 
         {/* ===================================
