@@ -20,8 +20,10 @@ import uploadImageToCloudinary from "../../utils/uploadCloudinary";
 
 const PhotographerProfile = ({ photographerData }) => {
   const [loading, setLoading] = useState(false);
+
   const avatarImg =
     "https://p7.hiclipart.com/preview/717/24/975/computer-icons-user-profile-user-account-clip-art-avatar.jpg";
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",

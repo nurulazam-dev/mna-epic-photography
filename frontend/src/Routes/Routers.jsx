@@ -5,6 +5,10 @@ import Login from "../Pages/Login";
 import Register from "../Pages/Register";
 import Photographers from "../Pages/Photographers/Photographers";
 import PhotographerDetails from "../Pages/Photographers/PhotographerDetails";
+import CheckoutSuccess from "../Pages/CheckoutSuccess";
+import ProtectedRoutes from "./ProtectedRoutes";
+import Dashboard from "../Dashboard/Photographer/Dashboard";
+import UserAccount from "../Dashboard/User/UserAccount";
 
 const Routers = () => {
   return (
@@ -13,8 +17,27 @@ const Routers = () => {
       <Route path="/home" element={<Home />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
+      <Route path="/checkout-success" element={<CheckoutSuccess />} />
       <Route path="/photographers" element={<Photographers />} />
       <Route path="/photographers/:id" element={<PhotographerDetails />} />
+
+      <Route
+        path="/users/profile/me"
+        element={
+          <ProtectedRoutes allowedRoles={["client"]}>
+            <UserAccount />
+          </ProtectedRoutes>
+        }
+      />
+      <Route
+        path="/photographers/profile/me"
+        element={
+          <ProtectedRoutes allowedRoles={["photographer"]}>
+            <Dashboard />
+          </ProtectedRoutes>
+        }
+      />
+
       <Route path="*" element={<NotFound />} />
     </Routes>
   );
