@@ -21,7 +21,7 @@ const PhotographerProfile = ({ photographerData }) => {
     expertise: "",
     servicePrice: 0,
     experience: "",
-    timeSlots: [],
+    // timeSlots: [],
     about: "",
     photo: null,
   });
@@ -36,7 +36,7 @@ const PhotographerProfile = ({ photographerData }) => {
       expertise: photographerData?.expertise,
       servicePrice: photographerData?.servicePrice,
       experience: photographerData?.experience,
-      timeSlots: photographerData?.timeSlots,
+      // timeSlots: photographerData?.timeSlots,
       about: photographerData?.about,
       photo: photographerData?.photo,
     });
@@ -205,12 +205,12 @@ const PhotographerProfile = ({ photographerData }) => {
               </select>
             </div>
 
-            {/* ===Specialization input part=== */}
+            {/* ===expertise input part=== */}
             <div>
-              <p className="form_label">Specialization*</p>
+              <p className="form_label">Expertise*</p>
               <select
-                name="specialization"
-                value={formData.specialization}
+                name="expertise"
+                value={formData.expertise}
                 onChange={handleInputChange}
                 className="form_input py-3.5"
               >
@@ -222,13 +222,13 @@ const PhotographerProfile = ({ photographerData }) => {
               </select>
             </div>
 
-            {/* ===Ticket_Price input part=== */}
+            {/* ===Service_Price input part=== */}
             <div>
-              <p className="form_label">Ticket Price*</p>
+              <p className="form_label">Service Price*</p>
               <input
                 type="number"
-                name="ticketPrice"
-                value={formData.ticketPrice}
+                name="servicePrice"
+                value={formData.servicePrice}
                 onChange={handleInputChange}
                 placeholder="100"
                 className="form_input cursor-text"
