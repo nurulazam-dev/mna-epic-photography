@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { toast } from "react-toastify";
-import { BASE_URL, token } from "../../config";
+import { BASE_URL, token } from "../../../../config";
 // import convertTime from "../../utils/convertTime";
 import {
   Box,
