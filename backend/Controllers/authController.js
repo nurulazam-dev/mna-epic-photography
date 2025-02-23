@@ -14,7 +14,8 @@ const generateToken = (user) => {
 };
 
 export const register = async (req, res) => {
-  const { email, password, name, role, photo } = req.body;
+  const { email, password, name, phone, role, photo } = req.body;
+
   try {
     let user = null;
 
@@ -84,6 +85,7 @@ export const login = async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
+    console.log(user);
     // compare password
     const isPasswordMatch = await bcrypt.compare(
       req.body.password,
@@ -107,6 +109,7 @@ export const login = async (req, res) => {
       role,
     });
   } catch (error) {
+    console.log(error);
     return res.status(500).json({ status: false, message: "Failed to login" });
   }
 };

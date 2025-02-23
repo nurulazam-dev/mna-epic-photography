@@ -15,7 +15,7 @@ import {
 } from "@mui/material";
 import { CloudUpload, Update } from "@mui/icons-material";
 import { toast } from "react-toastify";
-import { BASE_URL, token } from "../../config";
+import { BASE_URL, token } from "../../../config";
 import uploadImageToCloudinary from "../../utils/uploadCloudinary";
 
 const PhotographerProfile = ({ photographerData }) => {

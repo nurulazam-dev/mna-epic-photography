@@ -30,6 +30,7 @@ const Register = () => {
     password: "",
     photo: selectFile,
     gender: "",
+    phone: "",
     role: "client",
   });
   const navigate = useNavigate();
@@ -116,16 +117,35 @@ const Register = () => {
                 margin="normal"
                 required
               />
-              <TextField
-                fullWidth
-                label="Password"
-                type="password"
-                name="password"
-                value={formData.password}
-                onChange={handleInputChange}
-                margin="normal"
-                required
-              />
+
+              {/* pass & phone */}
+              <Grid container spacing={2}>
+                <Grid item xs={6}>
+                  <TextField
+                    fullWidth
+                    label="Password"
+                    type="password"
+                    name="password"
+                    value={formData.password}
+                    onChange={handleInputChange}
+                    margin="normal"
+                    required
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <TextField
+                    fullWidth
+                    label="Phone"
+                    type="phone"
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleInputChange}
+                    margin="normal"
+                    required
+                  />
+                </Grid>
+              </Grid>
+              {/* role & gender part */}
               <Grid container spacing={2}>
                 <Grid item xs={6}>
                   <FormControl fullWidth margin="normal">
@@ -156,6 +176,7 @@ const Register = () => {
                   </FormControl>
                 </Grid>
               </Grid>
+
               <Grid container alignItems="center" spacing={2}>
                 <Grid item>
                   <Button
