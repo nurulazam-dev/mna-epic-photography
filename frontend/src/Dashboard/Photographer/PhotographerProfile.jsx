@@ -3,13 +3,15 @@ import { useEffect, useState } from "react";
 import { GrUpdate } from "react-icons/gr";
 import { MdCloudUpload } from "react-icons/md";
 import { toast } from "react-toastify";
-import avatarImg from "../../assets/images/icons/avatar-icon.png";
 import Loading from "../../components/Shared/Loading";
 import { BASE_URL, token } from "../../config";
 import uploadImageToCloudinary from "../../utils/uploadCloudinary";
 
 const PhotographerProfile = ({ photographerData }) => {
   const [loading, setLoading] = useState(false);
+
+  const avatarImg =
+    "https://p7.hiclipart.com/preview/717/24/975/computer-icons-user-profile-user-account-clip-art-avatar.jpg";
 
   const [formData, setFormData] = useState({
     name: "",
