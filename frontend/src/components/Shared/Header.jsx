@@ -67,7 +67,6 @@ const Header = () => {
               component={NavLink}
               to={link.path}
               sx={{ color: "black", fontWeight: "bold", ml: 2 }}
-              activeClassName={{ color: "green" }}
             >
               {link.display}
             </Button>
