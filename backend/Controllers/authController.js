@@ -70,8 +70,10 @@ export const login = async (req, res) => {
   try {
     let user = null;
 
-    const client = await User.findOne({ email });
-    const photographer = await Photographer.findOne({ email });
+    const client = await User.findOne({ email }).select("+password");
+    const photographer = await Photographer.findOne({ email }).select(
+      "+password"
+    );
 
     if (client) {
       user = client;
@@ -88,7 +90,7 @@ export const login = async (req, res) => {
     // compare password
     const isPasswordMatch = await bcrypt.compare(
       req.body.password,
-      user.password
+      user._doc.password
     );
 
     if (!isPasswordMatch) {
