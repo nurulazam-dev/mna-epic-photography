@@ -94,7 +94,7 @@ const Header = () => {
             color="primary"
             sx={{ ml: 2 }}
           >
-            Login
+            LOGIN
           </Button>
         )}
 
