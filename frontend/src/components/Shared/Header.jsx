@@ -3,12 +3,8 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import {
   AppBar,
   Toolbar,
-  Typography,
   Button,
   IconButton,
-  Menu,
-  MenuItem,
-  Avatar,
   Box,
   Drawer,
   List,
@@ -17,7 +13,6 @@ import {
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import logo from "../../assets/images/logo.png";
-import userAvatar from "../../assets/images/logo.png";
 import { authContext } from "../../context/AuthContext";
 
 const navLinks = [
@@ -31,16 +26,7 @@ const navLinks = [
 const Header = () => {
   const { user, role, token, dispatch } = useContext(authContext);
   const navigate = useNavigate();
-  const [anchorEl, setAnchorEl] = useState(null);
   const [mobileOpen, setMobileOpen] = useState(false);
-
-  const handleMenuOpen = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-  };
 
   const toggleMobileMenu = () => {
     setMobileOpen(!mobileOpen);
@@ -76,29 +62,23 @@ const Header = () => {
         {/* User Info or Login/Logout */}
         {token && user ? (
           <Box sx={{ display: "flex", alignItems: "center" }}>
-            <Typography sx={{ mr: 1 }}>{user?.name}</Typography>
-            <Avatar
-              src={user?.photo || userAvatar}
-              alt="User"
-              onClick={handleMenuOpen}
-            />
-            <Menu
-              anchorEl={anchorEl}
-              open={Boolean(anchorEl)}
-              onClose={handleMenuClose}
+            <Button
+              component={NavLink}
+              sx={{ color: "black", fontWeight: "bold", ml: 2 }}
+              to={
+                role === "photographer"
+                  ? "/photographers/profile/me"
+                  : "/users/profile/me"
+              }
             >
-              <MenuItem
-                component={Link}
-                to={
-                  role === "photographer"
-                    ? "/photographers/profile/me"
-                    : "/users/profile/me"
-                }
-              >
-                Profile
-              </MenuItem>
-              <MenuItem onClick={handleLogout}>Logout</MenuItem>
-            </Menu>
+              {user?.name}
+            </Button>
+            <Button
+              onClick={handleLogout}
+              sx={{ ml: 1, color: "red", border: "red 1px solid" }}
+            >
+              Logout
+            </Button>
           </Box>
         ) : (
           <Button
