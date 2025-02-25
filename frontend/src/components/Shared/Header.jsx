@@ -155,7 +155,7 @@ const Header = () => {
                 to="/login"
                 onClick={toggleMobileMenu}
               >
-                <ListItemText primary="Login" />
+                <ListItemText primary="LOGIN" />
               </ListItem>
             )}
           </List>
