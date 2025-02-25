@@ -140,7 +140,11 @@ const Header = () => {
                 >
                   PROFILE <CallMadeOutlinedIcon />
                 </ListItem>
-                <ListItem button onClick={handleLogout}>
+                <ListItem
+                  button
+                  onClick={handleLogout}
+                  sx={{ color: "red", border: "red 1px solid" }}
+                >
                   <ListItemText primary="LOGOUT" />
                 </ListItem>
               </MenuList>
