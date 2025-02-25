@@ -10,8 +10,10 @@ import {
   List,
   ListItem,
   ListItemText,
+  MenuList,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
+import CallMadeOutlinedIcon from "@mui/icons-material/CallMadeOutlined";
 import logo from "../../assets/images/logo.png";
 import { authContext } from "../../context/AuthContext";
 
@@ -64,20 +66,24 @@ const Header = () => {
           <Box sx={{ display: "flex", alignItems: "center" }}>
             <Button
               component={NavLink}
-              sx={{ color: "black", fontWeight: "bold", ml: 2 }}
+              sx={{
+                color: "black",
+                fontWeight: "bold",
+                display: { xs: "none", sm: "none", md: "flex" },
+              }}
               to={
                 role === "photographer"
                   ? "/photographers/profile/me"
                   : "/users/profile/me"
               }
             >
-              {user?.name}
+              {user?.name} <CallMadeOutlinedIcon sx={{ ml: 1 }} />
             </Button>
             <Button
               onClick={handleLogout}
               sx={{ ml: 1, color: "red", border: "red 1px solid" }}
             >
-              Logout
+              LOGOUT
             </Button>
           </Box>
         ) : (
@@ -119,10 +125,25 @@ const Header = () => {
                 <ListItemText primary={link.display} />
               </ListItem>
             ))}
+
             {token && user ? (
-              <ListItem button onClick={handleLogout}>
-                <ListItemText primary="Logout" />
-              </ListItem>
+              <MenuList>
+                <ListItem
+                  button
+                  component={NavLink}
+                  sx={{ color: "black", fontWeight: "bold" }}
+                  to={
+                    role === "photographer"
+                      ? "/photographers/profile/me"
+                      : "/users/profile/me"
+                  }
+                >
+                  PROFILE <CallMadeOutlinedIcon />
+                </ListItem>
+                <ListItem button onClick={handleLogout}>
+                  <ListItemText primary="LOGOUT" />
+                </ListItem>
+              </MenuList>
             ) : (
               <ListItem
                 button
