@@ -1,177 +1,128 @@
 import { useContext, useState } from "react";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import {
-  AppBar,
-  Toolbar,
+  Avatar,
   Button,
-  IconButton,
-  Box,
-  Drawer,
-  List,
-  ListItem,
-  ListItemText,
-  MenuList,
+  CircularProgress,
+  Grid,
+  Paper,
+  TextField,
+  Typography,
 } from "@mui/material";
-import MenuIcon from "@mui/icons-material/Menu";
-import CallMadeOutlinedIcon from "@mui/icons-material/CallMadeOutlined";
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import logo from "../../assets/images/logo.png";
 import { authContext } from "../../context/AuthContext";
-
-const navLinks = [
-  { path: "/", display: "HOME" },
-  { path: "/photographers", display: "PHOTOGRAPHERS" },
-  { path: "/services", display: "SERVICES" },
-  { path: "/about", display: "ABOUT US" },
-  { path: "/contact", display: "CONTACT" },
-];
+import { BASE_URL } from "../../../config";
 
 const TestCode = () => {
-  const { user, role, token, dispatch } = useContext(authContext);
-  const navigate = useNavigate();
-  const [mobileOpen, setMobileOpen] = useState(false);
+  const [formData, setFormData] = useState({ email: "", password: "" });
 
-  const toggleMobileMenu = () => {
-    setMobileOpen(!mobileOpen);
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+  const { dispatch } = useContext(authContext);
+
+  const handleInputChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleLogout = () => {
-    dispatch({ type: "LOGOUT" });
-    navigate("/");
+  const submitHandler = async (event) => {
+    event.preventDefault();
+    setLoading(true);
+
+    try {
+      const res = await fetch(`${BASE_URL}/auth/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+      const result = await res.json();
+
+      if (!res.ok) {
+        throw new Error(result.message);
+      }
+
+      dispatch({
+        type: "LOGIN_SUCCESS",
+        payload: { user: result.data, token: result.token, role: result.role },
+      });
+
+      setLoading(false);
+      toast.success(result.message);
+      navigate("/home");
+    } catch (error) {
+      toast.error(error.message);
+      setLoading(false);
+    }
   };
 
   return (
-    <AppBar position="sticky" color="inherit" elevation={3}>
-      <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
-        {/* Left: Logo */}
-        <Box>
-          <NavLink to="/">
-            <img src={logo} alt="Logo" style={{ width: 65 }} />
-          </NavLink>
-        </Box>
-
-        {/* Middle: Navigation Links */}
-        <Box
-          sx={{
-            flexGrow: 1,
-            display: { xs: "none", md: "flex" },
-            justifyContent: "center",
-          }}
-        >
-          {navLinks.map((link) => (
+    <Grid
+      container
+      justifyContent="center"
+      alignItems="center"
+      sx={{ minHeight: "100vh", px: 2 }}
+    >
+      <Grid item xs={12} sm={8} md={5}>
+        <Paper elevation={6} sx={{ p: 4, pt: 0, textAlign: "center" }}>
+          <Avatar
+            sx={{
+              width: 80,
+              height: 60,
+              margin: "auto",
+            }}
+            src={logo}
+            alt="MNA Epic Photography"
+          />
+          <Typography
+            variant="h5"
+            fontWeight={600}
+            color="primary"
+            gutterBottom
+          >
+            Please Login
+          </Typography>
+          <form onSubmit={submitHandler}>
+            <TextField
+              fullWidth
+              label="Email"
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleInputChange}
+              required
+              sx={{ mb: 2 }}
+            />
+            <TextField
+              fullWidth
+              label="Password"
+              type="password"
+              name="password"
+              value={formData.password}
+              onChange={handleInputChange}
+              required
+              sx={{ mb: 3 }}
+            />
             <Button
-              key={link.path}
-              component={NavLink}
-              to={link.path}
-              sx={{ color: "black", fontWeight: "bold", mx: 1 }}
-            >
-              {link.display}
-            </Button>
-          ))}
-        </Box>
-
-        {/* Right: User Info or Login/Logout */}
-        <Box sx={{ display: "flex", alignItems: "center" }}>
-          {token && user ? (
-            <>
-              <Button
-                component={NavLink}
-                sx={{
-                  color: "black",
-                  fontWeight: "bold",
-                  display: { xs: "none", md: "flex" },
-                }}
-                to={
-                  role === "photographer"
-                    ? "/photographers/profile/me"
-                    : "/users/profile/me"
-                }
-              >
-                {user?.name} <CallMadeOutlinedIcon sx={{ ml: 1 }} />
-              </Button>
-              <Button
-                onClick={handleLogout}
-                sx={{ ml: 2, color: "red", border: "1px solid red" }}
-              >
-                LOGOUT
-              </Button>
-            </>
-          ) : (
-            <Button
-              component={Link}
-              to="/login"
+              type="submit"
+              fullWidth
               variant="contained"
               color="primary"
-              sx={{ ml: 2 }}
+              startIcon={
+                loading ? <CircularProgress size={20} /> : <CloudUploadIcon />
+              }
+              disabled={loading}
             >
-              LOGIN
+              {loading ? "Logging in..." : "Login"}
             </Button>
-          )}
-
-          {/* Mobile Menu Button */}
-          <IconButton
-            edge="end"
-            color="inherit"
-            aria-label="menu"
-            sx={{ display: { md: "none" } }}
-            onClick={toggleMobileMenu}
-          >
-            <MenuIcon />
-          </IconButton>
-        </Box>
-      </Toolbar>
-
-      {/* Mobile Drawer */}
-      <Drawer anchor="right" open={mobileOpen} onClose={toggleMobileMenu}>
-        <Box sx={{ width: 250 }}>
-          <List>
-            {navLinks.map((link) => (
-              <ListItem
-                button
-                component={NavLink}
-                to={link.path}
-                key={link.path}
-                onClick={toggleMobileMenu}
-              >
-                <ListItemText primary={link.display} />
-              </ListItem>
-            ))}
-
-            {token && user ? (
-              <MenuList>
-                <ListItem
-                  button
-                  component={NavLink}
-                  sx={{ color: "black", fontWeight: "bold" }}
-                  to={
-                    role === "photographer"
-                      ? "/photographers/profile/me"
-                      : "/users/profile/me"
-                  }
-                >
-                  PROFILE <CallMadeOutlinedIcon />
-                </ListItem>
-                <ListItem
-                  button
-                  onClick={handleLogout}
-                  sx={{ color: "red", border: "1px solid red" }}
-                >
-                  <ListItemText primary="LOGOUT" />
-                </ListItem>
-              </MenuList>
-            ) : (
-              <ListItem
-                button
-                component={Link}
-                to="/login"
-                onClick={toggleMobileMenu}
-              >
-                <ListItemText primary="LOGIN" />
-              </ListItem>
-            )}
-          </List>
-        </Box>
-      </Drawer>
-    </AppBar>
+          </form>
+          <Typography variant="body2" sx={{ mt: 2 }}>
+            Don&apos;t have an account?{" "}
+            <Link to="/register">Please Register</Link>
+          </Typography>
+        </Paper>
+      </Grid>
+    </Grid>
   );
 };
 

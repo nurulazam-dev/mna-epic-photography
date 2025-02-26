@@ -90,7 +90,9 @@ const Header = () => {
               </Button>
               <Button
                 onClick={handleLogout}
-                sx={{ ml: 2, color: "red", border: "1px solid red" }}
+                variant="outlined"
+                color="error"
+                sx={{ ml: 2 }}
               >
                 LOGOUT
               </Button>
