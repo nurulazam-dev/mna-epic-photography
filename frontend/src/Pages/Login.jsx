@@ -61,12 +61,16 @@ const Login = () => {
       container
       justifyContent="center"
       alignItems="center"
-      sx={{ minHeight: "100vh", px: 2 }}
+      sx={{ minHeight: { xs: "50vh", md: "70vh", lg: "80vh" }, px: 2 }}
     >
-      <Grid item xs={12} sm={8} md={5}>
-        <Paper elevation={6} sx={{ p: 4, textAlign: "center" }}>
+      <Grid item xs={11} sm={8} md={4}>
+        <Paper elevation={6} sx={{ p: 4, pt: 0, textAlign: "center" }}>
           <Avatar
-            sx={{ width: 80, height: 80, margin: "0 auto 16px" }}
+            sx={{
+              width: 80,
+              height: 60,
+              margin: "auto",
+            }}
             src={logo}
             alt="MNA Epic Photography"
           />
@@ -103,7 +107,7 @@ const Login = () => {
               type="submit"
               fullWidth
               variant="contained"
-              color="primary"
+              size="large"
               startIcon={
                 loading ? <CircularProgress size={20} /> : <CloudUploadIcon />
               }

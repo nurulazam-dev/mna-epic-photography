@@ -61,9 +61,9 @@ const TestCode = () => {
       container
       justifyContent="center"
       alignItems="center"
-      sx={{ minHeight: "100vh", px: 2 }}
+      sx={{ minHeight: { xs: "50vh", md: "70vh", lg: "80vh" }, px: 2 }}
     >
-      <Grid item xs={12} sm={8} md={5}>
+      <Grid item xs={11} sm={8} md={4}>
         <Paper elevation={6} sx={{ p: 4, pt: 0, textAlign: "center" }}>
           <Avatar
             sx={{
@@ -107,7 +107,7 @@ const TestCode = () => {
               type="submit"
               fullWidth
               variant="contained"
-              color="primary"
+              size="large"
               startIcon={
                 loading ? <CircularProgress size={20} /> : <CloudUploadIcon />
               }
