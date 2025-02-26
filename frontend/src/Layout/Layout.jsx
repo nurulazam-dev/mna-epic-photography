@@ -1,13 +1,11 @@
 import Footer from "../components/Shared/Footer";
-// import Header from "../components/Shared/Header";
-import TestCode from "../components/Shared/TestCode";
+import Header from "../components/Shared/Header";
 import Routers from "../Routes/Routers";
 
 const Layout = () => {
   return (
     <>
-      {/* <Header /> */}
-      <TestCode />
+      <Header />
       <main>
         <Routers />
       </main>

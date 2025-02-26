@@ -41,20 +41,28 @@ const Header = () => {
 
   return (
     <AppBar position="sticky" color="inherit" elevation={3}>
-      <Toolbar>
+      <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
         {/* Logo */}
-        <NavLink to="/">
-          <img src={logo} alt="Logo" style={{ width: 65 }} />
-        </NavLink>
+        <Box>
+          <NavLink to="/">
+            <img src={logo} alt="Logo" style={{ width: 65 }} />
+          </NavLink>
+        </Box>
 
         {/* Desktop Nav Links */}
-        <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" }, ml: 3 }}>
+        <Box
+          sx={{
+            flexGrow: 1,
+            display: { xs: "none", md: "flex" },
+            justifyContent: "center",
+          }}
+        >
           {navLinks.map((link) => (
             <Button
               key={link.path}
               component={NavLink}
               to={link.path}
-              sx={{ color: "black", fontWeight: "bold", ml: 2 }}
+              sx={{ color: "black", fontWeight: "bold", mx: 1 }}
             >
               {link.display}
             </Button>
@@ -62,52 +70,54 @@ const Header = () => {
         </Box>
 
         {/* User Info or Login/Logout */}
-        {token && user ? (
-          <Box sx={{ display: "flex", alignItems: "center" }}>
+        <Box sx={{ display: "flex", alignItems: "center" }}>
+          {token && user ? (
+            <>
+              <Button
+                component={NavLink}
+                sx={{
+                  color: "black",
+                  fontWeight: "bold",
+                  display: { xs: "none", md: "flex" },
+                }}
+                to={
+                  role === "photographer"
+                    ? "/photographers/profile/me"
+                    : "/users/profile/me"
+                }
+              >
+                {user?.name} <CallMadeOutlinedIcon sx={{ ml: 1 }} />
+              </Button>
+              <Button
+                onClick={handleLogout}
+                sx={{ ml: 2, color: "red", border: "1px solid red" }}
+              >
+                LOGOUT
+              </Button>
+            </>
+          ) : (
             <Button
-              component={NavLink}
-              sx={{
-                color: "black",
-                fontWeight: "bold",
-                display: { xs: "none", sm: "none", md: "flex" },
-              }}
-              to={
-                role === "photographer"
-                  ? "/photographers/profile/me"
-                  : "/users/profile/me"
-              }
+              component={Link}
+              to="/login"
+              variant="contained"
+              color="primary"
+              sx={{ ml: 2 }}
             >
-              {user?.name} <CallMadeOutlinedIcon sx={{ ml: 1 }} />
+              LOGIN
             </Button>
-            <Button
-              onClick={handleLogout}
-              sx={{ ml: 1, color: "red", border: "red 1px solid" }}
-            >
-              LOGOUT
-            </Button>
-          </Box>
-        ) : (
-          <Button
-            component={Link}
-            to="/login"
-            variant="contained"
-            color="primary"
-            sx={{ ml: 2 }}
-          >
-            LOGIN
-          </Button>
-        )}
+          )}
 
-        {/* Mobile Menu Button */}
-        <IconButton
-          edge="end"
-          color="inherit"
-          aria-label="menu"
-          sx={{ display: { md: "none" } }}
-          onClick={toggleMobileMenu}
-        >
-          <MenuIcon />
-        </IconButton>
+          {/* Mobile Menu Button */}
+          <IconButton
+            edge="end"
+            color="inherit"
+            aria-label="menu"
+            sx={{ display: { md: "none" } }}
+            onClick={toggleMobileMenu}
+          >
+            <MenuIcon />
+          </IconButton>
+        </Box>
       </Toolbar>
 
       {/* Mobile Drawer */}
@@ -143,7 +153,7 @@ const Header = () => {
                 <ListItem
                   button
                   onClick={handleLogout}
-                  sx={{ color: "red", border: "red 1px solid" }}
+                  sx={{ color: "red", border: "1px solid red" }}
                 >
                   <ListItemText primary="LOGOUT" />
                 </ListItem>
