@@ -12,7 +12,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+import LoginIcon from "@mui/icons-material/Login";
 import logo from "../assets/images/logo.png";
 
 const Login = () => {
@@ -109,7 +109,7 @@ const Login = () => {
               variant="contained"
               size="large"
               startIcon={
-                loading ? <CircularProgress size={20} /> : <CloudUploadIcon />
+                loading ? <CircularProgress size={20} /> : <LoginIcon />
               }
               disabled={loading}
             >
