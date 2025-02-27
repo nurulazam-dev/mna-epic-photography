@@ -21,7 +21,7 @@ const navLinks = [
   { path: "/", display: "HOME" },
   { path: "/photographers", display: "PHOTOGRAPHERS" },
   { path: "/services", display: "SERVICES" },
-  { path: "/about", display: "ABOUT US" },
+  { path: "/about-us", display: "ABOUT US" },
   { path: "/contact", display: "CONTACT" },
 ];
 

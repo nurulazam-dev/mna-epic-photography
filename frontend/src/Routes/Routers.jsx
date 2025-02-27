@@ -10,6 +10,7 @@ import ProtectedRoutes from "./ProtectedRoutes";
 import Dashboard from "../Dashboard/Photographer/Dashboard";
 import UserAccount from "../Dashboard/User/UserAccount";
 import Services from "../Pages/Services";
+import AboutUs from "../Pages/AboutUs";
 
 const Routers = () => {
   return (
@@ -18,6 +19,7 @@ const Routers = () => {
       <Route path="/home" element={<Home />} />
       <Route path="/login" element={<Login />} />
       <Route path="/services" element={<Services />} />
+      <Route path="/about-us" element={<AboutUs />} />
       {/* <Route path="/register" element={<TestCode />} /> */}
       <Route path="/register" element={<Register />} />
       <Route path="/checkout-success" element={<CheckoutSuccess />} />
