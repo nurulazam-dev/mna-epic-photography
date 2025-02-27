@@ -12,10 +12,8 @@ import {
   ListItemText,
   MenuList,
 } from "@mui/material";
-import LoginIcon from "@mui/icons-material/Login";
 import MenuIcon from "@mui/icons-material/Menu";
 import CallMadeOutlinedIcon from "@mui/icons-material/CallMadeOutlined";
-import LogoutIcon from "@mui/icons-material/Logout";
 import logo from "../../assets/images/logo.png";
 import { authContext } from "../../context/AuthContext";
 
@@ -96,7 +94,7 @@ const Header = () => {
                 color="error"
                 sx={{ ml: 2 }}
               >
-                LOGOUT <LogoutIcon />
+                LOGOUT
               </Button>
             </>
           ) : (
@@ -107,7 +105,7 @@ const Header = () => {
               color="primary"
               sx={{ ml: 2 }}
             >
-              LOGIN <LoginIcon />
+              LOGIN
             </Button>
           )}
 

@@ -203,6 +203,7 @@ const Register = () => {
                 type="submit"
                 variant="contained"
                 fullWidth
+                size="large"
                 sx={{ mt: 3 }}
                 disabled={loading}
               >
