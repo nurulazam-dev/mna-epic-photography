@@ -1,0 +1,92 @@
+[
+  {
+    "name": "James Carter",
+    "email": "carter@mnaepicphtg.com",
+    "phone": "+1 234-567-8901",
+    "photo": 1,
+    "servicePrice": 250,
+    "expertise": "Wedding Photography",
+    "experience": "8 years"
+  },
+  {
+    "name": "Emma Thompson",
+    "email": "thompson@mnaepicphtg.com",
+    "phone": "+1 234-567-8902",
+    "photo": 2,
+    "servicePrice": 300,
+    "expertise": "Portrait Photography",
+    "experience": "6 years"
+  },
+  {
+    "name": "Michael Johnson",
+    "email": "johnson@mnaepicphtg.com",
+    "phone": "+1 234-567-8903",
+    "photo": 3,
+    "servicePrice": 200,
+    "expertise": "Event Photography",
+    "experience": "5 years"
+  },
+  {
+    "name": "Sophia Miller",
+    "email": "miller@mnaepicphtg.com",
+    "phone": "+1 234-567-8904",
+    "photo": 4,
+    "servicePrice": 280,
+    "expertise": "Fashion Photography",
+    "experience": "7 years"
+  },
+  {
+    "name": "William Brown",
+    "email": "brown@mnaepicphtg.com",
+    "phone": "+1 234-567-8905",
+    "photo": 5,
+    "servicePrice": 350,
+    "expertise": "Commercial Photography",
+    "experience": "10 years"
+  },
+  {
+    "name": "Isabella Wilson",
+    "email": "wilson@mnaepicphtg.com",
+    "phone": "+1 234-567-8906",
+    "photo": 6,
+    "servicePrice": 275,
+    "expertise": "Lifestyle Photography",
+    "experience": "6 years"
+  },
+  {
+    "name": "Daniel Martinez",
+    "email": "martinez@mnaepicphtg.com",
+    "phone": "+1 234-567-8907",
+    "photo": 7,
+    "servicePrice": 220,
+    "expertise": "Sports Photography",
+    "experience": "4 years"
+  },
+  {
+    "name": "Olivia Anderson",
+    "email": "anderson@mnaepicphtg.com",
+    "phone": "+1 234-567-8908",
+    "photo": 8,
+    "servicePrice": 310,
+    "expertise": "Newborn Photography",
+    "experience": "5 years"
+  },
+  {
+    "name": "Ethan Thomas",
+    "email": "thomas@mnaepicphtg.com",
+    "phone": "+1 234-567-8909",
+    "photo": 9,
+    "servicePrice": 270,
+    "expertise": "Travel Photography",
+    "experience": "7 years"
+  },
+  {
+    "name": "Benjamin Harris",
+    "email": "harris@mnaepicphtg.com",
+    "phone": "+1 234-567-8910",
+    "photo": 10,
+    "servicePrice": 290,
+    "expertise": "Architectural Photography",
+    "experience": "9 years"
+  }
+]
