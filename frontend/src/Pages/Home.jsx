@@ -1,10 +1,13 @@
-import Loading from "../components/Shared/Loading";
+import AboutUs from "./AboutUs";
+import ContactUs from "./ContactUs";
+import Services from "./Services";
 
 const Home = () => {
   return (
     <>
-      <h2>Home</h2>
-      <Loading />
+      <Services />
+      <AboutUs />
+      <ContactUs />
     </>
   );
 };
