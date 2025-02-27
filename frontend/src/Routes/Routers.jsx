@@ -9,6 +9,7 @@ import CheckoutSuccess from "../Pages/CheckoutSuccess";
 import ProtectedRoutes from "./ProtectedRoutes";
 import Dashboard from "../Dashboard/Photographer/Dashboard";
 import UserAccount from "../Dashboard/User/UserAccount";
+import Services from "../Pages/Services";
 
 const Routers = () => {
   return (
@@ -16,6 +17,7 @@ const Routers = () => {
       <Route path="/" element={<Home />} />
       <Route path="/home" element={<Home />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/services" element={<Services />} />
       {/* <Route path="/register" element={<TestCode />} /> */}
       <Route path="/register" element={<Register />} />
       <Route path="/checkout-success" element={<CheckoutSuccess />} />
