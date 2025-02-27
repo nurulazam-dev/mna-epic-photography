@@ -22,7 +22,7 @@ const navLinks = [
   { path: "/photographers", display: "PHOTOGRAPHERS" },
   { path: "/services", display: "SERVICES" },
   { path: "/about-us", display: "ABOUT US" },
-  { path: "/contact", display: "CONTACT" },
+  { path: "/contact-us", display: "CONTACT" },
 ];
 
 const Header = () => {
