@@ -14,6 +14,7 @@ import {
   FormControl,
   Box,
   CircularProgress,
+  Grid,
 } from "@mui/material";
 import { BASE_URL, token } from "../../../config.js";
 import uploadImageToCloudinary from "../../utils/uploadCloudinary.js";
@@ -83,7 +84,7 @@ const UserProfile = ({ user }) => {
   };
 
   return (
-    <Container maxWidth="sm">
+    <Container>
       <Typography
         variant="h4"
         textAlign="center"
@@ -94,90 +95,103 @@ const UserProfile = ({ user }) => {
         Profile Information
       </Typography>
       <form onSubmit={submitHandler}>
-        <TextField
-          fullWidth
-          label="Full Name"
-          name="name"
-          value={formData.name}
-          onChange={handleInputChange}
-          required
-          margin="normal"
-        />
-        <TextField
-          fullWidth
-          label="Phone"
-          name="phone"
-          value={formData.phone}
-          onChange={handleInputChange}
-          required
-          margin="normal"
-        />
-        <TextField
-          fullWidth
-          label="Email"
-          name="email"
-          value={formData.email}
-          InputProps={{ readOnly: true }}
-          margin="normal"
-        />
-        <TextField
-          fullWidth
-          label="Password"
-          name="password"
-          type="password"
-          value={formData.password}
-          onChange={handleInputChange}
-          margin="normal"
-        />
-
-        <FormControl fullWidth margin="normal">
-          <InputLabel>Gender</InputLabel>
-          <Select
-            name="gender"
-            value={formData.gender}
-            onChange={handleInputChange}
-          >
-            <MenuItem value="">Select</MenuItem>
-            <MenuItem value="Male">Male</MenuItem>
-            <MenuItem value="Female">Female</MenuItem>
-            <MenuItem value="Other">Other</MenuItem>
-          </Select>
-        </FormControl>
-
-        <Box
-          display="flex"
-          alignItems="center"
-          justifyContent="space-between"
-          mt={2}
-        >
-          <input
-            type="file"
-            accept=".jpg, .png, .jpeg"
-            style={{ display: "none" }}
-            id="upload-photo"
-            onChange={handleFileInputChange}
-          />
-          <label htmlFor="upload-photo">
-            <Button
-              variant="contained"
-              component="span"
-              startIcon={<CloudUpload />}
+        <Grid container spacing={2}>
+          <Grid item xs={12} md={4}>
+            <TextField
+              fullWidth
+              label="Full Name"
+              name="name"
+              value={formData.name}
+              onChange={handleInputChange}
+              required
+              margin="normal"
+            />
+          </Grid>
+          <Grid item xs={12} md={4}>
+            <TextField
+              fullWidth
+              label="Phone"
+              name="phone"
+              value={formData.phone}
+              onChange={handleInputChange}
+              required
+              margin="normal"
+            />
+          </Grid>
+          <Grid item xs={12} md={4}>
+            <TextField
+              fullWidth
+              label="Email"
+              name="email"
+              value={formData.email}
+              InputProps={{ readOnly: true }}
+              margin="normal"
+            />
+          </Grid>
+          <Grid item xs={12} md={4}>
+            <TextField
+              fullWidth
+              label="Password"
+              name="password"
+              type="password"
+              value={formData.password}
+              onChange={handleInputChange}
+              margin="normal"
+            />
+          </Grid>
+          <Grid item xs={12} md={4}>
+            <FormControl fullWidth margin="normal">
+              <InputLabel>Gender</InputLabel>
+              <Select
+                name="gender"
+                value={formData.gender}
+                onChange={handleInputChange}
+              >
+                <MenuItem value="">Select</MenuItem>
+                <MenuItem value="Male">Male</MenuItem>
+                <MenuItem value="Female">Female</MenuItem>
+                <MenuItem value="Other">Other</MenuItem>
+              </Select>
+            </FormControl>
+          </Grid>
+          <Grid item xs={12} md={4}>
+            <Box
+              display="flex"
+              alignItems="center"
+              justifyContent="space-between"
+              mt={2}
             >
-              Upload Photo
-            </Button>
-          </label>
-          <img
-            src={formData.photo || defaultAvatar}
-            alt="User"
-            style={{ width: 48, height: 48, borderRadius: "50%" }}
-          />
-        </Box>
+              <input
+                type="file"
+                accept=".jpg, .png, .jpeg"
+                style={{ display: "none" }}
+                id="upload-photo"
+                onChange={handleFileInputChange}
+              />
+              <label htmlFor="upload-photo">
+                <Button
+                  variant="contained"
+                  component="span"
+                  startIcon={<CloudUpload />}
+                >
+                  Upload Photo
+                </Button>
+              </label>
+              <img
+                src={formData.photo || defaultAvatar}
+                alt="User"
+                style={{ width: 48, height: 48, borderRadius: "50%" }}
+              />
+            </Box>
+          </Grid>
+        </Grid>
 
         <Box mt={3} textAlign="center">
           <Button
             type="submit"
             variant="contained"
             color="primary"
+            size="large"
             fullWidth
             disabled={loading}
             startIcon={loading ? <CircularProgress size={24} /> : <Update />}
