@@ -18,14 +18,10 @@ const PhotographerSchema = new mongoose.Schema({
     enum: ["Male", "Female", "Other"],
     default: "",
   },
-  expertise: {
-    type: String,
-    enum: ["Wedding", "Event", "Portrait", "Fashion", "Product"],
-    default: "",
-  },
+  expertise: { type: String },
   experience: { type: Number, default: 0 },
-  // availability: { type: Array }, // Available time slots for bookings
-  unavailableDates: [{ type: Date }], // Store booked dates
+  availability: { type: Array },
+  unavailableDates: [{ type: Date }],
   reviews: [{ type: mongoose.Types.ObjectId, ref: "Review" }],
   averageRating: { type: Number, default: 0 },
   totalRating: { type: Number, default: 0 },
