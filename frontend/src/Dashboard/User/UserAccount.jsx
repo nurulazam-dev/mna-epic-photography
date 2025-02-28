@@ -58,9 +58,21 @@ const UserAccount = () => {
                 border: "2px solid #673AB7",
               }}
             />
-            <Typography variant="h6" fontWeight="bold" mt={2}>
-              {userData?.name}
-            </Typography>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Typography variant="h6" fontWeight="bold" sx={{ mr: 1 }}>
+                {userData?.name}
+              </Typography>
+              <Typography variant="body2" color="success">
+                ({userData?.role})
+              </Typography>
+            </Box>
+
             <Typography variant="body2" color="textSecondary">
               {userData?.email}
             </Typography>
