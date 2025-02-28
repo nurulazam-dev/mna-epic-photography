@@ -16,6 +16,11 @@ const UserSchema = new mongoose.Schema({
     enum: ["admin", "photographer", "client"],
     default: "client",
   },
+  gender: {
+    type: String,
+    enum: ["Male", "Female", "Other"],
+    default: "",
+  },
   bookings: [
     {
       type: mongoose.Schema.Types.ObjectId,
