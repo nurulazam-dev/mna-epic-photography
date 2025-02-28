@@ -51,28 +51,35 @@ const PhotographerCard = ({ photographer }) => {
         </Box>
       </Box>
 
-      <Box sx={{ display: "flex", justifyContent: "center", pt: 3 }}>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          pt: 3,
+        }}
+      >
         <CardMedia
           component="img"
           image={photo}
           alt={name}
-          sx={{ width: "50%" }}
+          sx={{ width: "75%" }}
         />
       </Box>
 
-      <CardContent sx={{ textAlign: "center" }}>
+      <CardContent sx={{ textAlign: "center", py: 0 }}>
         <Typography variant="h6" fontWeight={800} color="primary">
           {name}
         </Typography>
         <Typography variant="body2" color="textSecondary">
-          {expertise || (
+          {expertise + " photography expert" || (
             <Typography color="error" variant="body2">
               expertise Not Updated
             </Typography>
           )}
         </Typography>
-        <Typography variant="body2" color="textSecondary">
-          {experience || (
+        <Typography variant="body2" color="textSecondary" sx={{ mb: 1 }}>
+          Experience:{" "}
+          {experience + " years" || (
             <Typography color="error" variant="body2">
               Experience Not Updated
             </Typography>
