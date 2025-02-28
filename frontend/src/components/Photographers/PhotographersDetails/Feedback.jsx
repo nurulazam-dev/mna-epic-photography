@@ -6,6 +6,8 @@ import FeedbackForm from "./FeedbackForm";
 
 const Feedback = ({ reviews, totalRating }) => {
   const [showFeedbackForm, setShowFeedbackForm] = useState(false);
+  console.log(reviews[1]);
+  console.log(reviews[1].updatedAt);
 
   return (
     <Box sx={{ mb: 7 }}>
@@ -28,7 +30,7 @@ const Feedback = ({ reviews, totalRating }) => {
                 {review?.user?.name}
               </Typography>
               <Typography variant="body2" color="textSecondary">
-                {formatDate(review?.createAt)}
+                {formatDate(review?.createdAt)}
               </Typography>
               <Typography variant="body1" sx={{ mt: 1.5 }}>
                 {review?.reviewText}
