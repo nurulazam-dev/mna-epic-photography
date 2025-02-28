@@ -31,7 +31,7 @@ const PhotographerDetails = () => {
 
   const {
     name,
-    bio,
+    // bio,
     reviews,
     totalRating,
     expertise,
@@ -71,13 +71,13 @@ const PhotographerDetails = () => {
                     ({totalRating})
                   </Typography>
                 </Box>
-                <Typography
+                {/* <Typography
                   variant="body2"
                   color="textSecondary"
                   sx={{ maxWidth: 400, mt: 1 }}
                 >
                   {bio}
-                </Typography>
+                </Typography> */}
               </Box>
             </Box>
             {/* Tabs: About & Feedback */}

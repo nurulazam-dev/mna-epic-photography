@@ -5,6 +5,7 @@ const PhotographerSchema = new mongoose.Schema({
   password: { type: String, required: true, minlength: 6, select: false },
   name: { type: String, required: true },
   phone: { type: String },
+  about: { type: String },
   photo: { type: String },
   servicePrice: { type: Number },
   role: {
@@ -12,7 +13,16 @@ const PhotographerSchema = new mongoose.Schema({
     enum: ["admin", "photographer"],
     default: "photographer",
   },
-  expertise: { type: String }, // Wedding, Event, Portrait, etc.
+  gender: {
+    type: String,
+    enum: ["Male", "Female", "Other"],
+    default: "",
+  },
+  expertise: {
+    type: String,
+    enum: ["Wedding", "Event", "Portrait", "Fashion", "Product"],
+    default: "",
+  },
   experience: { type: Number, default: 0 },
   // availability: { type: Array }, // Available time slots for bookings
   unavailableDates: [{ type: Date }], // Store booked dates

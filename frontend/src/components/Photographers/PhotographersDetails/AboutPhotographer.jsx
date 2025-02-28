@@ -22,7 +22,7 @@ const AboutPhotographer = ({ about, experience }) => {
           Experience
         </Typography>
         {experience ? (
-          experience
+          experience + " years of professional experience."
         ) : (
           <Typography color="error" sx={{ animation: "pulse 1s infinite" }}>
             Experience profile isn&apos;t updated. Please update your experience

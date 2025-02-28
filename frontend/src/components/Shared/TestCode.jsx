@@ -1,129 +1,233 @@
-import { useContext, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+/* eslint-disable react/prop-types */
+import { useEffect, useState } from "react";
 import {
-  Avatar,
   Button,
-  CircularProgress,
-  Grid,
-  Paper,
   TextField,
+  Select,
+  MenuItem,
+  InputLabel,
+  FormControl,
   Typography,
+  Container,
+  Avatar,
+  CircularProgress,
+  Box,
+  Grid,
 } from "@mui/material";
-import CloudUploadIcon from "@mui/icons-material/CloudUpload";
-import logo from "../../assets/images/logo.png";
-import { authContext } from "../../context/AuthContext";
-import { BASE_URL } from "../../../config";
+import { CloudUpload, Update } from "@mui/icons-material";
+import { toast } from "react-toastify";
+import { BASE_URL, token } from "../../../config";
+import uploadImageToCloudinary from "../../utils/uploadCloudinary";
 
-const TestCode = () => {
-  const [formData, setFormData] = useState({ email: "", password: "" });
-
+const PhotographerProfile = ({ photographerData }) => {
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
-  const { dispatch } = useContext(authContext);
+
+  const avatarImg =
+    "https://p7.hiclipart.com/preview/717/24/975/computer-icons-user-profile-user-account-clip-art-avatar.jpg";
+
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+    phone: "",
+    // bio: "",
+    gender: "",
+    expertise: "",
+    servicePrice: 0,
+    experience: "",
+    about: "",
+    photo: null,
+  });
+
+  useEffect(() => {
+    setFormData({
+      name: photographerData?.name,
+      email: photographerData?.email,
+      phone: photographerData?.phone,
+      // bio: photographerData?.bio,
+      gender: photographerData?.gender,
+      expertise: photographerData?.expertise,
+      servicePrice: photographerData?.servicePrice,
+      experience: photographerData?.experience,
+      about: photographerData?.about,
+      photo: photographerData?.photo,
+    });
+  }, [photographerData]);
 
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const submitHandler = async (event) => {
-    event.preventDefault();
+  const handleFileInputChange = async (event) => {
+    const file = event.target.files[0];
+    const data = await uploadImageToCloudinary(file);
+    setFormData({ ...formData, photo: data?.url });
+  };
+
+  const updateProfileHandler = async (e) => {
+    e.preventDefault();
     setLoading(true);
-
     try {
-      const res = await fetch(`${BASE_URL}/auth/login`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
+      const res = await fetch(
+        `${BASE_URL}/photographers/${photographerData._id}`,
+        {
+          method: "PUT",
+          headers: {
+            "content-type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(formData),
+        }
+      );
       const result = await res.json();
-
       if (!res.ok) {
-        throw new Error(result.message);
+        throw Error(result.message);
       }
-
-      dispatch({
-        type: "LOGIN_SUCCESS",
-        payload: { user: result.data, token: result.token, role: result.role },
-      });
-
-      setLoading(false);
       toast.success(result.message);
-      navigate("/home");
-    } catch (error) {
-      toast.error(error.message);
-      setLoading(false);
+    } catch (err) {
+      toast.error(err.message);
     }
+    setLoading(false);
   };
 
   return (
-    <Grid
-      container
-      justifyContent="center"
-      alignItems="center"
-      sx={{ minHeight: { xs: "50vh", md: "70vh", lg: "80vh" }, px: 2 }}
-    >
-      <Grid item xs={11} sm={8} md={4}>
-        <Paper elevation={6} sx={{ p: 4, pt: 0, textAlign: "center" }}>
-          <Avatar
-            sx={{
-              width: 80,
-              height: 60,
-              margin: "auto",
-            }}
-            src={logo}
-            alt="MNA Epic Photography"
-          />
-          <Typography
-            variant="h5"
-            fontWeight={600}
-            color="primary"
-            gutterBottom
+    <Container>
+      <Typography
+        variant="h4"
+        align="center"
+        gutterBottom
+        sx={{
+          backgroundColor: "#2E7D32",
+          color: "white",
+          py: 2,
+          borderRadius: 1,
+        }}
+      >
+        Profile Information
+      </Typography>
+      <form>
+        <TextField
+          fullWidth
+          label="Name"
+          name="name"
+          value={formData.name}
+          onChange={handleInputChange}
+          margin="normal"
+        />
+        <TextField
+          fullWidth
+          label="Phone"
+          name="phone"
+          value={formData.phone}
+          onChange={handleInputChange}
+          margin="normal"
+        />
+        <FormControl fullWidth margin="normal">
+          <InputLabel>Gender</InputLabel>
+          <Select
+            name="gender"
+            value={formData.gender}
+            onChange={handleInputChange}
           >
-            Please Login
-          </Typography>
-          <form onSubmit={submitHandler}>
-            <TextField
-              fullWidth
-              label="Email"
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleInputChange}
-              required
-              sx={{ mb: 2 }}
-            />
-            <TextField
-              fullWidth
-              label="Password"
-              type="password"
-              name="password"
-              value={formData.password}
-              onChange={handleInputChange}
-              required
-              sx={{ mb: 3 }}
-            />
+            <MenuItem value="">Select</MenuItem>
+            <MenuItem value="Male">Male</MenuItem>
+            <MenuItem value="Female">Female</MenuItem>
+            <MenuItem value="Other">Other</MenuItem>
+          </Select>
+        </FormControl>
+        <FormControl fullWidth margin="normal">
+          <InputLabel>Expertise</InputLabel>
+          <Select
+            name="expertise"
+            value={formData.expertise}
+            onChange={handleInputChange}
+          >
+            <MenuItem value="Wedding">Wedding</MenuItem>
+            <MenuItem value="Event">Event</MenuItem>
+            <MenuItem value="Portrait">Portrait</MenuItem>
+            <MenuItem value="Fashion">Fashion</MenuItem>
+            <MenuItem value="Product">Product</MenuItem>
+          </Select>
+        </FormControl>
+        <TextField
+          fullWidth
+          label="Service Price"
+          type="number"
+          name="servicePrice"
+          value={formData.servicePrice}
+          onChange={handleInputChange}
+          margin="normal"
+        />
+        <TextField
+          fullWidth
+          label="Experience"
+          type="number"
+          name="experience"
+          value={formData.experience}
+          onChange={handleInputChange}
+          margin="normal"
+        />
+        {/* <TextField
+          fullWidth
+          label="Bio"
+          name="bio"
+          value={formData.bio}
+          onChange={handleInputChange}
+          margin="normal"
+        /> */}
+        <TextField
+          fullWidth
+          label="About"
+          name="about"
+          value={formData.about}
+          onChange={handleInputChange}
+          margin="normal"
+          multiline
+          rows={4}
+        />
+        <Box
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "16px",
+            margin: "16px 0",
+          }}
+        >
+          <Grid item>
             <Button
-              type="submit"
-              fullWidth
               variant="contained"
-              size="large"
-              startIcon={
-                loading ? <CircularProgress size={20} /> : <CloudUploadIcon />
-              }
-              disabled={loading}
+              component="label"
+              startIcon={<CloudUpload />}
             >
-              {loading ? "Logging in..." : "Login"}
+              Upload Photo
+              <input
+                type="file"
+                hidden
+                onChange={handleFileInputChange}
+                accept="image/*"
+              />
             </Button>
-          </form>
-          <Typography variant="body2" sx={{ mt: 2 }}>
-            Don&apos;t have an account?{" "}
-            <Link to="/register">Please Register</Link>
-          </Typography>
-        </Paper>
-      </Grid>
-    </Grid>
+          </Grid>
+          {formData.photo && (
+            <Avatar
+              src={formData.photo || avatarImg}
+              sx={{ width: 56, height: 56 }}
+            />
+          )}
+        </Box>
+        <Button
+          variant="contained"
+          color="success"
+          size="large"
+          fullWidth
+          onClick={updateProfileHandler}
+          startIcon={loading ? <CircularProgress size={24} /> : <Update />}
+        >
+          {loading ? "Updating..." : "Update Profile"}
+        </Button>
+      </form>
+    </Container>
   );
 };
 
-export default TestCode;
+export default PhotographerProfile;

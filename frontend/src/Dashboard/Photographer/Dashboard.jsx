@@ -40,7 +40,6 @@ const Dashboard = () => {
 
       {!loading && !error && (
         <Box display="flex" width="100%" mx="auto">
-          {/* Left Side / Tabs */}
           <Card sx={{ width: { xs: "25%", md: "20%" }, p: 2, mr: 2 }}>
             <CardContent>
               <Button
@@ -81,7 +80,6 @@ const Dashboard = () => {
             </CardContent>
           </Card>
 
-          {/* Right Side / Details Layout */}
           <Box flex={1} px={2}>
             {data.isApproved === "pending" && (
               <Alert severity="warning" icon={<Warning />} sx={{ my: 2 }}>
@@ -115,7 +113,7 @@ const Dashboard = () => {
                   <Box>
                     <Typography variant="h6">{data.name}</Typography>
                     <Typography color="textSecondary" fontSize={14}>
-                      {data.expertise || (
+                      {data.expertise + " Photography Expert" || (
                         <Typography color="error">
                           Expertise profile isn&apos;t updated. Please update
                           your expertise profile.
@@ -123,14 +121,14 @@ const Dashboard = () => {
                       )}
                     </Typography>
                     <Box display="flex" alignItems="center" gap={1} mt={1}>
-                      startIcon={<Star />}
+                      {<Star />}
                       <Typography>
                         {data.averageRating} ({data.totalRating})
                       </Typography>
                     </Box>
-                    <Typography fontSize={15} color="textSecondary" mt={1}>
+                    {/* <Typography fontSize={15} color="textSecondary" mt={1}>
                       {data?.bio}
-                    </Typography>
+                    </Typography> */}
                   </Box>
                 </Box>
                 <AboutPhotographer
