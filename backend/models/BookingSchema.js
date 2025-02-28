@@ -2,12 +2,12 @@ import mongoose from "mongoose";
 
 const BookingSchema = new mongoose.Schema({
   photographer: {
-    type: mongoose.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     ref: "Photographer",
     required: true,
   },
   user: {
-    type: mongoose.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     ref: "User",
     required: true,
   },
