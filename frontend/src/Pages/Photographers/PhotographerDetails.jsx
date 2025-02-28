@@ -61,16 +61,14 @@ const PhotographerDetails = () => {
                   {name}
                 </Typography>
                 <Typography variant="subtitle1" color="textSecondary">
-                  {expertise}
+                  {expertise} photography expert
                 </Typography>
-                <Box display="flex" alignItems="center" gap={1}>
-                  <Typography variant="body2" fontWeight="bold">
-                    {averageRating}
-                  </Typography>
-                  <Typography variant="body2" color="textSecondary">
-                    ({totalRating})
-                  </Typography>
-                </Box>
+                <Typography variant="body2" fontWeight="bold">
+                  Total Ratings: {totalRating}
+                </Typography>
+                <Typography variant="body2" color="textSecondary">
+                  (Avg Ratings: {averageRating})
+                </Typography>
                 {/* <Typography
                   variant="body2"
                   color="textSecondary"
