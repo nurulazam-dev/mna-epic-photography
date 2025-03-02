@@ -3,7 +3,7 @@ import { Box, Typography } from "@mui/material";
 
 const AboutPhotographer = ({ about, experience }) => {
   return (
-    <Box mb={10}>
+    <Box mb={5}>
       <Box>
         <Typography variant="body1" fontSize={{ xs: 14, lg: 16 }}>
           {about ? (
@@ -17,7 +17,7 @@ const AboutPhotographer = ({ about, experience }) => {
         </Typography>
       </Box>
 
-      <Box mt={5}>
+      <Box mt={3}>
         <Typography variant="h6" fontWeight="bold" color="primary">
           Experience
         </Typography>

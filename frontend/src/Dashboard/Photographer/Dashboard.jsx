@@ -91,11 +91,14 @@ const Dashboard = () => {
             {tab === "overview" && (
               <Box>
                 <Typography
-                  variant="h5"
-                  textAlign="center"
-                  bgcolor="green"
-                  color="white"
-                  p={2}
+                  variant="h4"
+                  sx={{
+                    backgroundColor: "green",
+                    color: "white",
+                    textAlign: "center",
+                    py: 1,
+                    fontFamily: "serif",
+                  }}
                 >
                   About {data?.name}
                 </Typography>
@@ -104,7 +107,7 @@ const Dashboard = () => {
                   flexDirection={{ xs: "column", md: "row" }}
                   alignItems="center"
                   gap={2}
-                  pt={3}
+                  pt={1}
                 >
                   <Avatar
                     src={data?.photo || userAvatar}
