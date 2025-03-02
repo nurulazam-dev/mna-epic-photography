@@ -17,6 +17,8 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import { formatDate } from "../../utils/formatDate";
 
 const Bookings = ({ bookings }) => {
+  console.log(bookings);
+
   return (
     <Container>
       <Typography
@@ -38,34 +40,37 @@ const Bookings = ({ bookings }) => {
           <TableHead>
             <TableRow sx={{ backgroundColor: "#f3f3f3" }}>
               <TableCell align="center">Client</TableCell>
-              <TableCell align="center">Gender</TableCell>
+              <TableCell align="center">Phone</TableCell>
+              <TableCell align="center">Verified</TableCell>
               <TableCell align="center">Payment</TableCell>
+              <TableCell align="center">Status</TableCell>
               <TableCell align="center">Price</TableCell>
+              <TableCell align="center">Program</TableCell>
               <TableCell align="center">Booked on</TableCell>
             </TableRow>
           </TableHead>
 
           <TableBody>
             {bookings?.map((item) => (
-              <TableRow key={item._id} hover>
+              <TableRow key={item?._id} hover>
                 <TableCell>
                   <Box display="flex" alignItems="center" gap={2}>
-                    <Avatar src={item.user.photo} alt={item.user.name} />
+                    <Avatar src={item?.user?.photo} alt={item?.user?.name} />
                     <Box>
                       <Typography fontWeight="bold">
-                        {item.user.name}
+                        {item?.user?.name}
                       </Typography>
                       <Typography variant="body2" color="textSecondary">
-                        {item.user.email}
+                        {item?.user?.email}
                       </Typography>
                     </Box>
                   </Box>
                 </TableCell>
 
-                <TableCell align="center">{item.user.gender}</TableCell>
+                <TableCell align="center">{item?.user?.gender}</TableCell>
 
                 <TableCell align="center">
-                  {item.isPaid ? (
+                  {item?.isPaid ? (
                     <Box
                       display="flex"
                       alignItems="center"
@@ -86,9 +91,9 @@ const Bookings = ({ bookings }) => {
                   )}
                 </TableCell>
 
-                <TableCell align="center">${item.servicePrice}</TableCell>
+                <TableCell align="center">${item?.servicePrice}</TableCell>
                 <TableCell align="center">
-                  {formatDate(item.createdAt)}
+                  {formatDate(item?.createdAt)}
                 </TableCell>
               </TableRow>
             ))}
