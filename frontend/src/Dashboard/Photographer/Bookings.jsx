@@ -10,7 +10,7 @@ import {
   Typography,
   Avatar,
   Box,
-  Container,
+  // Container,
 } from "@mui/material";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
@@ -20,7 +20,7 @@ const Bookings = ({ bookings }) => {
   console.log(bookings);
 
   return (
-    <Container>
+    <Box>
       <Typography
         variant="h4"
         sx={{
@@ -45,8 +45,8 @@ const Bookings = ({ bookings }) => {
               <TableCell align="center">Payment</TableCell>
               <TableCell align="center">Status</TableCell>
               <TableCell align="center">Price</TableCell>
-              <TableCell align="center">Program</TableCell>
               <TableCell align="center">Booked on</TableCell>
+              <TableCell align="center">Program</TableCell>
             </TableRow>
           </TableHead>
 
@@ -67,7 +67,7 @@ const Bookings = ({ bookings }) => {
                   </Box>
                 </TableCell>
 
-                <TableCell align="center">{item?.user?.gender}</TableCell>
+                <TableCell align="center">{item?.user?.phone}</TableCell>
 
                 <TableCell align="center">
                   {item?.isPaid ? (
@@ -90,10 +90,36 @@ const Bookings = ({ bookings }) => {
                     </Box>
                   )}
                 </TableCell>
+                <TableCell align="center">
+                  {item?.isPaid ? (
+                    <Box
+                      display="flex"
+                      alignItems="center"
+                      justifyContent="center"
+                      color="green"
+                    >
+                      <CheckCircleIcon sx={{ mr: 1 }} /> Paid
+                    </Box>
+                  ) : (
+                    <Box
+                      display="flex"
+                      alignItems="center"
+                      justifyContent="center"
+                      color="red"
+                    >
+                      <CancelIcon sx={{ mr: 1 }} /> Unpaid
+                    </Box>
+                  )}
+                </TableCell>
 
+                <TableCell align="center">{item?.status}</TableCell>
                 <TableCell align="center">${item?.servicePrice}</TableCell>
+
                 <TableCell align="center">
                   {formatDate(item?.createdAt)}
+                </TableCell>
+                <TableCell align="center">
+                  {formatDate(item?.programDate)}
                 </TableCell>
               </TableRow>
             ))}
@@ -110,7 +136,7 @@ const Bookings = ({ bookings }) => {
           No bookings available.
         </Typography>
       )}
-    </Container>
+    </Box>
   );
 };
 

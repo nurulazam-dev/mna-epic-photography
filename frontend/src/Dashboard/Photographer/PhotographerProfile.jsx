@@ -8,7 +8,7 @@ import {
   InputLabel,
   FormControl,
   Typography,
-  Container,
+  // Container,
   Avatar,
   CircularProgress,
   Box,
@@ -18,6 +18,7 @@ import { CloudUpload, Update } from "@mui/icons-material";
 import { toast } from "react-toastify";
 import { BASE_URL, token } from "../../../config";
 import uploadImageToCloudinary from "../../utils/uploadCloudinary";
+import Loading from "../../components/Shared/Loading";
 
 const PhotographerProfile = ({ photographerData }) => {
   const [loading, setLoading] = useState(false);
@@ -91,152 +92,159 @@ const PhotographerProfile = ({ photographerData }) => {
   };
 
   return (
-    <Container>
-      <Typography
-        variant="h4"
-        align="center"
-        gutterBottom
-        sx={{
-          backgroundColor: "#2E7D32",
-          color: "white",
-          py: 2,
-          borderRadius: 1,
-        }}
-      >
-        Profile Information
-      </Typography>
-      <form>
-        <Grid container spacing={2}>
-          <Grid item xs={12} md={4}>
-            <TextField
-              fullWidth
-              label="Name"
-              name="name"
-              value={formData.name}
-              onChange={handleInputChange}
-              margin="normal"
-            />
-          </Grid>
-          <Grid item xs={12} md={4}>
-            <TextField
-              fullWidth
-              label="Phone"
-              name="phone"
-              value={formData.phone}
-              onChange={handleInputChange}
-              margin="normal"
-            />
-          </Grid>
-          <Grid item xs={12} md={4}>
-            <FormControl fullWidth margin="normal">
-              <InputLabel>Gender</InputLabel>
-              <Select
-                name="gender"
-                value={formData.gender}
-                onChange={handleInputChange}
-              >
-                <MenuItem value="">Select</MenuItem>
-                <MenuItem value="Male">Male</MenuItem>
-                <MenuItem value="Female">Female</MenuItem>
-                <MenuItem value="Other">Other</MenuItem>
-              </Select>
-            </FormControl>
-          </Grid>
-          <Grid item xs={12} md={4}>
-            <FormControl fullWidth margin="normal">
-              <InputLabel>Expertise</InputLabel>
-              <Select
-                name="expertise"
-                value={formData.expertise}
-                onChange={handleInputChange}
-              >
-                <MenuItem value="Wedding">Wedding</MenuItem>
-                <MenuItem value="Event">Event</MenuItem>
-                <MenuItem value="Portrait">Portrait</MenuItem>
-                <MenuItem value="Fashion">Fashion</MenuItem>
-                <MenuItem value="Product">Product</MenuItem>
-              </Select>
-            </FormControl>
-          </Grid>
-          <Grid item xs={12} md={4}>
-            <TextField
-              fullWidth
-              label="Service Price"
-              type="number"
-              name="servicePrice"
-              value={formData.servicePrice}
-              onChange={handleInputChange}
-              margin="normal"
-            />
-          </Grid>
-          <Grid item xs={12} md={4}>
-            <TextField
-              fullWidth
-              label="Experience"
-              type="number"
-              name="experience"
-              value={formData.experience}
-              onChange={handleInputChange}
-              margin="normal"
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              fullWidth
-              label="About"
-              name="about"
-              value={formData.about}
-              onChange={handleInputChange}
-              margin="normal"
-              multiline
-              rows={4}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <Box
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                gap: "16px",
-                margin: "16px 0",
-              }}
-            >
-              <Button
-                variant="contained"
-                component="label"
-                startIcon={<CloudUpload />}
-              >
-                Upload Photo
-                <input
-                  type="file"
-                  hidden
-                  onChange={handleFileInputChange}
-                  accept="image/*"
+    <Box>
+      {loading && <Loading />}
+      {!loading && (
+        <Box>
+          <Typography
+            variant="h4"
+            align="center"
+            gutterBottom
+            sx={{
+              backgroundColor: "#2E7D32",
+              color: "white",
+              py: 2,
+              borderRadius: 1,
+            }}
+          >
+            Profile Information
+          </Typography>
+          <form>
+            <Grid container spacing={2}>
+              <Grid item xs={12} md={4}>
+                <TextField
+                  fullWidth
+                  label="Name"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleInputChange}
+                  margin="normal"
                 />
-              </Button>
-              {formData.photo && (
-                <Avatar
-                  src={formData.photo || avatarImg}
-                  sx={{ width: 56, height: 56 }}
+              </Grid>
+              <Grid item xs={12} md={4}>
+                <TextField
+                  fullWidth
+                  label="Phone"
+                  name="phone"
+                  value={formData.phone}
+                  onChange={handleInputChange}
+                  margin="normal"
                 />
-              )}
-            </Box>
-          </Grid>
-          <Grid item xs={12}>
-            <Button
-              variant="contained"
-              color="success"
-              size="large"
-              fullWidth
-              onClick={updateProfileHandler}
-              startIcon={loading ? <CircularProgress size={24} /> : <Update />}
-            >
-              {loading ? "Updating..." : "Update Profile"}
-            </Button>
-          </Grid>
-        </Grid>
-      </form>
-    </Container>
+              </Grid>
+              <Grid item xs={12} md={4}>
+                <FormControl fullWidth margin="normal">
+                  <InputLabel>Gender</InputLabel>
+                  <Select
+                    name="gender"
+                    value={formData.gender}
+                    onChange={handleInputChange}
+                  >
+                    <MenuItem value="">Select</MenuItem>
+                    <MenuItem value="Male">Male</MenuItem>
+                    <MenuItem value="Female">Female</MenuItem>
+                    <MenuItem value="Other">Other</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item xs={12} md={4}>
+                <FormControl fullWidth margin="normal">
+                  <InputLabel>Expertise</InputLabel>
+                  <Select
+                    name="expertise"
+                    value={formData.expertise}
+                    onChange={handleInputChange}
+                  >
+                    <MenuItem value="Wedding">Wedding</MenuItem>
+                    <MenuItem value="Event">Event</MenuItem>
+                    <MenuItem value="Portrait">Portrait</MenuItem>
+                    <MenuItem value="Fashion">Fashion</MenuItem>
+                    <MenuItem value="Product">Product</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item xs={12} md={4}>
+                <TextField
+                  fullWidth
+                  label="Service Price"
+                  type="number"
+                  name="servicePrice"
+                  value={formData.servicePrice}
+                  onChange={handleInputChange}
+                  margin="normal"
+                />
+              </Grid>
+              <Grid item xs={12} md={4}>
+                <TextField
+                  fullWidth
+                  label="Experience"
+                  type="number"
+                  name="experience"
+                  value={formData.experience}
+                  onChange={handleInputChange}
+                  margin="normal"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  fullWidth
+                  label="About"
+                  name="about"
+                  value={formData.about}
+                  onChange={handleInputChange}
+                  margin="normal"
+                  multiline
+                  rows={4}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "16px",
+                    margin: "16px 0",
+                  }}
+                >
+                  <Button
+                    variant="contained"
+                    component="label"
+                    startIcon={<CloudUpload />}
+                  >
+                    Upload Photo
+                    <input
+                      type="file"
+                      hidden
+                      onChange={handleFileInputChange}
+                      accept="image/*"
+                    />
+                  </Button>
+                  {formData.photo && (
+                    <Avatar
+                      src={formData.photo || avatarImg}
+                      sx={{ width: 56, height: 56 }}
+                    />
+                  )}
+                </Box>
+              </Grid>
+              <Grid item xs={12}>
+                <Button
+                  variant="contained"
+                  color="success"
+                  size="large"
+                  fullWidth
+                  onClick={updateProfileHandler}
+                  startIcon={
+                    loading ? <CircularProgress size={24} /> : <Update />
+                  }
+                >
+                  {loading ? "Updating..." : "Update Profile"}
+                </Button>
+              </Grid>
+            </Grid>
+          </form>
+        </Box>
+      )}
+    </Box>
   );
 };
 
