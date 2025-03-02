@@ -1,233 +1,167 @@
 /* eslint-disable react/prop-types */
-import { useEffect, useState } from "react";
-import {
-  Button,
-  TextField,
-  Select,
-  MenuItem,
-  InputLabel,
-  FormControl,
-  Typography,
-  Container,
-  Avatar,
-  CircularProgress,
-  Box,
-  Grid,
-} from "@mui/material";
-import { CloudUpload, Update } from "@mui/icons-material";
+import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
-import { BASE_URL, token } from "../../../config";
-import uploadImageToCloudinary from "../../utils/uploadCloudinary";
+import { BASE_URL, token } from "../../../../config";
+import {
+  Box,
+  Typography,
+  Button,
+  Paper,
+  // List,
+  // ListItem,
+  Divider,
+  TextField,
+} from "@mui/material";
 
-const PhotographerProfile = ({ photographerData }) => {
-  const [loading, setLoading] = useState(false);
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import dayjs from "dayjs";
 
-  const avatarImg =
-    "https://p7.hiclipart.com/preview/717/24/975/computer-icons-user-profile-user-account-clip-art-avatar.jpg";
-
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    password: "",
-    phone: "",
-    // bio: "",
-    gender: "",
-    expertise: "",
-    servicePrice: 0,
-    experience: "",
-    about: "",
-    photo: null,
-  });
+// const SidePanel = ({ photographerId, servicePrice, timeSlots }) => {
+const SidePanel = ({ photographerId, servicePrice }) => {
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [bookedDates, setBookedDates] = useState([]);
 
   useEffect(() => {
-    setFormData({
-      name: photographerData?.name,
-      email: photographerData?.email,
-      phone: photographerData?.phone,
-      // bio: photographerData?.bio,
-      gender: photographerData?.gender,
-      expertise: photographerData?.expertise,
-      servicePrice: photographerData?.servicePrice,
-      experience: photographerData?.experience,
-      about: photographerData?.about,
-      photo: photographerData?.photo,
-    });
-  }, [photographerData]);
+    const fetchBookedDates = async () => {
+      try {
+        const res = await fetch(
+          `${BASE_URL}/bookings/booked-dates/${photographerId}`
+        );
+        const data = await res.json();
+        if (res.ok) {
+          setBookedDates(data.bookedDates.map((date) => dayjs(date)));
+        } else {
+          throw new Error(data.message);
+        }
+      } catch (err) {
+        toast.error(err);
+      }
+    };
+    fetchBookedDates();
+  }, [photographerId]);
 
-  const handleInputChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+  // Handle booking
+  const bookingHandler = async () => {
+    if (!selectedDate) {
+      toast.error("Please select a date");
+      return;
+    }
 
-  const handleFileInputChange = async (event) => {
-    const file = event.target.files[0];
-    const data = await uploadImageToCloudinary(file);
-    setFormData({ ...formData, photo: data?.url });
-  };
-
-  const updateProfileHandler = async (e) => {
-    e.preventDefault();
-    setLoading(true);
     try {
       const res = await fetch(
-        `${BASE_URL}/photographers/${photographerData._id}`,
+        `${BASE_URL}/bookings/checkout-session/${photographerId}`,
         {
-          method: "PUT",
+          method: "POST",
           headers: {
-            "content-type": "application/json",
+            "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
-          body: JSON.stringify(formData),
+          body: JSON.stringify({ programDate: selectedDate }),
         }
       );
-      const result = await res.json();
+
+      const data = await res.json();
+
       if (!res.ok) {
-        throw Error(result.message);
+        throw new Error(data.message + " Please try again");
       }
-      toast.success(result.message);
+      if (data.session.url) {
+        window.location.href = data.session.url;
+      }
     } catch (err) {
       toast.error(err.message);
     }
-    setLoading(false);
   };
 
   return (
-    <Container>
-      <Typography
-        variant="h4"
-        align="center"
-        gutterBottom
-        sx={{
-          backgroundColor: "#2E7D32",
-          color: "white",
-          py: 2,
-          borderRadius: 1,
-        }}
+    <Paper elevation={3} sx={{ p: 3, borderRadius: 2 }}>
+      {/* Service Price */}
+      <Box
+        display="flex"
+        justifyContent="space-between"
+        alignItems="center"
+        mb={2}
       >
-        Profile Information
-      </Typography>
-      <form>
-        <TextField
-          fullWidth
-          label="Name"
-          name="name"
-          value={formData.name}
-          onChange={handleInputChange}
-          margin="normal"
-        />
-        <TextField
-          fullWidth
-          label="Phone"
-          name="phone"
-          value={formData.phone}
-          onChange={handleInputChange}
-          margin="normal"
-        />
-        <FormControl fullWidth margin="normal">
-          <InputLabel>Gender</InputLabel>
-          <Select
-            name="gender"
-            value={formData.gender}
-            onChange={handleInputChange}
-          >
-            <MenuItem value="">Select</MenuItem>
-            <MenuItem value="Male">Male</MenuItem>
-            <MenuItem value="Female">Female</MenuItem>
-            <MenuItem value="Other">Other</MenuItem>
-          </Select>
-        </FormControl>
-        <FormControl fullWidth margin="normal">
-          <InputLabel>Expertise</InputLabel>
-          <Select
-            name="expertise"
-            value={formData.expertise}
-            onChange={handleInputChange}
-          >
-            <MenuItem value="Wedding">Wedding</MenuItem>
-            <MenuItem value="Event">Event</MenuItem>
-            <MenuItem value="Portrait">Portrait</MenuItem>
-            <MenuItem value="Fashion">Fashion</MenuItem>
-            <MenuItem value="Product">Product</MenuItem>
-          </Select>
-        </FormControl>
-        <TextField
-          fullWidth
-          label="Service Price"
-          type="number"
-          name="servicePrice"
-          value={formData.servicePrice}
-          onChange={handleInputChange}
-          margin="normal"
-        />
-        <TextField
-          fullWidth
-          label="Experience"
-          type="number"
-          name="experience"
-          value={formData.experience}
-          onChange={handleInputChange}
-          margin="normal"
-        />
-        {/* <TextField
-          fullWidth
-          label="Bio"
-          name="bio"
-          value={formData.bio}
-          onChange={handleInputChange}
-          margin="normal"
-        /> */}
-        <TextField
-          fullWidth
-          label="About"
-          name="about"
-          value={formData.about}
-          onChange={handleInputChange}
-          margin="normal"
-          multiline
-          rows={4}
-        />
-        <Box
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "16px",
-            margin: "16px 0",
-          }}
+        <Typography variant="subtitle1" fontWeight="bold">
+          Service Price
+        </Typography>
+        <Typography variant="h6" color="primary" fontWeight="bold">
+          {servicePrice} BDT
+        </Typography>
+      </Box>
+
+      {/* Available Time Slots */}
+      {/* <Box my={3}>
+        <Typography
+          variant="subtitle1"
+          fontWeight="bold"
+          color="primary"
+          gutterBottom
         >
-          <Grid item>
-            <Button
-              variant="contained"
-              component="label"
-              startIcon={<CloudUpload />}
+          Available Time Slots:
+        </Typography>
+        <List>
+          {timeSlots?.map((item, index) => (
+            <ListItem
+              key={index}
+              sx={{ display: "flex", justifyContent: "space-between" }}
             >
-              Upload Photo
-              <input
-                type="file"
-                hidden
-                onChange={handleFileInputChange}
-                accept="image/*"
-              />
-            </Button>
-          </Grid>
-          {formData.photo && (
-            <Avatar
-              src={formData.photo || avatarImg}
-              sx={{ width: 56, height: 56 }}
-            />
-          )}
-        </Box>
-        <Button
-          variant="contained"
-          color="success"
-          size="large"
-          fullWidth
-          onClick={updateProfileHandler}
-          startIcon={loading ? <CircularProgress size={24} /> : <Update />}
+              <Typography variant="body2" fontWeight="bold">
+                {item.day.charAt(0).toUpperCase() + item.day.slice(1)}
+              </Typography>
+              <Typography
+                variant="body2"
+                fontWeight="bold"
+                color="textSecondary"
+              >
+                Time Slots
+                {convertTime(item.startingTime)} -{" "} 
+                {convertTime(item.endingTime)} 
+              </Typography>
+            </ListItem>
+          ))}
+        </List>
+      </Box> */}
+
+      {/* Date Picker for Booking */}
+      <Box my={3}>
+        <Typography
+          variant="subtitle1"
+          fontWeight="bold"
+          color="primary"
+          gutterBottom
         >
-          {loading ? "Updating..." : "Update Profile"}
-        </Button>
-      </form>
-    </Container>
+          Select a Date:
+        </Typography>
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <DatePicker
+            value={selectedDate}
+            onChange={(date) => setSelectedDate(date)}
+            disablePast
+            shouldDisableDate={(date) =>
+              bookedDates.some((bookedDate) => bookedDate.isSame(date, "day"))
+            }
+            renderInput={(params) => <TextField {...params} fullWidth />}
+          />
+        </LocalizationProvider>
+      </Box>
+
+      <Divider sx={{ my: 2 }} />
+
+      {/* Booking Button */}
+      <Button
+        variant="contained"
+        color="primary"
+        size="large"
+        fullWidth
+        onClick={bookingHandler}
+      >
+        Booking
+      </Button>
+    </Paper>
   );
 };
 
-export default PhotographerProfile;
+export default SidePanel;

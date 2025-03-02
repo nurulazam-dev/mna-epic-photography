@@ -18,7 +18,7 @@ import { BASE_URL } from "../../../config";
 import AboutPhotographer from "../../components/Photographers/PhotographersDetails/AboutPhotographer";
 
 const PhotographerDetails = () => {
-  const [tab, setTab] = useState("about");
+  const [tab, setTab] = useState("about-tab");
   const { id } = useParams();
   const {
     data: photographer,
@@ -37,7 +37,7 @@ const PhotographerDetails = () => {
     expertise,
     servicePrice,
     experience,
-    timeSlots,
+    // timeSlots,
     about,
     averageRating,
     photo,
@@ -86,20 +86,21 @@ const PhotographerDetails = () => {
                 textColor="primary"
                 indicatorColor="primary"
               >
-                <Tab value="about" label="About" />
-                <Tab value="feedback" label="Feedback" />
+                <Tab value="about-tab" label="About" />
+                <Tab value="feedback-tab" label="Feedback" />
               </Tabs>
             </Box>
             {/* Tab Content */}
             <Box mt={3}>
-              {tab === "about" && (
+              {tab === "about-tab" && (
                 <AboutPhotographer
                   name={name}
                   about={about}
                   experience={experience}
                 />
               )}
-              {tab === "feedback" && (
+
+              {tab === "feedback-tab" && (
                 <Feedback reviews={reviews} totalRating={totalRating} />
               )}
             </Box>
@@ -108,9 +109,9 @@ const PhotographerDetails = () => {
         {/* Right Section: Side Panel */}
         <Grid item xs={12} md={4}>
           <SidePanel
-            photographer={photographer._id}
+            photographerId={photographer._id}
             servicePrice={servicePrice}
-            timeSlots={timeSlots}
+            // timeSlots={timeSlots}
           />
         </Grid>
       </Grid>

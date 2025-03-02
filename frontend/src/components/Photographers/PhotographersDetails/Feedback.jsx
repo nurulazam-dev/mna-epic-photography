@@ -6,8 +6,6 @@ import FeedbackForm from "./FeedbackForm";
 
 const Feedback = ({ reviews, totalRating }) => {
   const [showFeedbackForm, setShowFeedbackForm] = useState(false);
-  console.log(reviews[1]);
-  console.log(reviews[1].updatedAt);
 
   return (
     <Box sx={{ mb: 7 }}>
