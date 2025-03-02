@@ -24,7 +24,7 @@ const MyBookings = () => {
   } = useFetchData(`${BASE_URL}/users/booking/my-bookings`);
 
   return (
-    <Box mt={4}>
+    <Box mt={2}>
       <Typography
         variant="h4"
         align="center"
