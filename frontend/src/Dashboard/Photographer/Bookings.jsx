@@ -28,7 +28,7 @@ const Bookings = ({ bookings }) => {
           color: "white",
           textAlign: "center",
           fontWeight: "bold",
-          py: 2,
+          py: 1,
           fontFamily: "serif",
         }}
       >
@@ -70,14 +70,14 @@ const Bookings = ({ bookings }) => {
                 <TableCell align="center">{item?.user?.phone}</TableCell>
 
                 <TableCell align="center">
-                  {item?.isPaid ? (
+                  {item?.isVerified == "true" ? (
                     <Box
                       display="flex"
                       alignItems="center"
                       justifyContent="center"
                       color="green"
                     >
-                      <CheckCircleIcon sx={{ mr: 1 }} /> Paid
+                      <CheckCircleIcon />
                     </Box>
                   ) : (
                     <Box
@@ -86,7 +86,7 @@ const Bookings = ({ bookings }) => {
                       justifyContent="center"
                       color="red"
                     >
-                      <CancelIcon sx={{ mr: 1 }} /> Unpaid
+                      <CancelIcon />
                     </Box>
                   )}
                 </TableCell>

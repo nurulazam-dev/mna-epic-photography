@@ -34,7 +34,7 @@ const Dashboard = () => {
   );
 
   return (
-    <Box maxWidth={1220} mx="auto" my={6} px={2}>
+    <Box maxWidth={1220} mx="auto" my={3} px={2}>
       {loading && !error && <Loading />}
       {error && !loading && <Error errMessage={error} />}
 

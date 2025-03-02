@@ -35,6 +35,7 @@ const MyBookings = () => {
       >
         My Bookings
       </Typography>
+
       {loading && !error && (
         <Box mt={10} display="flex" justifyContent="center">
           <CircularProgress />
@@ -52,6 +53,7 @@ const MyBookings = () => {
                 <TableCell align="center">Payment</TableCell>
                 <TableCell align="center">Price</TableCell>
                 <TableCell align="center">Booked on</TableCell>
+                <TableCell align="center">Program</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -62,7 +64,7 @@ const MyBookings = () => {
                       <Avatar
                         src={booking?.photo}
                         alt={booking?.name}
-                        sx={{ width: 40, height: 40, mr: 2 }}
+                        sx={{ width: 40, height: 40, mr: 1 }}
                       />
                       <Box>
                         <Typography fontWeight="bold">
@@ -86,6 +88,9 @@ const MyBookings = () => {
                   <TableCell align="center">${booking?.servicePrice}</TableCell>
                   <TableCell align="center">
                     {formatDate(booking?.createdAt)}
+                  </TableCell>
+                  <TableCell align="center">
+                    {formatDate(booking?.programDate)}
                   </TableCell>
                 </TableRow>
               ))}
