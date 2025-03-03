@@ -103,7 +103,8 @@ const PhotographerProfile = ({ photographerData }) => {
             sx={{
               backgroundColor: "#2E7D32",
               color: "white",
-              py: 2,
+              py: 1,
+              fontFamily: "serif",
               borderRadius: 1,
             }}
           >
@@ -184,7 +185,7 @@ const PhotographerProfile = ({ photographerData }) => {
                   margin="normal"
                 />
               </Grid>
-              <Grid item xs={12}>
+              <Grid item xs={8}>
                 <TextField
                   fullWidth
                   label="About"
@@ -193,10 +194,10 @@ const PhotographerProfile = ({ photographerData }) => {
                   onChange={handleInputChange}
                   margin="normal"
                   multiline
-                  rows={4}
+                  rows={2}
                 />
               </Grid>
-              <Grid item xs={12}>
+              <Grid item xs={4}>
                 <Box
                   sx={{
                     display: "flex",
@@ -205,6 +206,12 @@ const PhotographerProfile = ({ photographerData }) => {
                     margin: "16px 0",
                   }}
                 >
+                  {formData.photo && (
+                    <Avatar
+                      src={formData.photo || avatarImg}
+                      sx={{ width: 56, height: 56 }}
+                    />
+                  )}
                   <Button
                     variant="contained"
                     component="label"
@@ -218,12 +225,6 @@ const PhotographerProfile = ({ photographerData }) => {
                       accept="image/*"
                     />
                   </Button>
-                  {formData.photo && (
-                    <Avatar
-                      src={formData.photo || avatarImg}
-                      sx={{ width: 56, height: 56 }}
-                    />
-                  )}
                 </Box>
               </Grid>
               <Grid item xs={12}>
