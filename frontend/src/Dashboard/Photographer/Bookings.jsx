@@ -17,8 +17,6 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import { formatDate } from "../../utils/formatDate";
 
 const Bookings = ({ bookings }) => {
-  console.log(bookings);
-
   return (
     <Box>
       <Typography

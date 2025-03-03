@@ -47,7 +47,7 @@ const UserAccount = () => {
         >
           {/* Left Side - Profile Info */}
           <CardContent
-            sx={{ width: { xs: "100%", lg: "20%" }, textAlign: "center" }}
+            sx={{ width: { xs: "100%", lg: "18%" }, textAlign: "center" }}
           >
             <Avatar
               src={userData?.photo || userAvatar}
@@ -94,7 +94,7 @@ const UserAccount = () => {
           />
 
           {/* Right Side - Tabs */}
-          <CardContent sx={{ width: { xs: "100%", lg: "80%" } }}>
+          <CardContent sx={{ width: { xs: "100%", lg: "82%" } }}>
             <Box>
               <Button
                 onClick={() => setTab("bookings")}

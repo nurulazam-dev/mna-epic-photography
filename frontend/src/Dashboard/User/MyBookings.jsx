@@ -15,6 +15,8 @@ import {
   Box,
   CircularProgress,
 } from "@mui/material";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import CancelIcon from "@mui/icons-material/Cancel";
 
 const MyBookings = () => {
   const {
@@ -22,6 +24,8 @@ const MyBookings = () => {
     loading,
     error,
   } = useFetchData(`${BASE_URL}/users/booking/my-bookings`);
+
+  console.log(bookings);
 
   return (
     <Box mt={2}>
@@ -48,12 +52,13 @@ const MyBookings = () => {
             <TableHead>
               <TableRow sx={{ backgroundColor: "#f3f4f6" }}>
                 <TableCell align="center">Photographer</TableCell>
-                <TableCell align="center">Expertise</TableCell>
                 <TableCell align="center">Phone</TableCell>
+                <TableCell align="center">Expertise</TableCell>
+                <TableCell align="center">Status</TableCell>
                 <TableCell align="center">Payment</TableCell>
                 <TableCell align="center">Price</TableCell>
                 <TableCell align="center">Booked on</TableCell>
-                <TableCell align="center">Program</TableCell>
+                {/* <TableCell align="center">Program</TableCell> */}
               </TableRow>
             </TableHead>
             <TableBody>
@@ -76,21 +81,42 @@ const MyBookings = () => {
                       </Box>
                     </Box>
                   </TableCell>
+                  <TableCell align="center">
+                    <Typography color="textSecondary" variant="body2">
+                      {booking?.phone}
+                    </Typography>
+                  </TableCell>
                   <TableCell align="center">{booking?.expertise}</TableCell>
-                  <TableCell align="center">{booking?.phone}</TableCell>
+                  <TableCell align="center">{booking?.isApproved}</TableCell>
                   <TableCell align="center">
                     {booking?.isPaid ? (
-                      <Typography color="green">Paid</Typography>
+                      <Box
+                        display="flex"
+                        alignItems="center"
+                        justifyContent="center"
+                        color="green"
+                      >
+                        <CheckCircleIcon sx={{ mr: 1 }} /> Paid
+                      </Box>
                     ) : (
-                      <Typography color="red">Unpaid</Typography>
+                      <Box
+                        display="flex"
+                        alignItems="center"
+                        justifyContent="center"
+                        color="red"
+                      >
+                        <CancelIcon sx={{ mr: 1 }} /> Unpaid
+                      </Box>
                     )}
                   </TableCell>
                   <TableCell align="center">${booking?.servicePrice}</TableCell>
                   <TableCell align="center">
-                    {formatDate(booking?.createdAt)}
-                  </TableCell>
-                  <TableCell align="center">
-                    {formatDate(booking?.programDate)}
+                    <Typography color="textSecondary" variant="body2">
+                      {formatDate(booking?.createdAt)}
+                    </Typography>
+                    {/* <Typography color="textSecondary" variant="body2">
+                      {formatDate(booking?.programDate)}
+                    </Typography> */}
                   </TableCell>
                 </TableRow>
               ))}

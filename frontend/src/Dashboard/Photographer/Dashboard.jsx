@@ -81,7 +81,7 @@ const Dashboard = () => {
           </Card>
 
           <Box flex={1} px={2}>
-            {data.isApproved === "pending" && (
+            {data?.isApproved === "pending" && (
               <Alert severity="warning" icon={<Warning />} sx={{ my: 2 }}>
                 To get approval, please complete your profile. We&apos;ll review
                 manually and approve within 3 days.
@@ -142,7 +142,7 @@ const Dashboard = () => {
               </Box>
             )}
 
-            {tab === "bookings" && <Bookings bookings={data.bookings} />}
+            {tab === "bookings" && <Bookings bookings={data?.bookings} />}
             {tab === "settings" && (
               <PhotographerProfile photographerData={data} />
             )}
