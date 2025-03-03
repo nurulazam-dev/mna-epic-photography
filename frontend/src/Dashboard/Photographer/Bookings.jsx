@@ -41,7 +41,6 @@ const Bookings = ({ bookings }) => {
             <TableRow sx={{ backgroundColor: "#f3f3f3" }}>
               <TableCell align="center">Client</TableCell>
               <TableCell align="center">Phone</TableCell>
-              <TableCell align="center">Verified</TableCell>
               <TableCell align="center">Payment</TableCell>
               <TableCell align="center">Status</TableCell>
               <TableCell align="center">Price</TableCell>
@@ -57,8 +56,33 @@ const Bookings = ({ bookings }) => {
                   <Box display="flex" alignItems="center" gap={2}>
                     <Avatar src={item?.user?.photo} alt={item?.user?.name} />
                     <Box>
-                      <Typography fontWeight="bold">
+                      <Typography fontWeight="bold" display="flex">
                         {item?.user?.name}
+                        {item?.isVerified == "true" ? (
+                          <Box
+                            display="flex"
+                            alignItems="center"
+                            justifyContent="center"
+                            color="red"
+                            height={16}
+                            width={16}
+                            sx={{ marginLeft: "3px" }}
+                          >
+                            <CheckCircleIcon fontSize="10px" />
+                          </Box>
+                        ) : (
+                          <Box
+                            display="flex"
+                            alignItems="center"
+                            justifyContent="center"
+                            color="red"
+                            height={16}
+                            width={16}
+                            sx={{ marginLeft: "3px" }}
+                          >
+                            <CancelIcon fontSize="10px" />
+                          </Box>
+                        )}
                       </Typography>
                       <Typography variant="body2" color="textSecondary">
                         {item?.user?.email}
@@ -69,27 +93,6 @@ const Bookings = ({ bookings }) => {
 
                 <TableCell align="center">{item?.user?.phone}</TableCell>
 
-                <TableCell align="center">
-                  {item?.isVerified == "true" ? (
-                    <Box
-                      display="flex"
-                      alignItems="center"
-                      justifyContent="center"
-                      color="green"
-                    >
-                      <CheckCircleIcon />
-                    </Box>
-                  ) : (
-                    <Box
-                      display="flex"
-                      alignItems="center"
-                      justifyContent="center"
-                      color="red"
-                    >
-                      <CancelIcon />
-                    </Box>
-                  )}
-                </TableCell>
                 <TableCell align="center">
                   {item?.isPaid ? (
                     <Box
