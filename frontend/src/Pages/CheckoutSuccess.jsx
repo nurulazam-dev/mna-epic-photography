@@ -5,14 +5,14 @@ import brandLogo from "../assets/images/logo.png";
 const CheckoutSuccess = () => {
   return (
     <Container maxWidth="sm">
-      <Box display="flex" justifyContent="center" mt={4}>
+      <Box display="flex" justifyContent="center" mt={2}>
         <img
           src={brandLogo}
           alt="MNA Epic Photography"
           style={{ width: "100px", maxWidth: "230px" }}
         />
       </Box>
-      <Box textAlign="center" mt={3}>
+      <Box textAlign="center" mb={3}>
         <Typography variant="h5" fontWeight="bold" color="text.primary">
           Payment Done
         </Typography>
@@ -22,7 +22,7 @@ const CheckoutSuccess = () => {
         <Typography variant="body1" mt={1}>
           Have a great day!
         </Typography>
-        <Box mt={4} sx={{ animation: "bounce 1s infinite" }}>
+        <Box mt={1} sx={{ animation: "bounce 1s infinite" }}>
           <Button
             component={Link}
             to="/home"
