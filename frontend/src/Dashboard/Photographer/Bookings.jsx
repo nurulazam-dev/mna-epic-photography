@@ -15,6 +15,7 @@ import {
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { formatDate } from "../../utils/formatDate";
+import { GppBad, VerifiedUser } from "@mui/icons-material";
 
 const Bookings = ({ bookings }) => {
   return (
@@ -56,17 +57,18 @@ const Bookings = ({ bookings }) => {
                     <Box>
                       <Typography fontWeight="bold" display="flex">
                         {item?.user?.name}
-                        {item?.isVerified == "true" ? (
+                        {item?.user?.isVerified === true ? (
                           <Box
                             display="flex"
                             alignItems="center"
                             justifyContent="center"
-                            color="red"
+                            color="green"
                             height={16}
                             width={16}
                             sx={{ marginLeft: "3px" }}
                           >
-                            <CheckCircleIcon fontSize="10px" />
+                            <VerifiedUser fontSize="10px" />
+                            {/* <CheckCircleIcon fontSize="10px" /> */}
                           </Box>
                         ) : (
                           <Box
@@ -78,7 +80,8 @@ const Bookings = ({ bookings }) => {
                             width={16}
                             sx={{ marginLeft: "3px" }}
                           >
-                            <CancelIcon fontSize="10px" />
+                            <GppBad fontSize="10px" />
+                            {/* <CancelIcon fontSize="10px" /> */}
                           </Box>
                         )}
                       </Typography>

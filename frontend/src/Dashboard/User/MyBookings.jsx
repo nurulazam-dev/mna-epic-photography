@@ -87,6 +87,7 @@ const MyBookings = () => {
                     </Typography>
                   </TableCell>
                   <TableCell align="center">{booking?.expertise}</TableCell>
+                  {/* <TableCell align="center">{booking?.status}</TableCell> */}
                   <TableCell align="center">{booking?.isApproved}</TableCell>
                   <TableCell align="center">
                     {booking?.isPaid ? (
