@@ -12,6 +12,7 @@ import UserAccount from "../Dashboard/User/UserAccount";
 import Services from "../Pages/Services";
 import AboutUs from "../Pages/AboutUs";
 import ContactUs from "../Pages/ContactUs";
+import AdminDashboard from "../Dashboard/Admin/AdminDashboard";
 
 const Routers = () => {
   return (
@@ -33,6 +34,14 @@ const Routers = () => {
         element={
           <ProtectedRoutes allowedRoles={["client"]}>
             <UserAccount />
+          </ProtectedRoutes>
+        }
+      />
+      <Route
+        path="/admin/profile/me"
+        element={
+          <ProtectedRoutes allowedRoles={["admin"]}>
+            <AdminDashboard />
           </ProtectedRoutes>
         }
       />
