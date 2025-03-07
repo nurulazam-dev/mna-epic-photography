@@ -83,6 +83,8 @@ const Header = () => {
                 to={
                   role === "photographer"
                     ? "/photographers/profile/me"
+                    : role === "admin"
+                    ? "/admin/profile/me"
                     : "/users/profile/me"
                 }
               >
