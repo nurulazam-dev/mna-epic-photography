@@ -19,9 +19,9 @@ export const register = async (req, res) => {
   try {
     let user = null;
 
-    if (role == "client") {
+    if (role === "client" || role === "admin") {
       user = await User.findOne({ email });
-    } else if (role == "photographer") {
+    } else if (role === "photographer") {
       user = await Photographer.findOne({ email });
     }
 
@@ -34,7 +34,7 @@ export const register = async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const hashPassword = await bcrypt.hash(password, salt);
 
-    if (role == "client") {
+    if (role === "client" || role === "admin") {
       user = new User({
         name,
         email,
@@ -71,12 +71,16 @@ export const login = async (req, res) => {
     let user = null;
 
     const client = await User.findOne({ email }).select("+password");
+    const admin = await User.findOne({ email }).select("+password");
     const photographer = await Photographer.findOne({ email }).select(
       "+password"
     );
 
     if (client) {
       user = client;
+    }
+    if (admin) {
+      user = admin;
     }
     if (photographer) {
       user = photographer;
