@@ -14,14 +14,14 @@ const generateToken = (user) => {
 };
 
 export const register = async (req, res) => {
-  const { email, password, name, phone, role, photo } = req.body;
+  const { email, password, name, phone, role, photo, gender } = req.body;
 
   try {
     let user = null;
 
-    if (role === "client") {
+    if (role == "client") {
       user = await User.findOne({ email });
-    } else if (role === "photographer") {
+    } else if (role == "photographer") {
       user = await Photographer.findOne({ email });
     }
 
@@ -34,11 +34,12 @@ export const register = async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const hashPassword = await bcrypt.hash(password, salt);
 
-    if (role === "client") {
+    if (role == "client") {
       user = new User({
         name,
         email,
         phone,
+        gender,
         role,
         photo,
         password: hashPassword,
@@ -49,6 +50,7 @@ export const register = async (req, res) => {
       user = new Photographer({
         name,
         email,
+        gender,
         phone,
         role,
         photo,
@@ -61,6 +63,8 @@ export const register = async (req, res) => {
       .status(200)
       .json({ status: true, message: "User successfully created" });
   } catch (error) {
+    console.log(error);
+
     res.status(500).json({ status: false, message: "User created fail" });
   }
 };
