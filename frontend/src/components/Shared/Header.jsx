@@ -81,10 +81,10 @@ const Header = () => {
                   display: { xs: "none", md: "flex" },
                 }}
                 to={
-                  role === "photographer"
-                    ? "/photographers/profile/me"
-                    : role === "admin"
+                  role == "admin"
                     ? "/admin/profile/me"
+                    : role == "photographer"
+                    ? "/photographers/profile/me"
                     : "/users/profile/me"
                 }
               >
@@ -147,7 +147,9 @@ const Header = () => {
                   component={NavLink}
                   sx={{ color: "black", fontWeight: "bold" }}
                   to={
-                    role === "photographer"
+                    role == "admin"
+                      ? "/admin/profile/me"
+                      : role == "photographer"
                       ? "/photographers/profile/me"
                       : "/users/profile/me"
                   }
