@@ -1,5 +1,12 @@
 import { useState } from "react";
-import { AccountCircle, PlaylistAdd, Edit } from "@mui/icons-material";
+import {
+  PeopleAlt,
+  Leaderboard,
+  Groups,
+  ListAlt,
+  Settings,
+  DeleteForever,
+} from "@mui/icons-material";
 import {
   Button,
   Card,
@@ -41,7 +48,7 @@ const AdminDashboard = () => {
               <Button
                 fullWidth
                 onClick={() => setTab("adminDashboard")}
-                startIcon={<AccountCircle />}
+                startIcon={<Leaderboard />}
                 variant={tab === "adminDashboard" ? "contained" : "outlined"}
                 sx={{ mb: 2 }}
               >
@@ -50,7 +57,7 @@ const AdminDashboard = () => {
               <Button
                 fullWidth
                 onClick={() => setTab("manageUsers")}
-                startIcon={<PlaylistAdd />}
+                startIcon={<PeopleAlt />}
                 variant={tab === "manageUsers" ? "contained" : "outlined"}
                 sx={{ mb: 2 }}
               >
@@ -59,18 +66,18 @@ const AdminDashboard = () => {
               <Button
                 fullWidth
                 onClick={() => setTab("managePhotographers")}
-                startIcon={<PlaylistAdd />}
+                startIcon={<Groups />}
                 variant={
                   tab === "managePhotographers" ? "contained" : "outlined"
                 }
                 sx={{ mb: 2 }}
               >
-                Manage Photographers
+                Manage Photogs
               </Button>
               <Button
                 fullWidth
                 onClick={() => setTab("manageBookings")}
-                startIcon={<PlaylistAdd />}
+                startIcon={<ListAlt />}
                 variant={tab === "manageBookings" ? "contained" : "outlined"}
                 sx={{ mb: 2 }}
               >
@@ -79,7 +86,7 @@ const AdminDashboard = () => {
               <Button
                 fullWidth
                 onClick={() => setTab("settings")}
-                startIcon={<Edit />}
+                startIcon={<Settings />}
                 variant={tab === "settings" ? "contained" : "outlined"}
                 sx={{ mb: 2 }}
               >
@@ -88,6 +95,7 @@ const AdminDashboard = () => {
               <Button
                 fullWidth
                 variant="contained"
+                startIcon={<DeleteForever />}
                 color="error"
                 sx={{ mt: 6 }}
               >
@@ -123,11 +131,7 @@ const AdminDashboard = () => {
                     sx={{ width: 120, height: 120 }}
                   />
                   <Box>
-                    <Typography variant="h6">{data.name}</Typography>
-
-                    {/* <Typography fontSize={15} color="textSecondary" mt={1}>
-                      {data?.bio}
-                    </Typography> */}
+                    <Typography variant="h6">{data?.name}</Typography>
                   </Box>
                 </Box>
                 {/* admin dashboard home */}
