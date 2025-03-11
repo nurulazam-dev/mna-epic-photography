@@ -1,7 +1,5 @@
-import React from "react";
-
 const ManageBookings = () => {
-  return <div></div>;
+  return <div>ManageBookings</div>;
 };
 
 export default ManageBookings;
