@@ -146,7 +146,7 @@ const AdminProfile = ({ adminData }) => {
                 </FormControl>
               </Grid>
 
-              <Grid item xs={4}>
+              <Grid item xs={12} md={4}>
                 <Box
                   sx={{
                     display: "flex",
@@ -176,7 +176,15 @@ const AdminProfile = ({ adminData }) => {
                   </Button>
                 </Box>
               </Grid>
-              <Grid item xs={12}>
+              <Grid
+                item
+                xs={12}
+                md={4}
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                }}
+              >
                 <Button
                   variant="contained"
                   color="success"
