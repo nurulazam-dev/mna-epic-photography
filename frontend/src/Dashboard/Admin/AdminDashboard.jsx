@@ -1,11 +1,5 @@
 import { useState } from "react";
-import {
-  AccountCircle,
-  PlaylistAdd,
-  Edit,
-  Warning,
-  Star,
-} from "@mui/icons-material";
+import { AccountCircle, PlaylistAdd, Edit } from "@mui/icons-material";
 import {
   Button,
   Card,
@@ -13,7 +7,6 @@ import {
   Typography,
   Avatar,
   Box,
-  Alert,
 } from "@mui/material";
 import { BASE_URL } from "../../../config";
 
@@ -21,6 +14,10 @@ import Error from "../../components/Shared/Error";
 import Loading from "../../components/Shared/Loading";
 import useGetProfile from "../../hooks/useFetchData";
 import AdminDashboardHome from "./AdminDashboardHome";
+import ManageBookings from "./ManageBookings";
+import AdminProfile from "./AdminProfile";
+import ManagePhotographers from "./ManagePhotographers";
+import ManageUsers from "./ManageUsers";
 
 const AdminDashboard = () => {
   const [tab, setTab] = useState("adminDashboard");
@@ -29,7 +26,7 @@ const AdminDashboard = () => {
     "https://p7.hiclipart.com/preview/717/24/975/computer-icons-user-profile-user-account-clip-art-avatar.jpg";
 
   const { data, loading, error } = useGetProfile(
-    `${BASE_URL}/photographers/profile/me`
+    `${BASE_URL}/users/profile/me`
   );
 
   return (
@@ -43,9 +40,9 @@ const AdminDashboard = () => {
             <CardContent>
               <Button
                 fullWidth
-                onClick={() => setTab("overview")}
+                onClick={() => setTab("adminDashboard")}
                 startIcon={<AccountCircle />}
-                variant={tab === "overview" ? "contained" : "outlined"}
+                variant={tab === "adminDashboard" ? "contained" : "outlined"}
                 sx={{ mb: 2 }}
               >
                 Overview
@@ -100,7 +97,7 @@ const AdminDashboard = () => {
           </Card>
 
           <Box flex={1} px={2}>
-            {tab === "overview" && (
+            {tab === "adminDashboard" && (
               <Box>
                 <Typography
                   variant="h4"
@@ -138,10 +135,16 @@ const AdminDashboard = () => {
               </Box>
             )}
 
-            {tab === "bookings" && <Bookings bookings={data?.bookings} />}
-            {tab === "settings" && (
-              <PhotographerProfile photographerData={data} />
+            {tab === "manageBookings" && (
+              <ManageBookings manageBookings={data?.bookings} />
             )}
+            {tab === "manageUsers" && (
+              <ManageUsers manageUsers={data?.bookings} />
+            )}
+            {tab === "managePhotographers" && (
+              <ManagePhotographers managePhotographers={data?.bookings} />
+            )}
+            {tab === "settings" && <AdminProfile adminData={data} />}
           </Box>
         </Box>
       )}
