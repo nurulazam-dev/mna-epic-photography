@@ -62,10 +62,10 @@ export const getSinglePhotographer = async (req, res) => {
 export const getAllPhotographer = async (req, res) => {
   try {
     const { query } = req.query;
-    let photographers;
+    /*  let photographers;
     if (query) {
       photographers = await Photographer.find({
-        isApproved: "approved",
+        isApproved: "approved" || "pending",
         $or: [
           { name: { $regex: query, $options: "i" } },
           { expertise: { $regex: query, $options: "i" } },
@@ -73,9 +73,22 @@ export const getAllPhotographer = async (req, res) => {
       }).select("-password");
     } else {
       photographers = await Photographer.find({
-        isApproved: "approved",
+        isApproved: "approved" || "pending",
       }).select("-password");
+    }  */
+
+    // const photographers = await Photographer.find({}).select("-password");
+
+    let filter = { isApproved: { $in: ["approved", "pending"] } };
+
+    if (query) {
+      filter.$or = [
+        { name: { $regex: query, $options: "i" } },
+        { expertise: { $regex: query, $options: "i" } },
+      ];
     }
+
+    const photographers = await Photographer.find(filter).select("-password");
 
     res.status(200).json({
       success: true,
