@@ -107,31 +107,31 @@ const AdminDashboard = () => {
           <Box flex={1} px={2}>
             {tab === "adminDashboard" && (
               <Box>
-                <Typography
-                  variant="h4"
-                  sx={{
-                    backgroundColor: "green",
-                    color: "white",
-                    textAlign: "center",
-                    py: 1,
-                    fontFamily: "serif",
-                  }}
-                >
-                  About {data?.name}
-                </Typography>
                 <Box
                   display="flex"
                   flexDirection={{ xs: "column", md: "row" }}
                   alignItems="center"
                   gap={2}
-                  pt={1}
+                  backgroundColor="green"
+                  color="white"
+                  p={2}
+                  fontFamily="serif"
                 >
                   <Avatar
                     src={data?.photo || userAvatar}
                     sx={{ width: 120, height: 120 }}
                   />
                   <Box>
-                    <Typography variant="h6">{data?.name}</Typography>
+                    <Typography
+                      variant="h4"
+                      sx={{
+                        fontFamily: "serif",
+                      }}
+                    >
+                      {data?.name}
+                    </Typography>
+                    <Typography variant="body">{data?.phone}</Typography>
+                    <Typography variant="h6">{data?.email}</Typography>
                   </Box>
                 </Box>
                 {/* admin dashboard home */}
