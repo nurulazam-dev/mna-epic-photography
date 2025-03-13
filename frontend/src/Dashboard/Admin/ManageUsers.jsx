@@ -21,8 +21,6 @@ import Error from "../../components/Shared/Error";
 const ManageUsers = () => {
   const { data: users, loading, error } = useUsers(`${BASE_URL}/users`);
 
-  console.log("users:", users);
-
   return (
     <Box>
       {loading && !error && (
