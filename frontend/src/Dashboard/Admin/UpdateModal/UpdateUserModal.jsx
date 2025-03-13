@@ -13,7 +13,7 @@ import {
   FormControl,
 } from "@mui/material";
 import { toast } from "react-toastify";
-import { BASE_URL } from "../../../../config";
+import { BASE_URL, token } from "../../../../config";
 import { Update } from "@mui/icons-material";
 
 const UpdateUserModal = ({ user, onClose }) => {
@@ -36,6 +36,7 @@ const UpdateUserModal = ({ user, onClose }) => {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(updatedUser),
       });
