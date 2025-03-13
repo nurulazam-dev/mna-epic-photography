@@ -6,17 +6,23 @@ import {
   Typography,
   TextField,
   Button,
-  Avatar,
+  Grid,
+  Select,
+  MenuItem,
+  InputLabel,
+  FormControl,
 } from "@mui/material";
 import { toast } from "react-toastify";
 import { BASE_URL } from "../../../../config";
 
 const UpdateUserModal = ({ user, onClose }) => {
   const [updatedUser, setUpdatedUser] = useState({
-    name: user.name,
-    email: user.email,
-    phone: user.phone,
-    role: user.role,
+    name: user?.name,
+    email: user?.email,
+    phone: user?.phone,
+    role: user?.role,
+    gender: user?.gender,
+    isVerified: user?.isVerified,
   });
 
   const handleChange = (e) => {
@@ -25,7 +31,7 @@ const UpdateUserModal = ({ user, onClose }) => {
 
   const handleUpdate = async () => {
     try {
-      const res = await fetch(`${BASE_URL}/users/${user._id}`, {
+      const res = await fetch(`${BASE_URL}/users/${user?._id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -61,44 +67,92 @@ const UpdateUserModal = ({ user, onClose }) => {
           borderRadius: 2,
         }}
       >
-        <Typography variant="h6" gutterBottom>
-          Update User
-        </Typography>
-        <Box display="flex" flexDirection="column" alignItems="center" gap={2}>
-          <Avatar
-            src={user.photo}
-            alt={user.name}
-            sx={{ width: 56, height: 56 }}
-          />
+        <Grid item xs={12} md={6}>
+          <Typography
+            variant="h5"
+            fontWeight="bold"
+            sx={{ textAlign: "center", color: "green" }}
+            gutterBottom
+          >
+            Update User
+          </Typography>
+
           <TextField
             label="Name"
             name="name"
             fullWidth
-            value={updatedUser.name}
+            value={updatedUser?.name}
             onChange={handleChange}
+            margin="normal"
+            required
           />
           <TextField
             label="Email"
             name="email"
             fullWidth
-            value={updatedUser.email}
+            value={updatedUser?.email}
             onChange={handleChange}
             disabled
+            margin="normal"
           />
-          <TextField
-            label="Phone"
-            name="phone"
-            fullWidth
-            value={updatedUser.phone}
-            onChange={handleChange}
-          />
-          <TextField
-            label="Role"
-            name="role"
-            fullWidth
-            value={updatedUser.role}
-            onChange={handleChange}
-          />
+
+          <Grid container spacing={2}>
+            <Grid item xs={6}>
+              <TextField
+                label="Phone"
+                name="phone"
+                fullWidth
+                value={updatedUser?.phone}
+                onChange={handleChange}
+                margin="normal"
+                disabled
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <FormControl fullWidth margin="normal">
+                <InputLabel>Gender</InputLabel>
+                <Select
+                  name="gender"
+                  value={updatedUser.gender}
+                  onChange={handleChange}
+                >
+                  <MenuItem value="">Select</MenuItem>
+                  <MenuItem value="Male">Male</MenuItem>
+                  <MenuItem value="Female">Female</MenuItem>
+                  <MenuItem value="Other">Other</MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
+          </Grid>
+          <Grid container spacing={2}>
+            <Grid item xs={6}>
+              <FormControl fullWidth margin="normal">
+                <InputLabel>Role</InputLabel>
+                <Select
+                  name="role"
+                  value={updatedUser?.role}
+                  onChange={handleChange}
+                >
+                  <MenuItem value="client">Client</MenuItem>
+                  <MenuItem value="admin">Admin</MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
+            <Grid item xs={6}>
+              <FormControl fullWidth margin="normal">
+                <InputLabel>Verified</InputLabel>
+                <Select
+                  name="isVerified"
+                  value={updatedUser?.isVerified}
+                  onChange={handleChange}
+                >
+                  <MenuItem value="false">Not Verified</MenuItem>
+                  <MenuItem value="true">Verified</MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
+          </Grid>
+
           <Box display="flex" justifyContent="space-between" width="100%">
             <Button variant="contained" color="secondary" onClick={onClose}>
               Cancel
@@ -107,7 +161,7 @@ const UpdateUserModal = ({ user, onClose }) => {
               Save Changes
             </Button>
           </Box>
-        </Box>
+        </Grid>
       </Box>
     </Modal>
   );
