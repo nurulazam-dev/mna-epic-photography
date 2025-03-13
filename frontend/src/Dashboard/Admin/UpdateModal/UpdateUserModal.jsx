@@ -1,5 +1,11 @@
+import { Box, Typography } from "@mui/material";
+
 const UpdateUserModal = () => {
-  return <div>UpdateUserModal</div>;
+  return (
+    <Box>
+      <Typography>UpdateUserModal</Typography>
+    </Box>
+  );
 };
 
 export default UpdateUserModal;
