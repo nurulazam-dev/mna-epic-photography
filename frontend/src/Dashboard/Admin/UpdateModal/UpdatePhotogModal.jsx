@@ -20,10 +20,12 @@ const UpdatePhotogModal = ({ photographer, onClose }) => {
   const [updatedPhotog, setUpdatedPhotog] = useState({
     name: photographer?.name,
     email: photographer?.email,
+    expertise: photographer?.expertise,
+    experience: photographer?.experience,
     phone: photographer?.phone,
-    role: photographer?.role,
+    servicePrice: photographer?.servicePrice,
     gender: photographer?.gender,
-    isVerified: photographer?.isVerified,
+    isApproved: photographer?.isApproved,
   });
 
   const handleChange = (e) => {
@@ -146,27 +148,64 @@ const UpdatePhotogModal = ({ photographer, onClose }) => {
           <Grid container spacing={2}>
             <Grid item xs={6}>
               <FormControl fullWidth margin="normal">
-                <InputLabel>Role</InputLabel>
+                <InputLabel>Experience</InputLabel>
                 <Select
-                  name="role"
-                  value={updatedPhotog?.role}
+                  name="experience"
+                  value={updatedPhotog?.experience}
                   onChange={handleChange}
                 >
-                  <MenuItem value="client">Client</MenuItem>
-                  <MenuItem value="admin">Admin</MenuItem>
+                  <MenuItem value="1">1 Years</MenuItem>
+                  <MenuItem value="2">2 Years</MenuItem>
+                  <MenuItem value="3">3 Years</MenuItem>
+                  <MenuItem value="4">4 Years</MenuItem>
+                  <MenuItem value="5">5 Years</MenuItem>
+                  <MenuItem value="6">6 Years</MenuItem>
+                  <MenuItem value="7">7 Years</MenuItem>
+                  <MenuItem value="8">8 Years</MenuItem>
+                  <MenuItem value="9">9 Years</MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
+            <Grid item xs={6}>
+              <TextField
+                label="Service Price"
+                name="servicePrice"
+                fullWidth
+                value={updatedPhotog?.servicePrice}
+                onChange={handleChange}
+                margin="normal"
+                required
+              />
+            </Grid>
+          </Grid>
+          <Grid container spacing={2}>
+            <Grid item xs={6}>
+              <FormControl fullWidth margin="normal">
+                <InputLabel>Expertise</InputLabel>
+                <Select
+                  name="expertise"
+                  value={updatedPhotog?.expertise}
+                  onChange={handleChange}
+                >
+                  <MenuItem value="Wedding">Wedding</MenuItem>
+                  <MenuItem value="Event">Event</MenuItem>
+                  <MenuItem value="Portrait">Portrait</MenuItem>
+                  <MenuItem value="Fashion">Fashion</MenuItem>
+                  <MenuItem value="Product">Product</MenuItem>
                 </Select>
               </FormControl>
             </Grid>
             <Grid item xs={6}>
               <FormControl fullWidth margin="normal">
-                <InputLabel>Verified</InputLabel>
+                <InputLabel>Status</InputLabel>
                 <Select
-                  name="isVerified"
-                  value={updatedPhotog?.isVerified}
+                  name="isApproved"
+                  value={updatedPhotog?.isApproved}
                   onChange={handleChange}
                 >
-                  <MenuItem value="false">Not Verified</MenuItem>
-                  <MenuItem value="true">Verified</MenuItem>
+                  <MenuItem value="pending">Pending</MenuItem>
+                  <MenuItem value="approved">Approved</MenuItem>
+                  <MenuItem value="cancelled">Cancelled</MenuItem>
                 </Select>
               </FormControl>
             </Grid>

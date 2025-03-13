@@ -19,7 +19,7 @@ router.get("/", getAllPhotographer);
 router.put(
   "/:id",
   authenticate,
-  restrict(["photographer"]),
+  restrict(["photographer", "admin"]),
   updatePhotographer
 );
 router.delete(
