@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import {
   Table,
   TableBody,
@@ -10,16 +9,28 @@ import {
   Typography,
   Avatar,
   Box,
-  // Container,
+  CircularProgress,
+  Button,
 } from "@mui/material";
-import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import CancelIcon from "@mui/icons-material/Cancel";
 import { formatDate } from "../../utils/formatDate";
 import { GppBad, VerifiedUser } from "@mui/icons-material";
+import { BASE_URL } from "../../../config";
+import useUsers from "../../hooks/useFetchData";
+import Error from "../../components/Shared/Error";
 
-const ManageUsers = ({ users }) => {
+const ManageUsers = () => {
+  const { data: users, loading, error } = useUsers(`${BASE_URL}/users`);
+
+  console.log("users:", users);
+
   return (
     <Box>
+      {loading && !error && (
+        <CircularProgress sx={{ display: "block", mx: "auto" }} />
+      )}
+
+      {error && !loading && <Error errMessage={error} />}
+
       <Typography
         variant="h4"
         align="center"
@@ -40,90 +51,77 @@ const ManageUsers = ({ users }) => {
           <TableHead>
             <TableRow sx={{ backgroundColor: "#f3f3f3" }}>
               <TableCell align="center">Client</TableCell>
+              <TableCell align="center">Role</TableCell>
               <TableCell align="center">Phone</TableCell>
-              <TableCell align="center">Update Status</TableCell>
+
+              <TableCell align="center">Registered</TableCell>
+              <TableCell align="center">Action</TableCell>
             </TableRow>
           </TableHead>
 
-          <TableBody>
-            {users?.map((item) => (
-              <TableRow key={item?._id} hover>
-                <TableCell>
-                  <Box display="flex" alignItems="center" gap={2}>
-                    <Avatar src={item?.user?.photo} alt={item?.user?.name} />
-                    <Box>
-                      <Typography fontWeight="bold" display="flex">
-                        {item?.user?.name}
-                        {item?.user?.isVerified === true ? (
-                          <Box
-                            display="flex"
-                            alignItems="center"
-                            justifyContent="center"
-                            color="green"
-                            height={16}
-                            width={16}
-                            sx={{ marginLeft: "3px" }}
-                          >
-                            <VerifiedUser fontSize="10px" />
-                            {/* <CheckCircleIcon fontSize="10px" /> */}
-                          </Box>
-                        ) : (
-                          <Box
-                            display="flex"
-                            alignItems="center"
-                            justifyContent="center"
-                            color="red"
-                            height={16}
-                            width={16}
-                            sx={{ marginLeft: "3px" }}
-                          >
-                            <GppBad fontSize="10px" />
-                            {/* <CancelIcon fontSize="10px" /> */}
-                          </Box>
-                        )}
-                      </Typography>
-                      <Typography variant="body2" color="textSecondary">
-                        {item?.user?.email}
-                      </Typography>
+          {!loading && !error && (
+            <TableBody>
+              {users?.map((user) => (
+                <TableRow key={user?._id} hover>
+                  <TableCell sx={{ padding: "2px 10px" }}>
+                    <Box display="flex" alignItems="center" gap={2}>
+                      <Avatar src={user?.photo} alt={user?.name} />
+                      <Box>
+                        <Typography
+                          fontWeight="bold"
+                          display="flex"
+                          alignItems="center"
+                        >
+                          {user?.name}
+                          {user?.isVerified === true ? (
+                            <Box
+                              display="flex"
+                              alignItems="center"
+                              justifyContent="center"
+                              color="green"
+                              height={16}
+                              width={16}
+                              sx={{ marginLeft: "3px" }}
+                            >
+                              <VerifiedUser fontSize="10px" />
+                              {/* <CheckCircleIcon fontSize="10px" /> */}
+                            </Box>
+                          ) : (
+                            <Box
+                              display="flex"
+                              alignItems="center"
+                              justifyContent="center"
+                              color="red"
+                              height={16}
+                              width={16}
+                              sx={{ marginLeft: "3px" }}
+                            >
+                              <GppBad fontSize="10px" />
+                              {/* <CancelIcon fontSize="10px" /> */}
+                            </Box>
+                          )}
+                        </Typography>
+                        <Typography variant="body2" color="textSecondary">
+                          {user?.email}
+                        </Typography>
+                      </Box>
                     </Box>
-                  </Box>
-                </TableCell>
+                  </TableCell>
 
-                <TableCell align="center">{item?.user?.phone}</TableCell>
-
-                <TableCell align="center">
-                  {item?.isVerified ? (
-                    <Box
-                      display="flex"
-                      alignItems="center"
-                      justifyContent="center"
-                      color="green"
-                    >
-                      <CheckCircleIcon sx={{ mr: 1 }} /> Verified
-                    </Box>
-                  ) : (
-                    <Box
-                      display="flex"
-                      alignItems="center"
-                      justifyContent="center"
-                      color="red"
-                    >
-                      <CancelIcon sx={{ mr: 1 }} /> Not Verified
-                    </Box>
-                  )}
-                </TableCell>
-
-                <TableCell align="center">{item?.status}</TableCell>
-
-                <TableCell align="center">
-                  {formatDate(item?.createdAt)}
-                </TableCell>
-                <TableCell align="center">
-                  {formatDate(item?.programDate)}
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
+                  <TableCell align="center">{user?.role}</TableCell>
+                  <TableCell align="center">{user?.phone}</TableCell>
+                  <TableCell align="center">
+                    {formatDate(user?.createdAt)}
+                  </TableCell>
+                  <TableCell align="center" sx={{ padding: "2px" }}>
+                    <Button variant="contained" color="success">
+                      Update
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          )}
         </Table>
       </TableContainer>
 
