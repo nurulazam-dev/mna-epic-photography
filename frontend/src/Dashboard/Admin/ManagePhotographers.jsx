@@ -165,9 +165,12 @@ const ManagePhotographers = () => {
         </Typography>
       )}
 
-      {/* Update User Modal */}
+      {/* Update photographer Modal */}
       {selectedPhotog && (
-        <UpdatePhotogModal user={selectedPhotog} onClose={handleCloseModal} />
+        <UpdatePhotogModal
+          photographer={selectedPhotog}
+          onClose={handleCloseModal}
+        />
       )}
     </Box>
   );
