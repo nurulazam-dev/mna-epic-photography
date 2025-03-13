@@ -68,7 +68,7 @@ const ManagePhotographers = () => {
               <TableCell align="center">Phone</TableCell>
               <TableCell align="center">Experience</TableCell>
               <TableCell align="center">Status</TableCell>
-              <TableCell align="center">Service $</TableCell>
+              <TableCell align="center">S.Price</TableCell>
               <TableCell align="center">Action</TableCell>
             </TableRow>
           </TableHead>
@@ -125,13 +125,24 @@ const ManagePhotographers = () => {
                   <TableCell align="center">
                     {photog?.experience} years
                   </TableCell>
-                  <TableCell align="center">{photog?.isApproved}</TableCell>
-                  <TableCell align="center">{photog?.servicePrice}</TableCell>
+                  <TableCell align="center">
+                    {photog?.isApproved == "approved" ? (
+                      <Typography variant="body2" sx={{ color: "green" }}>
+                        Approved
+                      </Typography>
+                    ) : (
+                      <Typography variant="body2" sx={{ color: "red" }}>
+                        Pending
+                      </Typography>
+                    )}
+                  </TableCell>
+                  <TableCell align="center">$ {photog?.servicePrice}</TableCell>
 
                   <TableCell align="center" sx={{ padding: "2px" }}>
                     <Button
                       variant="contained"
                       color="success"
+                      size="small"
                       onClick={() => handleOpenModal(photog)}
                     >
                       Update
