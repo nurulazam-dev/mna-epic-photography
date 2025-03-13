@@ -14,6 +14,7 @@ import {
 } from "@mui/material";
 import { toast } from "react-toastify";
 import { BASE_URL } from "../../../../config";
+import { Update } from "@mui/icons-material";
 
 const UpdateUserModal = ({ user, onClose }) => {
   const [updatedUser, setUpdatedUser] = useState({
@@ -67,6 +68,20 @@ const UpdateUserModal = ({ user, onClose }) => {
           borderRadius: 2,
         }}
       >
+        <Button
+          variant="outlined"
+          size="small"
+          color="error"
+          onClick={onClose}
+          sx={{
+            position: "absolute",
+            borderRadius: 1,
+            right: "2%",
+            top: "2%",
+          }}
+        >
+          ✕
+        </Button>
         <Grid item xs={12} md={6}>
           <Typography
             variant="h5"
@@ -153,12 +168,15 @@ const UpdateUserModal = ({ user, onClose }) => {
             </Grid>
           </Grid>
 
-          <Box display="flex" justifyContent="space-between" width="100%">
-            <Button variant="contained" color="secondary" onClick={onClose}>
-              Cancel
-            </Button>
-            <Button variant="contained" color="primary" onClick={handleUpdate}>
-              Save Changes
+          <Box display="flex" justifyContent="end">
+            <Button
+              variant="contained"
+              color="success"
+              size="large"
+              onClick={handleUpdate}
+              startIcon={<Update />}
+            >
+              Update
             </Button>
           </Box>
         </Grid>
