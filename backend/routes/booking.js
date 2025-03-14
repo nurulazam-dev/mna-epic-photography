@@ -2,6 +2,7 @@ import express from "express";
 import { authenticate } from "../auth/verifyToken.js";
 import {
   checkPhotographerAvailability,
+  getBookings,
   getCheckoutSession,
 } from "../Controllers/bookingController.js";
 import Booking from "../models/BookingSchema.js";
@@ -16,7 +17,6 @@ router.get(
 router.get("/booked-dates/:photographerId", async (req, res) => {
   try {
     const { photographerId } = req.params;
-    console.log(photographerId);
 
     const bookings = await Booking.find({
       photographer: photographerId,
@@ -31,6 +31,8 @@ router.get("/booked-dates/:photographerId", async (req, res) => {
       .json({ success: false, message: "Error fetching booked dates" });
   }
 });
+
+router.get("/my-bookings", authenticate, getBookings);
 
 router.post(
   "/checkout-session/:photographerId",
