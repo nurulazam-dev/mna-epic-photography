@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import {
   Table,
   TableBody,
@@ -10,16 +9,46 @@ import {
   Typography,
   Avatar,
   Box,
-  // Container,
+  Button,
+  CircularProgress,
 } from "@mui/material";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { formatDate } from "../../utils/formatDate";
 import { GppBad, VerifiedUser } from "@mui/icons-material";
+import { BASE_URL } from "../../../config";
+import useBookings from "../../hooks/useFetchData";
+import { useState } from "react";
+import UpdateBookingModal from "./UpdateModal/UpdateBookingModal";
+import Error from "../../components/Shared/Error";
 
-const ManageBookings = ({ bookings }) => {
+const ManageBookings = () => {
+  const {
+    data: bookings,
+    loading,
+    error,
+  } = useBookings(`${BASE_URL}/bookings`);
+
+  console.log("bookings: ", bookings);
+
+  const [selectedBooking, setSelectedBooking] = useState(null);
+
+  const handleOpenModal = (booking) => {
+    setSelectedBooking(booking);
+  };
+
+  const handleCloseModal = () => {
+    setSelectedBooking(null);
+  };
+
   return (
     <Box>
+      {loading && !error && (
+        <CircularProgress sx={{ display: "block", mx: "auto" }} />
+      )}
+
+      {error && !loading && <Error errMessage={error} />}
+
       <Typography
         variant="h4"
         align="center"
@@ -49,16 +78,19 @@ const ManageBookings = ({ bookings }) => {
             </TableRow>
           </TableHead>
 
+          {/*  {!loading && !error && (
+
+          )} */}
           <TableBody>
-            {bookings?.map((item) => (
-              <TableRow key={item?._id} hover>
+            {bookings?.map((booking) => (
+              <TableRow key={booking?._id} hover>
                 <TableCell>
                   <Box display="flex" alignItems="center" gap={2}>
-                    <Avatar src={item?.user?.photo} alt={item?.user?.name} />
+                    <Avatar src={booking?.photo} alt={booking?.name} />
                     <Box>
                       <Typography fontWeight="bold" display="flex">
-                        {item?.user?.name}
-                        {item?.user?.isVerified === true ? (
+                        {booking?.user?.name}
+                        {booking?.user?.isVerified === true ? (
                           <Box
                             display="flex"
                             alignItems="center"
@@ -87,16 +119,16 @@ const ManageBookings = ({ bookings }) => {
                         )}
                       </Typography>
                       <Typography variant="body2" color="textSecondary">
-                        {item?.user?.email}
+                        {booking?.user?.email}
                       </Typography>
                     </Box>
                   </Box>
                 </TableCell>
 
-                <TableCell align="center">{item?.user?.phone}</TableCell>
+                <TableCell align="center">{booking?.user?.phone}</TableCell>
 
                 <TableCell align="center">
-                  {item?.isPaid ? (
+                  {booking?.isPaid ? (
                     <Box
                       display="flex"
                       alignItems="center"
@@ -117,14 +149,23 @@ const ManageBookings = ({ bookings }) => {
                   )}
                 </TableCell>
 
-                <TableCell align="center">{item?.status}</TableCell>
-                <TableCell align="center">${item?.servicePrice}</TableCell>
+                <TableCell align="center">{booking?.status}</TableCell>
+                <TableCell align="center">${booking?.servicePrice}</TableCell>
 
                 <TableCell align="center">
-                  {formatDate(item?.createdAt)}
+                  {formatDate(booking?.createdAt)}
                 </TableCell>
                 <TableCell align="center">
-                  {formatDate(item?.programDate)}
+                  {formatDate(booking?.programDate)}
+                </TableCell>
+                <TableCell align="center" sx={{ padding: "2px" }}>
+                  <Button
+                    variant="contained"
+                    color="success"
+                    onClick={() => handleOpenModal(booking)}
+                  >
+                    Update
+                  </Button>
                 </TableCell>
               </TableRow>
             ))}
@@ -140,6 +181,14 @@ const ManageBookings = ({ bookings }) => {
         >
           No bookings available.
         </Typography>
+      )}
+
+      {/* Update booking Modal */}
+      {selectedBooking && (
+        <UpdateBookingModal
+          booking={selectedBooking}
+          onClose={handleCloseModal}
+        />
       )}
     </Box>
   );
