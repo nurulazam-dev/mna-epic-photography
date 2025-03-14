@@ -37,15 +37,12 @@ export const checkPhotographerAvailability = async (req, res) => {
 ======================================*/
 export const getCheckoutSession = async (req, res) => {
   try {
-    // const { photographerId } = req.params;
     const { programDate } = req.body;
     if (!programDate) {
       return res
         .status(400)
         .json({ success: false, message: "Program date is required" });
     }
-
-    // const selectedDate = new Date(programDate);
 
     const isBooked = await Booking.findOne({
       photographer: req.params.photographerId,
@@ -61,7 +58,6 @@ export const getCheckoutSession = async (req, res) => {
 
     const photographer = await Photographer.findById(req.params.photographerId);
 
-    // const photographer = await Photographer.findById(photographerId);
     const user = await User.findById(req.userId);
     const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
@@ -112,5 +108,35 @@ export const getCheckoutSession = async (req, res) => {
       success: false,
       message: "Error creating checkout session",
     });
+  }
+};
+
+export const getBookings = async (req, res) => {
+  try {
+    const user = await User.findById(req.userId);
+
+    let bookings;
+
+    if (user.role === "admin") {
+      bookings = await Booking.find()
+        .populate("user", "name email")
+        .populate("photographer", "name");
+    } else if (user.role === "photographer") {
+      bookings = await Booking.find({ photographer: req.userId }).populate(
+        "user",
+        "name email"
+      );
+    } else {
+      bookings = await Booking.find({ user: req.userId }).populate(
+        "photographer",
+        "name"
+      );
+    }
+
+    res.status(200).json({ success: true, bookings });
+  } catch (err) {
+    res
+      .status(500)
+      .json({ success: false, message: "Error fetching bookings" });
   }
 };

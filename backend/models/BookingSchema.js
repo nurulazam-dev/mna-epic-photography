@@ -4,7 +4,6 @@ const BookingSchema = new mongoose.Schema({
   programDate: {
     type: Date,
     required: true,
-    // unique: false,
   },
   servicePrice: {
     type: Number,
