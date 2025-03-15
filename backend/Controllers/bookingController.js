@@ -111,32 +111,30 @@ export const getCheckoutSession = async (req, res) => {
   }
 };
 
-export const getBookings = async (req, res) => {
+export const getAllBookings = async (req, res) => {
   try {
     const user = await User.findById(req.userId);
 
-    let bookings;
-
-    if (user.role === "admin") {
-      bookings = await Booking.find()
-        .populate("user", "name email")
-        .populate("photographer", "name");
-    } else if (user.role === "photographer") {
-      bookings = await Booking.find({ photographer: req.userId }).populate(
-        "user",
-        "name email"
-      );
-    } else {
-      bookings = await Booking.find({ user: req.userId }).populate(
-        "photographer",
-        "name"
-      );
+    if (!user || user.role !== "admin") {
+      return res.status(403).json({
+        success: false,
+        message: "Unauthorized access. Only admin can view all bookings.",
+      });
     }
 
-    res.status(200).json({ success: true, bookings });
+    const bookings = await Booking.find()
+      .populate("user", "name email")
+      .populate("photographer", "name servicePrice");
+
+    res.status(200).json({
+      success: true,
+      message: "Successfully got all bookings",
+      data: bookings,
+    });
   } catch (err) {
-    res
-      .status(500)
-      .json({ success: false, message: "Error fetching bookings" });
+    res.status(500).json({
+      success: false,
+      message: "Internal server error",
+    });
   }
 };

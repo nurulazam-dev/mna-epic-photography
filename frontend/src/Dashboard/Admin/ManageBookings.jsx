@@ -17,10 +17,10 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import { formatDate } from "../../utils/formatDate";
 import { GppBad, VerifiedUser } from "@mui/icons-material";
 import { BASE_URL } from "../../../config";
-import useBookings from "../../hooks/useFetchData";
 import { useState } from "react";
 import UpdateBookingModal from "./UpdateModal/UpdateBookingModal";
 import Error from "../../components/Shared/Error";
+import useBookings from "../../hooks/useBookings";
 
 const ManageBookings = () => {
   const {
@@ -78,98 +78,97 @@ const ManageBookings = () => {
             </TableRow>
           </TableHead>
 
-          {/*  {!loading && !error && (
-
-          )} */}
-          <TableBody>
-            {bookings?.map((booking) => (
-              <TableRow key={booking?._id} hover>
-                <TableCell>
-                  <Box display="flex" alignItems="center" gap={2}>
-                    <Avatar src={booking?.photo} alt={booking?.name} />
-                    <Box>
-                      <Typography fontWeight="bold" display="flex">
-                        {booking?.user?.name}
-                        {booking?.user?.isVerified === true ? (
-                          <Box
-                            display="flex"
-                            alignItems="center"
-                            justifyContent="center"
-                            color="green"
-                            height={16}
-                            width={16}
-                            sx={{ marginLeft: "3px" }}
-                          >
-                            <VerifiedUser fontSize="10px" />
-                            {/* <CheckCircleIcon fontSize="10px" /> */}
-                          </Box>
-                        ) : (
-                          <Box
-                            display="flex"
-                            alignItems="center"
-                            justifyContent="center"
-                            color="red"
-                            height={16}
-                            width={16}
-                            sx={{ marginLeft: "3px" }}
-                          >
-                            <GppBad fontSize="10px" />
-                            {/* <CancelIcon fontSize="10px" /> */}
-                          </Box>
-                        )}
-                      </Typography>
-                      <Typography variant="body2" color="textSecondary">
-                        {booking?.user?.email}
-                      </Typography>
+          {!loading && !error && (
+            <TableBody>
+              {bookings?.map((booking) => (
+                <TableRow key={booking?._id} hover>
+                  <TableCell>
+                    <Box display="flex" alignItems="center" gap={2}>
+                      <Avatar src={booking?.photo} alt={booking?.name} />
+                      <Box>
+                        <Typography fontWeight="bold" display="flex">
+                          {booking?.user?.name}
+                          {booking?.user?.isVerified === true ? (
+                            <Box
+                              display="flex"
+                              alignItems="center"
+                              justifyContent="center"
+                              color="green"
+                              height={16}
+                              width={16}
+                              sx={{ marginLeft: "3px" }}
+                            >
+                              <VerifiedUser fontSize="10px" />
+                              {/* <CheckCircleIcon fontSize="10px" /> */}
+                            </Box>
+                          ) : (
+                            <Box
+                              display="flex"
+                              alignItems="center"
+                              justifyContent="center"
+                              color="red"
+                              height={16}
+                              width={16}
+                              sx={{ marginLeft: "3px" }}
+                            >
+                              <GppBad fontSize="10px" />
+                              {/* <CancelIcon fontSize="10px" /> */}
+                            </Box>
+                          )}
+                        </Typography>
+                        <Typography variant="body2" color="textSecondary">
+                          {booking?.user?.email}
+                        </Typography>
+                      </Box>
                     </Box>
-                  </Box>
-                </TableCell>
+                  </TableCell>
 
-                <TableCell align="center">{booking?.user?.phone}</TableCell>
+                  <TableCell align="center">{booking?.user?.phone}</TableCell>
 
-                <TableCell align="center">
-                  {booking?.isPaid ? (
-                    <Box
-                      display="flex"
-                      alignItems="center"
-                      justifyContent="center"
-                      color="green"
+                  <TableCell align="center">
+                    {booking?.isPaid ? (
+                      <Box
+                        display="flex"
+                        alignItems="center"
+                        justifyContent="center"
+                        color="green"
+                      >
+                        <CheckCircleIcon sx={{ mr: 1 }} /> Paid
+                      </Box>
+                    ) : (
+                      <Box
+                        display="flex"
+                        alignItems="center"
+                        justifyContent="center"
+                        color="red"
+                      >
+                        <CancelIcon sx={{ mr: 1 }} /> Unpaid
+                      </Box>
+                    )}
+                  </TableCell>
+
+                  <TableCell align="center">{booking?.status}</TableCell>
+                  <TableCell align="center">${booking?.servicePrice}</TableCell>
+
+                  <TableCell align="center">
+                    {formatDate(booking?.createdAt)}
+                  </TableCell>
+                  <TableCell align="center">
+                    {formatDate(booking?.programDate)}
+                  </TableCell>
+                  <TableCell align="center" sx={{ padding: "2px" }}>
+                    <Button
+                      variant="contained"
+                      color="success"
+                      onClick={() => handleOpenModal(booking)}
                     >
-                      <CheckCircleIcon sx={{ mr: 1 }} /> Paid
-                    </Box>
-                  ) : (
-                    <Box
-                      display="flex"
-                      alignItems="center"
-                      justifyContent="center"
-                      color="red"
-                    >
-                      <CancelIcon sx={{ mr: 1 }} /> Unpaid
-                    </Box>
-                  )}
-                </TableCell>
-
-                <TableCell align="center">{booking?.status}</TableCell>
-                <TableCell align="center">${booking?.servicePrice}</TableCell>
-
-                <TableCell align="center">
-                  {formatDate(booking?.createdAt)}
-                </TableCell>
-                <TableCell align="center">
-                  {formatDate(booking?.programDate)}
-                </TableCell>
-                <TableCell align="center" sx={{ padding: "2px" }}>
-                  <Button
-                    variant="contained"
-                    color="success"
-                    onClick={() => handleOpenModal(booking)}
-                  >
-                    Update
-                  </Button>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
+                      Update
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          )}
         </Table>
       </TableContainer>
 

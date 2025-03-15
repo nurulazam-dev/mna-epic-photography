@@ -2,7 +2,8 @@ import express from "express";
 import { authenticate } from "../auth/verifyToken.js";
 import {
   checkPhotographerAvailability,
-  getBookings,
+  getAllBookings,
+  // getBookings,
   getCheckoutSession,
 } from "../Controllers/bookingController.js";
 import Booking from "../models/BookingSchema.js";
@@ -32,12 +33,14 @@ router.get("/booked-dates/:photographerId", async (req, res) => {
   }
 });
 
-router.get("/my-bookings", authenticate, getBookings);
-
 router.post(
   "/checkout-session/:photographerId",
   authenticate,
   getCheckoutSession
 );
+
+// router.get("/my-bookings", authenticate, getBookings);
+// router.get("/bookings", authenticate, getAllBookings);
+router.get("/", authenticate, getAllBookings);
 
 export default router;
