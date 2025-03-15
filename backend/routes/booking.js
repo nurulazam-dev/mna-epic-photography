@@ -3,7 +3,6 @@ import { authenticate, restrict } from "../auth/verifyToken.js";
 import {
   checkPhotographerAvailability,
   getAllBookings,
-  // getBookings,
   getCheckoutSession,
   updateBooking,
 } from "../Controllers/bookingController.js";
