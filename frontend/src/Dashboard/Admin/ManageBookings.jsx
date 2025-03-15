@@ -15,7 +15,7 @@ import {
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { formatDate } from "../../utils/formatDate";
-import { GppBad, VerifiedUser } from "@mui/icons-material";
+import { EventAvailable, GppBad, VerifiedUser } from "@mui/icons-material";
 import { BASE_URL } from "../../../config";
 import { useState } from "react";
 import UpdateBookingModal from "./UpdateModal/UpdateBookingModal";
@@ -29,7 +29,7 @@ const ManageBookings = () => {
     error,
   } = useBookings(`${BASE_URL}/bookings`);
 
-  console.log("bookings: ", bookings[1]);
+  console.log("bookings: ", bookings);
 
   const [selectedBooking, setSelectedBooking] = useState(null);
 
@@ -39,6 +39,11 @@ const ManageBookings = () => {
 
   const handleCloseModal = () => {
     setSelectedBooking(null);
+  };
+
+  const getPhotogLastName = (fullName) => {
+    const nameParts = fullName.trim().split(" ");
+    return nameParts.length > 1 ? nameParts[nameParts.length - 1] : fullName;
   };
 
   return (
@@ -72,8 +77,11 @@ const ManageBookings = () => {
               <TableCell align="center">Status</TableCell>
               <TableCell align="center">Price</TableCell>
               <TableCell align="center">Payment</TableCell>
-              <TableCell align="center">Booked on</TableCell>
-              <TableCell align="center">Program</TableCell>
+              <TableCell align="center">
+                {" "}
+                <EventAvailable fontSize="10px" />
+              </TableCell>
+              {/* <TableCell align="center">Program</TableCell> */}
               <TableCell align="center">Action</TableCell>
             </TableRow>
           </TableHead>
@@ -84,7 +92,10 @@ const ManageBookings = () => {
                 <TableRow key={booking?._id} hover>
                   <TableCell>
                     <Box display="flex" alignItems="center" gap={1}>
-                      <Avatar src={booking?.photo} alt={booking?.name} />
+                      <Avatar
+                        src={booking?.user?.photo}
+                        alt={booking?.user?.name}
+                      />
                       <Box>
                         <Typography fontWeight="bold" display="flex">
                           {booking?.user?.name}
@@ -123,13 +134,17 @@ const ManageBookings = () => {
                     </Box>
                   </TableCell>
 
+                  {/* photographer */}
                   <TableCell>
                     <Box display="flex" alignItems="center" gap={1}>
-                      <Avatar src={booking?.photo} alt={booking?.name} />
+                      <Avatar
+                        src={booking?.photographer?.photo}
+                        alt={booking?.photographer?.name}
+                      />
                       <Box>
                         <Typography fontWeight="bold" display="flex">
-                          {booking?.user?.name}
-                          {booking?.user?.isVerified === true ? (
+                          {getPhotogLastName(booking?.photographer?.name)}
+                          {booking?.photographer?.isApproved === "approved" ? (
                             <Box
                               display="flex"
                               alignItems="center"
@@ -158,7 +173,7 @@ const ManageBookings = () => {
                           )}
                         </Typography>
                         <Typography variant="body2" color="textSecondary">
-                          {booking?.user?.email}
+                          {booking?.photographer?.email}
                         </Typography>
                       </Box>
                     </Box>
@@ -199,11 +214,12 @@ const ManageBookings = () => {
                   </TableCell>
 
                   <TableCell align="center">
-                    {formatDate(booking?.createdAt)}
-                  </TableCell>
-                  <TableCell align="center">
+                    {formatDate(booking?.createdAt)} <br />
                     {formatDate(booking?.programDate)}
                   </TableCell>
+                  {/* <TableCell align="center">
+                    {formatDate(booking?.programDate)}
+                  </TableCell> */}
                   <TableCell align="center" sx={{ padding: "2px" }}>
                     <Button
                       variant="contained"

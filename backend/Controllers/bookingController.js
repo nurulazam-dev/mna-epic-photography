@@ -124,7 +124,11 @@ export const getAllBookings = async (req, res) => {
 
     const bookings = await Booking.find()
       .populate("user", "name email")
-      .populate("photographer", "name servicePrice");
+      .populate(
+        "photographer",
+        "name email phone photo isApproved servicePrice"
+      )
+      .exec();
 
     res.status(200).json({
       success: true,
