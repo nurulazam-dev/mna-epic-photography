@@ -40,7 +40,7 @@ router.post(
   getCheckoutSession
 );
 
-router.get("/", authenticate, getAllBookings);
+router.get("/", authenticate, restrict(["admin"]), getAllBookings);
 router.put("/:id", authenticate, restrict(["admin"]), updateBooking);
 
 export default router;
