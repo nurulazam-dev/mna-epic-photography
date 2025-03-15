@@ -15,7 +15,7 @@ import {
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { formatDate } from "../../utils/formatDate";
-import { EventAvailable, GppBad, VerifiedUser } from "@mui/icons-material";
+import { GppBad, VerifiedUser } from "@mui/icons-material";
 import { BASE_URL } from "../../../config";
 import { useState } from "react";
 import UpdateBookingModal from "./UpdateModal/UpdateBookingModal";
@@ -77,11 +77,8 @@ const ManageBookings = () => {
               <TableCell align="center">Status</TableCell>
               <TableCell align="center">Price</TableCell>
               <TableCell align="center">Payment</TableCell>
-              <TableCell align="center">
-                {" "}
-                <EventAvailable fontSize="10px" />
-              </TableCell>
-              {/* <TableCell align="center">Program</TableCell> */}
+              <TableCell align="center">Booked</TableCell>
+              <TableCell align="center">Program</TableCell>
               <TableCell align="center">Action</TableCell>
             </TableRow>
           </TableHead>
@@ -214,16 +211,16 @@ const ManageBookings = () => {
                   </TableCell>
 
                   <TableCell align="center">
-                    {formatDate(booking?.createdAt)} <br />
+                    {formatDate(booking?.createdAt)}
+                  </TableCell>
+                  <TableCell align="center">
                     {formatDate(booking?.programDate)}
                   </TableCell>
-                  {/* <TableCell align="center">
-                    {formatDate(booking?.programDate)}
-                  </TableCell> */}
                   <TableCell align="center" sx={{ padding: "2px" }}>
                     <Button
                       variant="contained"
                       color="success"
+                      size="small"
                       onClick={() => handleOpenModal(booking)}
                     >
                       Update

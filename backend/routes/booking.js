@@ -1,10 +1,11 @@
 import express from "express";
-import { authenticate } from "../auth/verifyToken.js";
+import { authenticate, restrict } from "../auth/verifyToken.js";
 import {
   checkPhotographerAvailability,
   getAllBookings,
   // getBookings,
   getCheckoutSession,
+  updateBooking,
 } from "../Controllers/bookingController.js";
 import Booking from "../models/BookingSchema.js";
 
@@ -40,5 +41,6 @@ router.post(
 );
 
 router.get("/", authenticate, getAllBookings);
+router.put("/:id", authenticate, restrict(["admin"]), updateBooking);
 
 export default router;
