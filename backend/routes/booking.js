@@ -39,8 +39,6 @@ router.post(
   getCheckoutSession
 );
 
-// router.get("/my-bookings", authenticate, getBookings);
-// router.get("/bookings", authenticate, getAllBookings);
 router.get("/", authenticate, getAllBookings);
 
 export default router;

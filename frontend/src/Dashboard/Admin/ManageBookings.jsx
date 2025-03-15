@@ -20,7 +20,7 @@ import { BASE_URL } from "../../../config";
 import { useState } from "react";
 import UpdateBookingModal from "./UpdateModal/UpdateBookingModal";
 import Error from "../../components/Shared/Error";
-import useBookings from "../../hooks/useBookings";
+import useBookings from "../../hooks/useFetchData";
 
 const ManageBookings = () => {
   const {
