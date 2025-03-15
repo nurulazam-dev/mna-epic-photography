@@ -83,7 +83,7 @@ const ManageBookings = () => {
               {bookings?.map((booking) => (
                 <TableRow key={booking?._id} hover>
                   <TableCell>
-                    <Box display="flex" alignItems="center" gap={2}>
+                    <Box display="flex" alignItems="center" gap={1}>
                       <Avatar src={booking?.photo} alt={booking?.name} />
                       <Box>
                         <Typography fontWeight="bold" display="flex">
@@ -124,7 +124,7 @@ const ManageBookings = () => {
                   </TableCell>
 
                   <TableCell>
-                    <Box display="flex" alignItems="center" gap={2}>
+                    <Box display="flex" alignItems="center" gap={1}>
                       <Avatar src={booking?.photo} alt={booking?.name} />
                       <Box>
                         <Typography fontWeight="bold" display="flex">
@@ -164,7 +164,17 @@ const ManageBookings = () => {
                     </Box>
                   </TableCell>
 
-                  <TableCell align="center">{booking?.status}</TableCell>
+                  <TableCell align="center">
+                    {booking?.status === "approved" ? (
+                      <Typography variant="body2" color="green">
+                        Approved
+                      </Typography>
+                    ) : (
+                      <Typography variant="body2" color="red">
+                        {booking?.status}
+                      </Typography>
+                    )}
+                  </TableCell>
                   <TableCell align="center">${booking?.servicePrice}</TableCell>
                   <TableCell align="center">
                     {booking?.isPaid ? (
