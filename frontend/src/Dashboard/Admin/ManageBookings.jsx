@@ -29,7 +29,7 @@ const ManageBookings = () => {
     error,
   } = useBookings(`${BASE_URL}/bookings`);
 
-  console.log("bookings: ", bookings);
+  console.log("bookings: ", bookings[1]);
 
   const [selectedBooking, setSelectedBooking] = useState(null);
 
@@ -68,13 +68,13 @@ const ManageBookings = () => {
           <TableHead>
             <TableRow sx={{ backgroundColor: "#f3f3f3" }}>
               <TableCell align="center">Client</TableCell>
-              <TableCell align="center">Phone</TableCell>
               <TableCell align="center">Photogs</TableCell>
-              <TableCell align="center">Payment</TableCell>
               <TableCell align="center">Status</TableCell>
               <TableCell align="center">Price</TableCell>
+              <TableCell align="center">Payment</TableCell>
               <TableCell align="center">Booked on</TableCell>
               <TableCell align="center">Program</TableCell>
+              <TableCell align="center">Action</TableCell>
             </TableRow>
           </TableHead>
 
@@ -123,8 +123,49 @@ const ManageBookings = () => {
                     </Box>
                   </TableCell>
 
-                  <TableCell align="center">{booking?.user?.phone}</TableCell>
+                  <TableCell>
+                    <Box display="flex" alignItems="center" gap={2}>
+                      <Avatar src={booking?.photo} alt={booking?.name} />
+                      <Box>
+                        <Typography fontWeight="bold" display="flex">
+                          {booking?.user?.name}
+                          {booking?.user?.isVerified === true ? (
+                            <Box
+                              display="flex"
+                              alignItems="center"
+                              justifyContent="center"
+                              color="green"
+                              height={16}
+                              width={16}
+                              sx={{ marginLeft: "3px" }}
+                            >
+                              <VerifiedUser fontSize="10px" />
+                              {/* <CheckCircleIcon fontSize="10px" /> */}
+                            </Box>
+                          ) : (
+                            <Box
+                              display="flex"
+                              alignItems="center"
+                              justifyContent="center"
+                              color="red"
+                              height={16}
+                              width={16}
+                              sx={{ marginLeft: "3px" }}
+                            >
+                              <GppBad fontSize="10px" />
+                              {/* <CancelIcon fontSize="10px" /> */}
+                            </Box>
+                          )}
+                        </Typography>
+                        <Typography variant="body2" color="textSecondary">
+                          {booking?.user?.email}
+                        </Typography>
+                      </Box>
+                    </Box>
+                  </TableCell>
 
+                  <TableCell align="center">{booking?.status}</TableCell>
+                  <TableCell align="center">${booking?.servicePrice}</TableCell>
                   <TableCell align="center">
                     {booking?.isPaid ? (
                       <Box
@@ -146,9 +187,6 @@ const ManageBookings = () => {
                       </Box>
                     )}
                   </TableCell>
-
-                  <TableCell align="center">{booking?.status}</TableCell>
-                  <TableCell align="center">${booking?.servicePrice}</TableCell>
 
                   <TableCell align="center">
                     {formatDate(booking?.createdAt)}
