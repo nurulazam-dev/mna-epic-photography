@@ -14,7 +14,6 @@ import {
 } from "@mui/material";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
-import { formatDate } from "../../utils/formatDate";
 import { GppBad, VerifiedUser } from "@mui/icons-material";
 import { BASE_URL } from "../../../config";
 import { useState } from "react";
@@ -211,10 +210,28 @@ const ManageBookings = () => {
                   </TableCell>
 
                   <TableCell align="center">
-                    {formatDate(booking?.createdAt)}
+                    {booking?.createdAt
+                      ? new Date(booking.createdAt).toLocaleDateString(
+                          "en-GB",
+                          {
+                            day: "2-digit",
+                            month: "2-digit",
+                            year: "2-digit",
+                          }
+                        )
+                      : "???"}
                   </TableCell>
                   <TableCell align="center">
-                    {formatDate(booking?.programDate)}
+                    {booking?.programDate
+                      ? new Date(booking.programDate).toLocaleDateString(
+                          "en-GB",
+                          {
+                            day: "2-digit",
+                            month: "2-digit",
+                            year: "2-digit",
+                          }
+                        )
+                      : "???"}
                   </TableCell>
                   <TableCell align="center" sx={{ padding: "2px" }}>
                     <Button
