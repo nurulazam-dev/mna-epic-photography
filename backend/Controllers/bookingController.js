@@ -163,6 +163,7 @@ export const getAllBookings = async (req, res) => {
           isPaid: 1,
           status: 1,
           programDate: 1,
+          createdAt: 1,
         },
       },
     ]);
