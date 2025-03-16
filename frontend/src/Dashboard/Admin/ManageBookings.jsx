@@ -86,14 +86,14 @@ const ManageBookings = () => {
             <TableBody>
               {bookings?.map((booking) => (
                 <TableRow key={booking?._id} hover>
-                  <TableCell>
+                  <TableCell sx={{ padding: "2px 10px" }}>
                     <Box display="flex" alignItems="center" gap={1}>
                       <Avatar
                         src={booking?.user?.photo}
                         alt={booking?.user?.name}
                       />
                       <Box>
-                        <Typography fontWeight="bold" display="flex">
+                        <Typography variant="body2" display="flex">
                           {booking?.user?.name}
                           {booking?.user?.isVerified === true ? (
                             <Box
@@ -123,7 +123,7 @@ const ManageBookings = () => {
                             </Box>
                           )}
                         </Typography>
-                        <Typography variant="body2" color="textSecondary">
+                        <Typography variant="caption" color="textSecondary">
                           {booking?.user?.email}
                         </Typography>
                       </Box>
@@ -131,14 +131,14 @@ const ManageBookings = () => {
                   </TableCell>
 
                   {/* photographer */}
-                  <TableCell>
+                  <TableCell sx={{ padding: "2px 10px" }}>
                     <Box display="flex" alignItems="center" gap={1}>
                       <Avatar
                         src={booking?.photographer?.photo}
                         alt={booking?.photographer?.name}
                       />
                       <Box>
-                        <Typography fontWeight="bold" display="flex">
+                        <Typography variant="body2" display="flex">
                           {getPhotogLastName(booking?.photographer?.name)}
                           {booking?.photographer?.isApproved === "approved" ? (
                             <Box
@@ -168,7 +168,7 @@ const ManageBookings = () => {
                             </Box>
                           )}
                         </Typography>
-                        <Typography variant="body2" color="textSecondary">
+                        <Typography variant="caption" color="textSecondary">
                           {booking?.photographer?.email}
                         </Typography>
                       </Box>
@@ -210,28 +210,32 @@ const ManageBookings = () => {
                   </TableCell>
 
                   <TableCell align="center">
-                    {booking?.createdAt
-                      ? new Date(booking.createdAt).toLocaleDateString(
-                          "en-GB",
-                          {
-                            day: "2-digit",
-                            month: "2-digit",
-                            year: "2-digit",
-                          }
-                        )
-                      : "???"}
+                    <Typography variant="caption">
+                      {booking?.createdAt
+                        ? new Date(booking.createdAt).toLocaleDateString(
+                            "en-GB",
+                            {
+                              day: "2-digit",
+                              month: "2-digit",
+                              year: "2-digit",
+                            }
+                          )
+                        : "???"}
+                    </Typography>
                   </TableCell>
                   <TableCell align="center">
-                    {booking?.programDate
-                      ? new Date(booking.programDate).toLocaleDateString(
-                          "en-GB",
-                          {
-                            day: "2-digit",
-                            month: "2-digit",
-                            year: "2-digit",
-                          }
-                        )
-                      : "???"}
+                    <Typography variant="caption">
+                      {booking?.programDate
+                        ? new Date(booking.programDate).toLocaleDateString(
+                            "en-GB",
+                            {
+                              day: "2-digit",
+                              month: "2-digit",
+                              year: "2-digit",
+                            }
+                          )
+                        : "???"}
+                    </Typography>
                   </TableCell>
                   <TableCell align="center" sx={{ padding: "2px" }}>
                     <Button
