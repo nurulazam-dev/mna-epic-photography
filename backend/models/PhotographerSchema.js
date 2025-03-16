@@ -10,7 +10,6 @@ const PhotographerSchema = new mongoose.Schema({
   servicePrice: { type: Number },
   role: {
     type: String,
-    // enum: ["admin", "photographer"],
     default: "photographer",
   },
   gender: {

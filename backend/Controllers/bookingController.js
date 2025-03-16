@@ -118,16 +118,54 @@ export const getAllBookings = async (req, res) => {
     if (!user || user.role !== "admin") {
       return res.status(403).json({
         success: false,
-        message: "Unauthorized access. Only admin can view all bookings.",
+        message: "Only admin can view all bookings.",
       });
     }
 
-    const bookings = await Booking.find()
-      .populate("user", "name email isVerified photo")
+    // const bookings = await Booking.find()
+    /* .populate("user", "name email phone photo isVerified role")
       .populate(
         "photographer",
         "name email phone photo isApproved servicePrice"
-      );
+      ) */
+    const bookings = await Booking.aggregate([
+      {
+        $lookup: {
+          from: "users",
+          localField: "user",
+          foreignField: "_id",
+          as: "user",
+        },
+      },
+      { $unwind: "$user" },
+      {
+        $lookup: {
+          from: "photographers",
+          localField: "photographer",
+          foreignField: "_id",
+          as: "photographer",
+        },
+      },
+      { $unwind: "$photographer" },
+      {
+        $project: {
+          "user.name": 1,
+          "user.email": 1,
+          "user.phone": 1,
+          "user.photo": 1,
+          "user.isVerified": 1,
+          "photographer.name": 1,
+          "photographer.email": 1,
+          "photographer.phone": 1,
+          "photographer.photo": 1,
+          "photographer.isApproved": 1,
+          servicePrice: 1,
+          isPaid: 1,
+          status: 1,
+          programDate: 1,
+        },
+      },
+    ]);
 
     res.status(200).json({
       success: true,
