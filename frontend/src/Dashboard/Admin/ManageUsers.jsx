@@ -62,7 +62,9 @@ const ManageUsers = () => {
             <TableRow sx={{ backgroundColor: "#f3f3f3" }}>
               <TableCell align="center">Client</TableCell>
               <TableCell align="center">Role</TableCell>
+              <TableCell align="center">Verified</TableCell>
               <TableCell align="center">Phone</TableCell>
+              <TableCell align="center">Gender</TableCell>
               <TableCell align="center">Registered</TableCell>
               <TableCell align="center">Action</TableCell>
             </TableRow>
@@ -116,7 +118,11 @@ const ManageUsers = () => {
                   </TableCell>
 
                   <TableCell align="center">{user?.role}</TableCell>
+                  <TableCell align="center">
+                    {user?.isVerified ? "Verified" : "Not Verify"}
+                  </TableCell>
                   <TableCell align="center">{user?.phone}</TableCell>
+                  <TableCell align="center">{user?.gender}</TableCell>
                   <TableCell align="center">
                     {formatDate(user?.createdAt)}
                   </TableCell>
@@ -124,6 +130,7 @@ const ManageUsers = () => {
                     <Button
                       variant="contained"
                       color="success"
+                      size="small"
                       onClick={() => handleOpenModal(user)}
                     >
                       Update
