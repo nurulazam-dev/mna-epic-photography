@@ -67,6 +67,7 @@ const ManageUsers = () => {
               <TableCell align="center">Gender</TableCell>
               <TableCell align="center">Registered</TableCell>
               <TableCell align="center">Action</TableCell>
+              {/* <TableCell align="center">Action</TableCell> */}
             </TableRow>
           </TableHead>
 
@@ -128,14 +129,23 @@ const ManageUsers = () => {
                   <TableCell align="center">
                     {formatDate(user?.createdAt)}
                   </TableCell>
-                  <TableCell align="center" sx={{ padding: "2px" }}>
+                  <TableCell align="center" sx={{ padding: "6px" }}>
                     <Button
                       variant="contained"
                       color="success"
                       size="small"
+                      sx={{ marginRight: "6px" }}
                       onClick={() => handleOpenModal(user)}
                     >
                       Update
+                    </Button>
+                    <Button
+                      variant="contained"
+                      color="error"
+                      size="small"
+                      onClick={() => handleOpenModal(user)}
+                    >
+                      Delete
                     </Button>
                   </TableCell>
                 </TableRow>

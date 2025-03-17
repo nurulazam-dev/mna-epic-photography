@@ -127,6 +127,7 @@ const AdminProfile = ({ adminData }) => {
                   name="phone"
                   value={formData.phone}
                   onChange={handleInputChange}
+                  disabled
                   margin="normal"
                 />
               </Grid>
