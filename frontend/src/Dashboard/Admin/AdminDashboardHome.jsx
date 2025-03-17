@@ -98,13 +98,13 @@ const AdminDashboardHome = () => {
         </Grid>
       </Grid>
 
-      <Grid container spacing={3} sx={{ marginTop: 1 }}>
+      <Grid container spacing={2} sx={{ marginTop: 1 }}>
         <Grid item xs={12} md={6}>
-          <Paper sx={{ padding: 3 }}>
+          <Paper sx={{ padding: 1 }}>
             <Typography variant="h6" textAlign="center" marginBottom={2}>
               Bookings Per Month
             </Typography>
-            <ResponsiveContainer width="100%" height={300}>
+            <ResponsiveContainer width="100%" height={250}>
               <BarChart data={summary?.bookingsPerMonth}>
                 <XAxis dataKey="month" />
                 <YAxis />
@@ -116,11 +116,11 @@ const AdminDashboardHome = () => {
         </Grid>
 
         <Grid item xs={12} md={6}>
-          <Paper sx={{ padding: 3 }}>
-            <Typography variant="h6" textAlign="center" marginBottom={2}>
+          <Paper sx={{ padding: 1 }}>
+            <Typography variant="h6" textAlign="center">
               User Roles Distribution
             </Typography>
-            <ResponsiveContainer width="100%" height={300}>
+            <ResponsiveContainer width="100%" height={265}>
               <PieChart>
                 <Pie
                   data={summary?.userRoles}
