@@ -62,7 +62,7 @@ const ManageUsers = () => {
             <TableRow sx={{ backgroundColor: "#f3f3f3" }}>
               <TableCell align="center">Client</TableCell>
               <TableCell align="center">Role</TableCell>
-              <TableCell align="center">Verified</TableCell>
+              <TableCell align="center">V. Status</TableCell>
               <TableCell align="center">Phone</TableCell>
               <TableCell align="center">Gender</TableCell>
               <TableCell align="center">Registered</TableCell>
@@ -117,7 +117,9 @@ const ManageUsers = () => {
                     </Box>
                   </TableCell>
 
-                  <TableCell align="center">{user?.role}</TableCell>
+                  <TableCell align="center" sx={{ textTransform: "uppercase" }}>
+                    {user?.role}
+                  </TableCell>
                   <TableCell align="center">
                     {user?.isVerified ? "Verified" : "Not Verify"}
                   </TableCell>
