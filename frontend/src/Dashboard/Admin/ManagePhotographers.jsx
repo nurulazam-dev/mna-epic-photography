@@ -67,7 +67,7 @@ const ManagePhotographers = () => {
               <TableCell align="center">Expertise</TableCell>
               <TableCell align="center">Phone</TableCell>
               <TableCell align="center">Experience</TableCell>
-              <TableCell align="center">Status</TableCell>
+              <TableCell align="center">Reg.Status</TableCell>
               <TableCell align="center">S.Price</TableCell>
               <TableCell align="center">Action</TableCell>
             </TableRow>

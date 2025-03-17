@@ -73,7 +73,7 @@ const ManageBookings = () => {
             <TableRow sx={{ backgroundColor: "#f3f3f3" }}>
               <TableCell align="center">Client</TableCell>
               <TableCell align="center">Photogs</TableCell>
-              <TableCell align="center">Status</TableCell>
+              <TableCell align="center">B.Status</TableCell>
               <TableCell align="center">Price</TableCell>
               <TableCell align="center">Payment</TableCell>
               <TableCell align="center">Booked</TableCell>
@@ -123,7 +123,12 @@ const ManageBookings = () => {
                             </Box>
                           )}
                         </Typography>
-                        <Typography variant="caption" color="textSecondary">
+                        <Typography
+                          variant="caption"
+                          color="textSecondary"
+                          component="div"
+                          sx={{ textOverflow: "ellipsis" }}
+                        >
                           {booking?.user?.email}
                         </Typography>
                       </Box>

@@ -119,8 +119,10 @@ const UpdateBookingModal = ({ booking, onClose }) => {
                   value={updatedBooking?.status}
                   onChange={handleChange}
                 >
-                  <MenuItem value="approved">Approved</MenuItem>
                   <MenuItem value="pending">Pending</MenuItem>
+                  <MenuItem value="approved">Approved</MenuItem>
+                  <MenuItem value="cancelled">Cancelled</MenuItem>
+                  <MenuItem value="completed">Completed</MenuItem>
                 </Select>
               </FormControl>
             </Grid>
