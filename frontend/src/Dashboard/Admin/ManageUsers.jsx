@@ -63,7 +63,7 @@ const ManageUsers = () => {
           borderRadius: 1,
         }}
       >
-        Manage Users
+        Manage Users ({users?.length})
       </Typography>
 
       <TableContainer component={Paper}>

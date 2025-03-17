@@ -65,7 +65,7 @@ const ManageBookings = () => {
           borderRadius: 1,
         }}
       >
-        Manage Bookings
+        Manage Bookings ({bookings?.length})
       </Typography>
       <TableContainer component={Paper}>
         <Table>

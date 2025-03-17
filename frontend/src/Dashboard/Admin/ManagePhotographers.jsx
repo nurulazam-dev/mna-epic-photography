@@ -56,7 +56,7 @@ const ManagePhotographers = () => {
           borderRadius: 1,
         }}
       >
-        Manage Users
+        Manage Photographers ({photogs?.length})
       </Typography>
 
       <TableContainer component={Paper}>
