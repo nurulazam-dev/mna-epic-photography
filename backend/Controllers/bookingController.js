@@ -32,6 +32,24 @@ export const checkPhotographerAvailability = async (req, res) => {
   }
 };
 
+export const photographerBookedDate = async (req, res) => {
+  try {
+    const { photographerId } = req.params;
+
+    const bookings = await Booking.find({
+      photographer: photographerId,
+    }).select("programDate");
+
+    const bookedDates = bookings.map((booking) => booking.programDate);
+
+    res.status(200).json({ success: true, bookedDates });
+  } catch (err) {
+    res
+      .status(500)
+      .json({ success: false, message: "Error fetching booked dates" });
+  }
+};
+
 /* ====================================
   Handle Booking Checkout and Payment
 ======================================*/

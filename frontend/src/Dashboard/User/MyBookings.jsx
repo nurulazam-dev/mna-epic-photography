@@ -25,6 +25,8 @@ const MyBookings = () => {
     error,
   } = useFetchData(`${BASE_URL}/users/booking/my-bookings`);
 
+  console.log(bookings);
+
   return (
     <Box mt={2}>
       <Typography
