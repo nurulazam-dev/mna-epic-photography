@@ -19,18 +19,28 @@ import useUsers from "../../hooks/useFetchData";
 import Error from "../../components/Shared/Error";
 import { useState } from "react";
 import UpdateUserModal from "./UpdateModal/UpdateUserModal";
+import DeleteUserModal from "./UpdateModal/DeleteUserModel";
 
 const ManageUsers = () => {
   const { data: users, loading, error } = useUsers(`${BASE_URL}/users`);
 
   const [selectedUser, setSelectedUser] = useState(null);
+  const [deleteUser, setDeleteUser] = useState(null);
 
-  const handleOpenModal = (user) => {
+  const handleOpenUpdateModal = (user) => {
     setSelectedUser(user);
   };
 
-  const handleCloseModal = () => {
+  const handleCloseUpdateModal = () => {
     setSelectedUser(null);
+  };
+
+  const handleOpenDeleteModal = (user) => {
+    setDeleteUser(user);
+  };
+
+  const handleCloseDeleteModal = () => {
+    setDeleteUser(null);
   };
 
   return (
@@ -67,7 +77,6 @@ const ManageUsers = () => {
               <TableCell align="center">Gender</TableCell>
               <TableCell align="center">Registered</TableCell>
               <TableCell align="center">Action</TableCell>
-              {/* <TableCell align="center">Action</TableCell> */}
             </TableRow>
           </TableHead>
 
@@ -135,7 +144,7 @@ const ManageUsers = () => {
                       color="success"
                       size="small"
                       sx={{ marginRight: "6px" }}
-                      onClick={() => handleOpenModal(user)}
+                      onClick={() => handleOpenUpdateModal(user)}
                     >
                       Update
                     </Button>
@@ -143,7 +152,7 @@ const ManageUsers = () => {
                       variant="contained"
                       color="error"
                       size="small"
-                      onClick={() => handleOpenModal(user)}
+                      onClick={() => handleOpenDeleteModal(user)}
                     >
                       Delete
                     </Button>
@@ -167,7 +176,12 @@ const ManageUsers = () => {
 
       {/* Update User Modal */}
       {selectedUser && (
-        <UpdateUserModal user={selectedUser} onClose={handleCloseModal} />
+        <UpdateUserModal user={selectedUser} onClose={handleCloseUpdateModal} />
+      )}
+
+      {/* Delete User Modal */}
+      {deleteUser && (
+        <DeleteUserModal user={deleteUser} onClose={handleCloseDeleteModal} />
       )}
     </Box>
   );
