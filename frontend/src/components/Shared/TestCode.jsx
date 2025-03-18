@@ -76,29 +76,6 @@ const TestCode = () => {
                 alt={img.title}
                 sx={{ objectFit: "cover", width: "100%" }}
               />
-              {/* <Box
-                sx={{
-                  position: "absolute",
-                  bottom: 0,
-                  left: 0,
-                  right: 0,
-                  bgcolor: "rgba(0, 0, 0, 0.5)",
-                  color: "white",
-                  p: 2,
-                }}
-              >
-                {img.category && (
-                  <Typography
-                    variant="subtitle2"
-                    sx={{ fontWeight: "bold", textTransform: "uppercase" }}
-                  >
-                    {img.category}
-                  </Typography>
-                )}
-                <Typography variant="h6" sx={{ fontWeight: "bold" }}>
-                  {img.title}
-                </Typography>
-              </Box> */}
             </Card>
           </Grid>
         ))}
