@@ -46,7 +46,7 @@ const images = [
 
 const TestCode = () => {
   return (
-    <Box sx={{ p: 4 }}>
+    <Box sx={{ p: 3 }}>
       <Typography variant="h4" fontWeight="bold" textAlign="center" mb={3}>
         Our Gallery
       </Typography>
@@ -64,8 +64,8 @@ const TestCode = () => {
             <Card
               sx={{
                 position: "relative",
-                height: img.rows * 160,
-                borderRadius: 2,
+                height: img.rows * 170,
+                borderRadius: 1,
                 overflow: "hidden",
               }}
             >
