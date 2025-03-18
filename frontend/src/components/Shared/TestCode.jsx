@@ -1,167 +1,110 @@
-/* eslint-disable react/prop-types */
-import { useState, useEffect } from "react";
-import { toast } from "react-toastify";
-import { BASE_URL, token } from "../../../../config";
-import {
-  Box,
-  Typography,
-  Button,
-  Paper,
-  // List,
-  // ListItem,
-  Divider,
-  TextField,
-} from "@mui/material";
+import { Box, Grid, Card, CardMedia, Typography } from "@mui/material";
+import img1 from "../../assets/images/eventPhotos/2.png";
+import img2 from "../../assets/images/eventPhotos/3.png";
+import img3 from "../../assets/images/eventPhotos/4.png";
+import img4 from "../../assets/images/eventPhotos/5.png";
+import img5 from "../../assets/images/eventPhotos/6.png";
+import img6 from "../../assets/images/eventPhotos/7.png";
 
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import dayjs from "dayjs";
+const images = [
+  {
+    src: img1,
+    cols: 6,
+    rows: 2,
+  },
+  {
+    src: img2,
+    cols: 3,
+    rows: 1,
+  },
+  {
+    src: img3,
+    cols: 3,
+    rows: 1,
+  },
+  {
+    src: img4,
+    cols: 6,
+    rows: 1,
+  },
+  {
+    src: img5,
+    cols: 4,
+    rows: 2,
+  },
+  {
+    src: img6,
+    cols: 4,
+    rows: 2,
+  },
+  {
+    src: img1,
+    cols: 4,
+    rows: 2,
+  },
+];
 
-// const SidePanel = ({ photographerId, servicePrice, timeSlots }) => {
-const SidePanel = ({ photographerId, servicePrice }) => {
-  const [selectedDate, setSelectedDate] = useState(null);
-  const [bookedDates, setBookedDates] = useState([]);
-
-  useEffect(() => {
-    const fetchBookedDates = async () => {
-      try {
-        const res = await fetch(
-          `${BASE_URL}/bookings/booked-dates/${photographerId}`
-        );
-        const data = await res.json();
-        if (res.ok) {
-          setBookedDates(data.bookedDates.map((date) => dayjs(date)));
-        } else {
-          throw new Error(data.message);
-        }
-      } catch (err) {
-        toast.error(err);
-      }
-    };
-    fetchBookedDates();
-  }, [photographerId]);
-
-  // Handle booking
-  const bookingHandler = async () => {
-    if (!selectedDate) {
-      toast.error("Please select a date");
-      return;
-    }
-
-    try {
-      const res = await fetch(
-        `${BASE_URL}/bookings/checkout-session/${photographerId}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({ programDate: selectedDate }),
-        }
-      );
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        throw new Error(data.message + " Please try again");
-      }
-      if (data.session.url) {
-        window.location.href = data.session.url;
-      }
-    } catch (err) {
-      toast.error(err.message);
-    }
-  };
-
+const TestCode = () => {
   return (
-    <Paper elevation={3} sx={{ p: 3, borderRadius: 2 }}>
-      {/* Service Price */}
-      <Box
-        display="flex"
-        justifyContent="space-between"
-        alignItems="center"
-        mb={2}
-      >
-        <Typography variant="subtitle1" fontWeight="bold">
-          Service Price
-        </Typography>
-        <Typography variant="h6" color="primary" fontWeight="bold">
-          {servicePrice} BDT
-        </Typography>
-      </Box>
+    <Box sx={{ p: 4 }}>
+      <Typography variant="h4" fontWeight="bold" textAlign="center" mb={3}>
+        Our Gallery
+      </Typography>
 
-      {/* Available Time Slots */}
-      {/* <Box my={3}>
-        <Typography
-          variant="subtitle1"
-          fontWeight="bold"
-          color="primary"
-          gutterBottom
-        >
-          Available Time Slots:
-        </Typography>
-        <List>
-          {timeSlots?.map((item, index) => (
-            <ListItem
-              key={index}
-              sx={{ display: "flex", justifyContent: "space-between" }}
+      <Grid container spacing={2}>
+        {images.map((img, index) => (
+          <Grid
+            item
+            key={index}
+            xs={12}
+            sm={img.cols * 2}
+            md={img.cols}
+            lg={img.cols}
+          >
+            <Card
+              sx={{
+                position: "relative",
+                height: img.rows * 160,
+                borderRadius: 2,
+                overflow: "hidden",
+              }}
             >
-              <Typography variant="body2" fontWeight="bold">
-                {item.day.charAt(0).toUpperCase() + item.day.slice(1)}
-              </Typography>
-              <Typography
-                variant="body2"
-                fontWeight="bold"
-                color="textSecondary"
+              <CardMedia
+                component="img"
+                height="100%"
+                image={img.src}
+                alt={img.title}
+                sx={{ objectFit: "cover", width: "100%" }}
+              />
+              {/* <Box
+                sx={{
+                  position: "absolute",
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  bgcolor: "rgba(0, 0, 0, 0.5)",
+                  color: "white",
+                  p: 2,
+                }}
               >
-                Time Slots
-                {convertTime(item.startingTime)} -{" "} 
-                {convertTime(item.endingTime)} 
-              </Typography>
-            </ListItem>
-          ))}
-        </List>
-      </Box> */}
-
-      {/* Date Picker for Booking */}
-      <Box my={3}>
-        <Typography
-          variant="subtitle1"
-          fontWeight="bold"
-          color="primary"
-          gutterBottom
-        >
-          Select a Date:
-        </Typography>
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <DatePicker
-            value={selectedDate}
-            onChange={(date) => setSelectedDate(date)}
-            disablePast
-            shouldDisableDate={(date) =>
-              bookedDates.some((bookedDate) => bookedDate.isSame(date, "day"))
-            }
-            renderInput={(params) => <TextField {...params} fullWidth />}
-          />
-        </LocalizationProvider>
-      </Box>
-
-      <Divider sx={{ my: 2 }} />
-
-      {/* Booking Button */}
-      <Button
-        variant="contained"
-        color="primary"
-        size="large"
-        fullWidth
-        onClick={bookingHandler}
-      >
-        Booking
-      </Button>
-    </Paper>
+                {img.category && (
+                  <Typography
+                    variant="subtitle2"
+                    sx={{ fontWeight: "bold", textTransform: "uppercase" }}
+                  >
+                    {img.category}
+                  </Typography>
+                )}
+                <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+                  {img.title}
+                </Typography>
+              </Box> */}
+            </Card>
+          </Grid>
+        ))}
+      </Grid>
+    </Box>
   );
 };
 
-export default SidePanel;
+export default TestCode;
