@@ -1,3 +1,5 @@
+import BusinessIcon from "@mui/icons-material/Business";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 import img1 from "../images/eventPhotos/2.png";
 import img2 from "../images/eventPhotos/5.png";
 import img3 from "../images/eventPhotos/4.png";
@@ -70,5 +72,18 @@ export const teamData = [
     name: "David Brown",
     role: "Senior Editor",
     img: "https://source.unsplash.com/150x150/?editor,photography",
+  },
+];
+
+export const missionVisionData = [
+  {
+    title: "Our Mission",
+    text: "To create stunning visual stories that connect with people and bring emotions to life through photography.",
+    icon: <BusinessIcon fontSize="large" color="primary" />,
+  },
+  {
+    title: "Our Vision",
+    text: "To be the most trusted photography brand, transforming moments into timeless art for generations.",
+    icon: <VisibilityIcon fontSize="large" color="secondary" />,
   },
 ];
