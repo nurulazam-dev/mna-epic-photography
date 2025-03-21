@@ -52,3 +52,5 @@ export const galleryImagesData = [
   { src: img6, span: { xs: 4, sm: 4 }, rows: 1 },
   { src: img1, span: { xs: 4, sm: 4 }, rows: 1 },
 ];
+
+export const heroImages = [img1, img2, img3, img4, img5, img6];
