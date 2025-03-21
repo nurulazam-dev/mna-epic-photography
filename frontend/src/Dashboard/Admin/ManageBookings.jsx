@@ -51,11 +51,9 @@ const ManageBookings = () => {
     const [domainName, domainExt] = domain.split(".");
 
     const shortDomain =
-      domainName.length > 4 ? `${domainName.slice(0, 4)}...` : domainName;
+      domainName.length > 2 ? `${domainName.slice(0, 2)}...` : domainName;
 
     return `${name}@${shortDomain}.${domainExt}`;
-
-    // return name.length > 6 ? `${name.slice(0, 6)}...@${domain}` : email;
   };
 
   return (

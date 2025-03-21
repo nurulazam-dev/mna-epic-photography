@@ -1,7 +1,6 @@
 import { BASE_URL } from "../../../config";
 import Error from "../../components/Shared/Error";
 import useFetchData from "../../hooks/useFetchData";
-import { formatDate } from "../../utils/formatDate";
 import {
   Table,
   TableBody,
@@ -17,6 +16,7 @@ import {
 } from "@mui/material";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
+import { GppBad, VerifiedUser } from "@mui/icons-material";
 
 const MyBookings = () => {
   const {
@@ -25,7 +25,16 @@ const MyBookings = () => {
     error,
   } = useFetchData(`${BASE_URL}/users/booking/my-bookings`);
 
-  console.log(bookings);
+  const getShortEmail = (email) => {
+    if (!email) return "";
+    const [name, domain] = email.split("@");
+    const [domainName, domainExt] = domain.split(".");
+
+    const shortDomain =
+      domainName.length > 2 ? `${domainName.slice(0, 2)}...` : domainName;
+
+    return `${name}@${shortDomain}.${domainExt}`;
+  };
 
   return (
     <Box mt={2}>
@@ -57,8 +66,8 @@ const MyBookings = () => {
                 <TableCell align="center">Status</TableCell>
                 <TableCell align="center">Payment</TableCell>
                 <TableCell align="center">Price</TableCell>
-                <TableCell align="center">Booked on</TableCell>
-                {/* <TableCell align="center">Program</TableCell> */}
+                <TableCell align="center">Booked</TableCell>
+                <TableCell align="center">Program</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -67,28 +76,58 @@ const MyBookings = () => {
                   <TableCell>
                     <Box display="flex" alignItems="center">
                       <Avatar
-                        src={booking?.photo}
-                        alt={booking?.name}
+                        src={booking?.photographer?.photo}
+                        alt={booking?.photographer?.name}
                         sx={{ width: 40, height: 40, mr: 1 }}
                       />
                       <Box>
-                        <Typography fontWeight="bold">
-                          {booking?.name}
+                        <Typography
+                          variant="body2"
+                          display="flex"
+                          alignItems="center"
+                        >
+                          {booking?.photographer?.name}
+                          {booking?.photographer?.isApproved == "approved" ? (
+                            <Box
+                              display="flex"
+                              alignItems="center"
+                              justifyContent="center"
+                              color="green"
+                              height={16}
+                              width={16}
+                              sx={{ marginLeft: "3px" }}
+                            >
+                              <VerifiedUser fontSize="10px" />
+                            </Box>
+                          ) : (
+                            <Box
+                              display="flex"
+                              alignItems="center"
+                              justifyContent="center"
+                              color="red"
+                              height={16}
+                              width={16}
+                              sx={{ marginLeft: "3px" }}
+                            >
+                              <GppBad fontSize="10px" />
+                            </Box>
+                          )}
                         </Typography>
-                        <Typography color="textSecondary" variant="body2">
-                          {booking?.email}
+                        <Typography variant="caption" color="textSecondary">
+                          {getShortEmail(booking?.photographer?.email)}
                         </Typography>
                       </Box>
                     </Box>
                   </TableCell>
                   <TableCell align="center">
                     <Typography color="textSecondary" variant="body2">
-                      {booking?.phone}
+                      {booking?.photographer?.phone}
                     </Typography>
                   </TableCell>
-                  <TableCell align="center">{booking?.expertise}</TableCell>
-                  {/* <TableCell align="center">{booking?.status}</TableCell> */}
-                  <TableCell align="center">{booking?.isApproved}</TableCell>
+                  <TableCell align="center">
+                    {booking?.photographer?.expertise}
+                  </TableCell>
+                  <TableCell align="center">{booking?.status}</TableCell>
                   <TableCell align="center">
                     {booking?.isPaid ? (
                       <Box
@@ -112,12 +151,32 @@ const MyBookings = () => {
                   </TableCell>
                   <TableCell align="center">${booking?.servicePrice}</TableCell>
                   <TableCell align="center">
-                    <Typography color="textSecondary" variant="body2">
-                      {formatDate(booking?.createdAt)}
+                    <Typography variant="body2">
+                      {booking?.createdAt
+                        ? new Date(booking.createdAt).toLocaleDateString(
+                            "en-GB",
+                            {
+                              day: "2-digit",
+                              month: "2-digit",
+                              year: "2-digit",
+                            }
+                          )
+                        : "???"}
                     </Typography>
-                    {/* <Typography color="textSecondary" variant="body2">
-                      {formatDate(booking?.programDate)}
-                    </Typography> */}
+                  </TableCell>
+                  <TableCell align="center">
+                    <Typography variant="body2">
+                      {booking?.programDate
+                        ? new Date(booking.programDate).toLocaleDateString(
+                            "en-GB",
+                            {
+                              day: "2-digit",
+                              month: "2-digit",
+                              year: "2-digit",
+                            }
+                          )
+                        : "???"}
+                    </Typography>
                   </TableCell>
                 </TableRow>
               ))}

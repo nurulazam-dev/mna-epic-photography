@@ -36,11 +36,11 @@ const BookingSchema = new mongoose.Schema({
 });
 
 BookingSchema.pre(/^find/, function (next) {
-  this.populate("user").populate({
+  /* this.populate("user").populate({
     path: "photographer",
     select: "name",
-  });
-
+  }); */
+  this.populate("user").populate("photographer");
   next();
 });
 

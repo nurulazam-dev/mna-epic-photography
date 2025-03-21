@@ -120,8 +120,6 @@ export const getCheckoutSession = async (req, res) => {
       session,
     });
   } catch (err) {
-    console.log(err);
-
     res.status(500).json({
       success: false,
       message: "Error creating checkout session",

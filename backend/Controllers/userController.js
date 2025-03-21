@@ -95,7 +95,7 @@ export const getUserProfile = async (req, res) => {
 };
 
 // get_My_booking controller
-export const getMyBooking = async (req, res) => {
+/* export const getMyBooking = async (req, res) => {
   try {
     const bookings = await Booking.find({ user: req.userId });
     const photographerIds = bookings.map((el) => el.photographer.id);
@@ -109,6 +109,23 @@ export const getMyBooking = async (req, res) => {
       data: photographers,
     });
   } catch (error) {
+    res.status(500).json({ success: false, message: "Something went wrong" });
+  }
+}; */
+
+export const getMyBooking = async (req, res) => {
+  try {
+    const bookings = await Booking.find({ user: req.userId })
+      .populate("photographer")
+      .select("status isPaid programDate createdAt servicePrice");
+
+    res.status(200).json({
+      success: true,
+      message: "Bookings retrieved successfully",
+      data: bookings,
+    });
+  } catch (error) {
+    console.error(error);
     res.status(500).json({ success: false, message: "Something went wrong" });
   }
 };
