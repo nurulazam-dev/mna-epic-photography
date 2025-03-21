@@ -10,36 +10,36 @@ export const servicesData = [
     title: "Wedding Photography",
     description:
       "Capture the most beautiful moments of your special day with our expert photographers.",
-    image: "https://source.unsplash.com/400x300/?wedding,photography",
+    image: img5,
   },
   {
     title: "Event Photography",
     description:
       "We cover corporate and personal events with high-quality photography.",
-    image: "https://source.unsplash.com/400x300/?event,photography",
+    image: img1,
   },
   {
     title: "Portrait Photography",
     description:
       "Professional portrait sessions tailored to your personality and style.",
-    image: "https://source.unsplash.com/400x300/?portrait,photography",
+    image: img3,
   },
   {
     title: "Product Photography",
     description: "High-quality product photos that make your brand stand out.",
-    image: "https://source.unsplash.com/400x300/?product,photography",
+    image: img2,
   },
   {
     title: "Fashion Photography",
     description:
       "Showcase the latest fashion trends with stunning photography.",
-    image: "https://source.unsplash.com/400x300/?fashion,photography",
+    image: img4,
   },
   {
     title: "Nature Photography",
     description:
       "Capture the beauty of nature with our professional photographers.",
-    image: "https://source.unsplash.com/400x300/?nature,photography",
+    image: img6,
   },
 ];
 
@@ -54,3 +54,21 @@ export const galleryImagesData = [
 ];
 
 export const heroImages = [img1, img2, img3, img4, img5, img6];
+
+export const teamData = [
+  {
+    name: "M N Azam",
+    role: "Founder & Lead Photographer",
+    img: "https://source.unsplash.com/150x150/?man,portrait",
+  },
+  {
+    name: "Jane Smith",
+    role: "Creative Director",
+    img: "https://source.unsplash.com/150x150/?woman,portrait",
+  },
+  {
+    name: "David Brown",
+    role: "Senior Editor",
+    img: "https://source.unsplash.com/150x150/?editor,photography",
+  },
+];
