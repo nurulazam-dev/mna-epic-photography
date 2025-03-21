@@ -45,6 +45,19 @@ const ManageBookings = () => {
     return nameParts.length > 1 ? nameParts[nameParts.length - 1] : fullName;
   };
 
+  const getShortEmail = (email) => {
+    if (!email) return "";
+    const [name, domain] = email.split("@");
+    const [domainName, domainExt] = domain.split(".");
+
+    const shortDomain =
+      domainName.length > 4 ? `${domainName.slice(0, 4)}...` : domainName;
+
+    return `${name}@${shortDomain}.${domainExt}`;
+
+    // return name.length > 6 ? `${name.slice(0, 6)}...@${domain}` : email;
+  };
+
   return (
     <Box>
       {loading && !error && (
@@ -174,7 +187,7 @@ const ManageBookings = () => {
                           )}
                         </Typography>
                         <Typography variant="caption" color="textSecondary">
-                          {booking?.photographer?.email}
+                          {getShortEmail(booking?.photographer?.email)}
                         </Typography>
                       </Box>
                     </Box>
@@ -215,7 +228,7 @@ const ManageBookings = () => {
                   </TableCell>
 
                   <TableCell align="center">
-                    <Typography variant="caption">
+                    <Typography variant="body2">
                       {booking?.createdAt
                         ? new Date(booking.createdAt).toLocaleDateString(
                             "en-GB",
@@ -229,7 +242,7 @@ const ManageBookings = () => {
                     </Typography>
                   </TableCell>
                   <TableCell align="center">
-                    <Typography variant="caption">
+                    <Typography variant="body2">
                       {booking?.programDate
                         ? new Date(booking.programDate).toLocaleDateString(
                             "en-GB",

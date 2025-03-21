@@ -16,7 +16,7 @@ const Services = () => {
     >
       <Box textAlign="center" mb={3}>
         <Typography variant="h3" fontWeight="bold" color="primary">
-          Our Photography Services
+          Our Services
         </Typography>
       </Box>
 

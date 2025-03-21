@@ -113,7 +113,7 @@ const ManagePhotographers = () => {
                             </Box>
                           )}
                         </Typography>
-                        <Typography variant="body2" color="textSecondary">
+                        <Typography variant="caption" color="textSecondary">
                           {photog?.email}
                         </Typography>
                       </Box>
