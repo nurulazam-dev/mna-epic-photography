@@ -1,11 +1,12 @@
-import BusinessIcon from "@mui/icons-material/Business";
-import VisibilityIcon from "@mui/icons-material/Visibility";
 import img1 from "../images/eventPhotos/2.png";
 import img2 from "../images/eventPhotos/5.png";
 import img3 from "../images/eventPhotos/4.png";
 import img4 from "../images/eventPhotos/6.png";
 import img5 from "../images/eventPhotos/3.png";
 import img6 from "../images/eventPhotos/7.png";
+import founderImg from "../images/photographers/3.png";
+import directorImg from "../images/photographers/5.png";
+import editorImg from "../images/photographers/1.png";
 
 export const servicesData = [
   {
@@ -61,29 +62,16 @@ export const teamData = [
   {
     name: "M N Azam",
     role: "Founder & Lead Photographer",
-    img: "https://source.unsplash.com/150x150/?man,portrait",
+    img: founderImg,
   },
   {
     name: "Jane Smith",
     role: "Creative Director",
-    img: "https://source.unsplash.com/150x150/?woman,portrait",
+    img: directorImg,
   },
   {
     name: "David Brown",
     role: "Senior Editor",
-    img: "https://source.unsplash.com/150x150/?editor,photography",
-  },
-];
-
-export const missionVisionData = [
-  {
-    title: "Our Mission",
-    text: "To create stunning visual stories that connect with people and bring emotions to life through photography.",
-    icon: <BusinessIcon fontSize="large" color="primary" />,
-  },
-  {
-    title: "Our Vision",
-    text: "To be the most trusted photography brand, transforming moments into timeless art for generations.",
-    icon: <VisibilityIcon fontSize="large" color="secondary" />,
+    img: editorImg,
   },
 ];

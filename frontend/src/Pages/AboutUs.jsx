@@ -1,27 +1,10 @@
 import { Box, Typography, Grid, Paper, Avatar } from "@mui/material";
+import { teamData } from "../assets/data/localData";
 import BusinessIcon from "@mui/icons-material/Business";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 
 const AboutUs = () => {
-  const teamData = [
-    {
-      name: "M N Azam",
-      role: "Founder & Lead Photographer",
-      img: "https://source.unsplash.com/150x150/?man,portrait",
-    },
-    {
-      name: "Jane Smith",
-      role: "Creative Director",
-      img: "https://source.unsplash.com/150x150/?woman,portrait",
-    },
-    {
-      name: "David Brown",
-      role: "Senior Editor",
-      img: "https://source.unsplash.com/150x150/?editor,photography",
-    },
-  ];
-
-  const missionVision = [
+  const missionVisionData = [
     {
       title: "Our Mission",
       text: "To create stunning visual stories that connect with people and bring emotions to life through photography.",
@@ -66,7 +49,7 @@ const AboutUs = () => {
       </Box>
 
       <Grid container spacing={4} justifyContent="center">
-        {missionVision.map((item, index) => (
+        {missionVisionData.map((item, index) => (
           <Grid item xs={12} sm={6} key={index}>
             <Paper
               elevation={3}
@@ -84,7 +67,6 @@ const AboutUs = () => {
         ))}
       </Grid>
 
-      {/* Team Section */}
       <Box textAlign="center" mt={8} mb={4}>
         <Typography variant="h4" fontWeight="bold" color="primary">
           Meet Our Team
@@ -95,7 +77,6 @@ const AboutUs = () => {
         </Typography>
       </Box>
 
-      {/* Team Members */}
       <Grid container spacing={4} justifyContent="center">
         {teamData.map((member, index) => (
           <Grid item xs={12} sm={6} md={4} key={index}>
