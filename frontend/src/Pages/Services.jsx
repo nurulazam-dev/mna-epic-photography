@@ -5,6 +5,7 @@ import {
   Card,
   CardMedia,
   CardContent,
+  Box,
 } from "@mui/material";
 import { servicesData } from "../assets/data/localData";
 
@@ -13,13 +14,11 @@ const Services = () => {
     <Container
       sx={{ minHeight: { xs: "60vh", md: "70vh", lg: "80vh" }, py: 5 }}
     >
-      <Typography variant="h4" align="center" fontWeight="bold" gutterBottom>
-        Our Photography Services
-      </Typography>
-      <Typography variant="body1" align="center" color="text.secondary" mb={4}>
-        Explore our wide range of photography services to capture your special
-        moments.
-      </Typography>
+      <Box textAlign="center" mb={3}>
+        <Typography variant="h3" fontWeight="bold" color="primary">
+          Our Photography Services
+        </Typography>
+      </Box>
 
       <Grid container spacing={3}>
         {servicesData.map((service, index) => (

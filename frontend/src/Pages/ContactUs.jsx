@@ -27,20 +27,14 @@ const ContactUs = () => {
       sx={{
         minHeight: { xs: "60vh", md: "70vh", lg: "80vh" },
         px: 3,
-        py: 5,
-        bgcolor: "#f5f5f5",
+        // py: 2,
       }}
     >
-      <Box textAlign="center" mb={5}>
+      <Box textAlign="center" mb={3}>
         <Typography variant="h3" fontWeight="bold" color="primary">
           Contact Us
         </Typography>
-        <Typography variant="subtitle1" color="text.secondary" mt={1}>
-          We&apos;d love to hear from you! Reach out for inquiries,
-          collaborations, or support.
-        </Typography>
       </Box>
-
       <Grid container spacing={4} justifyContent="center">
         <Grid item xs={12} md={5}>
           <Paper elevation={3} sx={{ p: 4 }}>
@@ -119,10 +113,12 @@ const ContactUs = () => {
       </Grid>
 
       {/* Google Map */}
-      <Box mt={6} textAlign="center">
-        <Typography variant="h4" fontWeight="bold" color="primary" mb={2}>
-          Find Us Here
-        </Typography>
+      <Box my={4} textAlign="center">
+        <Box textAlign="center" mb={3}>
+          <Typography variant="h3" fontWeight="bold" color="primary">
+            Find Us Here
+          </Typography>
+        </Box>
         <Paper elevation={3} sx={{ overflow: "hidden", borderRadius: 2 }}>
           <iframe
             title="Google Map"

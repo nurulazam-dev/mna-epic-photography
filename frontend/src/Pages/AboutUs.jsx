@@ -23,24 +23,20 @@ const AboutUs = () => {
         minHeight: { xs: "60vh", md: "70vh", lg: "80vh" },
         px: 3,
         py: 5,
-        bgcolor: "#f5f5f5",
+        // bgcolor: "#f5f5f5",
       }}
     >
-      <Box textAlign="center" mb={5}>
+      <Box textAlign="center" mb={3}>
         <Typography variant="h3" fontWeight="bold" color="primary">
           About Us
         </Typography>
-        <Typography variant="subtitle1" color="text.secondary" mt={1}>
-          Learn more about our journey, mission, and the passionate team behind
-          our success.
-        </Typography>
       </Box>
 
-      <Box mb={5} textAlign="center" maxWidth="800px" mx="auto">
-        <Typography variant="h5" fontWeight="bold" color="primary.dark">
+      <Box mb={2} textAlign="center" maxWidth="800px" mx="auto">
+        <Typography variant="h5" fontWeight="bold">
           Who We Are
         </Typography>
-        <Typography variant="body1" color="text.secondary" mt={2}>
+        <Typography variant="body1" color="text.secondary">
           We are a leading photography company dedicated to capturing life’s
           most precious moments with artistic excellence. Our expert team
           specializes in wedding photography, portraits, events, and commercial
@@ -67,16 +63,11 @@ const AboutUs = () => {
         ))}
       </Grid>
 
-      <Box textAlign="center" mt={8} mb={4}>
-        <Typography variant="h4" fontWeight="bold" color="primary">
+      <Box textAlign="center" mt={3} mb={1}>
+        <Typography variant="h3" fontWeight="bold" color="primary">
           Meet Our Team
         </Typography>
-        <Typography variant="body1" color="text.secondary" mt={1}>
-          A group of passionate professionals dedicated to delivering
-          excellence.
-        </Typography>
       </Box>
-
       <Grid container spacing={4} justifyContent="center">
         {teamData.map((member, index) => (
           <Grid item xs={12} sm={6} md={4} key={index}>

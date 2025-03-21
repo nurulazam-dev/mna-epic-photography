@@ -4,9 +4,11 @@ import { galleryImagesData } from "../../assets/data/localData";
 const GallerySection = () => {
   return (
     <Box sx={{ px: 5, py: 2 }}>
-      <Typography variant="h4" fontWeight="bold" textAlign="center" mb={5}>
-        Our Gallery
-      </Typography>
+      <Box textAlign="center" mb={3}>
+        <Typography variant="h3" fontWeight="bold" color="primary">
+          Our Gallery
+        </Typography>
+      </Box>
 
       <Grid
         container

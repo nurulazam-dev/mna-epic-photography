@@ -44,11 +44,9 @@ const socialLinks = [
 
 const Footer = () => {
   return (
-    <Box sx={{ bgcolor: "primary.dark", color: "white", py: 5 }}>
+    <Box sx={{ bgcolor: "primary.dark", color: "white", py: 5, pb: 2 }}>
       <Container maxWidth="lg">
-        {/* Top Section */}
         <Grid container spacing={4}>
-          {/* About Us */}
           <Grid item xs={12} sm={6} md={3}>
             <Typography variant="h6" gutterBottom fontWeight="bold">
               MNA Epic Photography
@@ -60,7 +58,6 @@ const Footer = () => {
             </Typography>
           </Grid>
 
-          {/* Quick Links */}
           <Grid item xs={12} sm={6} md={3}>
             <Typography variant="h6" gutterBottom fontWeight="bold">
               Quick Links
@@ -74,7 +71,6 @@ const Footer = () => {
             ))}
           </Grid>
 
-          {/* Contact Information */}
           <Grid item xs={12} sm={6} md={3}>
             <Typography variant="h6" gutterBottom fontWeight="bold">
               Contact Us
@@ -100,7 +96,6 @@ const Footer = () => {
             </Typography>
           </Grid>
 
-          {/* Newsletter Subscription */}
           <Grid item xs={12} sm={6} md={3}>
             <Typography variant="h6" gutterBottom fontWeight="bold">
               Stay Updated
@@ -109,7 +104,7 @@ const Footer = () => {
               Subscribe to our newsletter for the latest photography tips and
               updates.
             </Typography>
-            <Box component="form" sx={{ display: "flex", mt: 2 }}>
+            <Box component="form" sx={{ display: "flex", mt: 1 }}>
               <TextField
                 label="Your Email"
                 variant="outlined"
@@ -124,12 +119,9 @@ const Footer = () => {
           </Grid>
         </Grid>
 
-        {/* Divider */}
-        <Divider sx={{ my: 3, bgcolor: "gray" }} />
+        <Divider sx={{ my: 2, bgcolor: "gray" }} />
 
-        {/* Bottom Section */}
         <Grid container justifyContent="space-between" alignItems="center">
-          {/* Social Media Links */}
           <Grid item>
             {socialLinks.map((social) => (
               <IconButton key={social.id} href={social.path} target="_blank">
@@ -138,7 +130,6 @@ const Footer = () => {
             ))}
           </Grid>
 
-          {/* Copyright */}
           <Grid item>
             <Typography variant="body2" color="gray">
               &copy; {new Date().getFullYear()} MNA Epic Photography. All rights
