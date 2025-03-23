@@ -18,6 +18,7 @@ import usePhotogs from "../../hooks/useFetchData";
 import Error from "../../components/Shared/Error";
 import { useState } from "react";
 import UpdatePhotogModal from "./UpdateModal/UpdatePhotogModal";
+import { getShortEmail } from "../../utils/getShortEmail";
 
 const ManagePhotographers = () => {
   const {
@@ -114,7 +115,7 @@ const ManagePhotographers = () => {
                           )}
                         </Typography>
                         <Typography variant="caption" color="textSecondary">
-                          {photog?.email}
+                          {getShortEmail(photog?.email)}
                         </Typography>
                       </Box>
                     </Box>
