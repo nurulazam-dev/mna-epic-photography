@@ -20,6 +20,7 @@ import { useState } from "react";
 import UpdateBookingModal from "./UpdateModal/UpdateBookingModal";
 import Error from "../../components/Shared/Error";
 import useBookings from "../../hooks/useFetchData";
+import { formatDate } from "../../utils/formatDate";
 
 const ManageBookings = () => {
   const {
@@ -228,28 +229,14 @@ const ManageBookings = () => {
                   <TableCell align="center">
                     <Typography variant="body2">
                       {booking?.createdAt
-                        ? new Date(booking.createdAt).toLocaleDateString(
-                            "en-GB",
-                            {
-                              day: "2-digit",
-                              month: "2-digit",
-                              year: "2-digit",
-                            }
-                          )
+                        ? formatDate(booking.createdAt)
                         : "???"}
                     </Typography>
                   </TableCell>
                   <TableCell align="center">
                     <Typography variant="body2">
                       {booking?.programDate
-                        ? new Date(booking.programDate).toLocaleDateString(
-                            "en-GB",
-                            {
-                              day: "2-digit",
-                              month: "2-digit",
-                              year: "2-digit",
-                            }
-                          )
+                        ? formatDate(booking.programDate)
                         : "???"}
                     </Typography>
                   </TableCell>
