@@ -17,6 +17,7 @@ import {
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { GppBad, VerifiedUser } from "@mui/icons-material";
+import { getShortEmail } from "../../utils/getShortEmail";
 
 const MyBookings = () => {
   const {
@@ -24,17 +25,6 @@ const MyBookings = () => {
     loading,
     error,
   } = useFetchData(`${BASE_URL}/users/booking/my-bookings`);
-
-  const getShortEmail = (email) => {
-    if (!email) return "";
-    const [name, domain] = email.split("@");
-    const [domainName, domainExt] = domain.split(".");
-
-    const shortDomain =
-      domainName.length > 2 ? `${domainName.slice(0, 2)}...` : domainName;
-
-    return `${name}@${shortDomain}.${domainExt}`;
-  };
 
   return (
     <Box mt={2}>
@@ -63,7 +53,7 @@ const MyBookings = () => {
                 <TableCell align="center">Photographer</TableCell>
                 <TableCell align="center">Phone</TableCell>
                 <TableCell align="center">Expertise</TableCell>
-                <TableCell align="center">Status</TableCell>
+                <TableCell align="center">B.Status</TableCell>
                 <TableCell align="center">Payment</TableCell>
                 <TableCell align="center">Price</TableCell>
                 <TableCell align="center">Booked</TableCell>
@@ -73,7 +63,7 @@ const MyBookings = () => {
             <TableBody>
               {bookings?.map((booking) => (
                 <TableRow key={booking._id} hover>
-                  <TableCell>
+                  <TableCell sx={{ padding: "2px 10px" }}>
                     <Box display="flex" alignItems="center">
                       <Avatar
                         src={booking?.photographer?.photo}
