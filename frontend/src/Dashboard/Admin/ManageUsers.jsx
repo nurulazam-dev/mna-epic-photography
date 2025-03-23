@@ -20,6 +20,7 @@ import Error from "../../components/Shared/Error";
 import { useState } from "react";
 import UpdateUserModal from "./UpdateModal/UpdateUserModal";
 import DeleteUserModal from "./UpdateModal/DeleteUserModel";
+import { getShortEmail } from "../../utils/getShortEmail";
 
 const ManageUsers = () => {
   const { data: users, loading, error } = useUsers(`${BASE_URL}/users`);
@@ -121,7 +122,7 @@ const ManageUsers = () => {
                           )}
                         </Typography>
                         <Typography variant="body2" color="textSecondary">
-                          {user?.email}
+                          {getShortEmail(user?.email)}
                         </Typography>
                       </Box>
                     </Box>
