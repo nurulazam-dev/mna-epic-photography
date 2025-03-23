@@ -31,13 +31,11 @@ const PhotographerDetails = () => {
 
   const {
     name,
-    // bio,
     reviews,
     totalRating,
     expertise,
     servicePrice,
     experience,
-    // timeSlots,
     about,
     averageRating,
     photo,
@@ -108,7 +106,6 @@ const PhotographerDetails = () => {
           <SidePanel
             photographerId={photographer._id}
             servicePrice={servicePrice}
-            // timeSlots={timeSlots}
           />
         </Grid>
       </Grid>
