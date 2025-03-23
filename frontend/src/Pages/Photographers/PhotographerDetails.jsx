@@ -67,15 +67,12 @@ const PhotographerDetails = () => {
                   Total Ratings: {totalRating}
                 </Typography>
                 <Typography variant="body2" color="textSecondary">
-                  (Avg Ratings: {averageRating})
+                  (Avg Ratings:{" "}
+                  {averageRating > 0
+                    ? averageRating?.toFixed(1)
+                    : averageRating}
+                  )
                 </Typography>
-                {/* <Typography
-                  variant="body2"
-                  color="textSecondary"
-                  sx={{ maxWidth: 400, mt: 1 }}
-                >
-                  {bio}
-                </Typography> */}
               </Box>
             </Box>
             {/* Tabs: About & Feedback */}

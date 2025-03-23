@@ -16,6 +16,7 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { formatDate } from "../../utils/formatDate";
 import { GppBad, VerifiedUser } from "@mui/icons-material";
+import { getShortEmail } from "../../utils/getShortEmail";
 
 const Bookings = ({ bookings }) => {
   return (
@@ -41,7 +42,7 @@ const Bookings = ({ bookings }) => {
               <TableCell align="center">Client</TableCell>
               <TableCell align="center">Phone</TableCell>
               <TableCell align="center">Payment</TableCell>
-              <TableCell align="center">Status</TableCell>
+              <TableCell align="center">B.Status</TableCell>
               <TableCell align="center">Price</TableCell>
               <TableCell align="center">Booked on</TableCell>
               <TableCell align="center">Program</TableCell>
@@ -51,7 +52,7 @@ const Bookings = ({ bookings }) => {
           <TableBody>
             {bookings?.map((item) => (
               <TableRow key={item?._id} hover>
-                <TableCell>
+                <TableCell sx={{ padding: "2px 10px" }}>
                   <Box display="flex" alignItems="center" gap={2}>
                     <Avatar src={item?.user?.photo} alt={item?.user?.name} />
                     <Box>
@@ -86,7 +87,7 @@ const Bookings = ({ bookings }) => {
                         )}
                       </Typography>
                       <Typography variant="body2" color="textSecondary">
-                        {item?.user?.email}
+                        {getShortEmail(item?.user?.email)}
                       </Typography>
                     </Box>
                   </Box>
@@ -117,7 +118,7 @@ const Bookings = ({ bookings }) => {
                 </TableCell>
 
                 <TableCell align="center">{item?.status}</TableCell>
-                <TableCell align="center">${item?.servicePrice}</TableCell>
+                <TableCell align="center">$ {item?.servicePrice}</TableCell>
 
                 <TableCell align="center">
                   {formatDate(item?.createdAt)}

@@ -43,7 +43,7 @@ const PhotographerCard = ({ photographer }) => {
         >
           <Star sx={{ color: "gold", fontSize: 18, mr: 0.5 }} />
           <Typography variant="body2" fontWeight={600} color="textPrimary">
-            {averageRating}
+            {averageRating > 0 ? averageRating?.toFixed(1) : averageRating}
           </Typography>
           <Typography variant="body2" color="textSecondary" sx={{ ml: 0.5 }}>
             ({totalRating})

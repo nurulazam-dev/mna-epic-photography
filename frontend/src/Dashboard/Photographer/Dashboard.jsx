@@ -126,7 +126,9 @@ const Dashboard = () => {
                     <Box display="flex" alignItems="center" gap={1} mt={1}>
                       {<Star />}
                       <Typography>
-                        {data.averageRating} ({data.totalRating})
+                        {data?.averageRating > 0
+                          ? data?.averageRating?.toFixed(1)
+                          : data?.averageRating}
                       </Typography>
                     </Box>
                     {/* <Typography fontSize={15} color="textSecondary" mt={1}>
