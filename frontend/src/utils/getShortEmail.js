@@ -4,7 +4,7 @@ export const getShortEmail = (email) => {
   const [domainName, domainExt] = domain.split(".");
 
   const shortDomain =
-    domainName.length > 2 ? `${domainName.slice(0, 2)}...` : domainName;
+    domainName.length > 1 ? `${domainName.slice(0, 1)}...` : domainName;
 
   return `${name}@${shortDomain}.${domainExt}`;
 };

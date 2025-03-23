@@ -21,6 +21,7 @@ import UpdateBookingModal from "./UpdateModal/UpdateBookingModal";
 import Error from "../../components/Shared/Error";
 import useBookings from "../../hooks/useFetchData";
 import { formatDate } from "../../utils/formatDate";
+import { getShortEmail } from "../../utils/getShortEmail";
 
 const ManageBookings = () => {
   const {
@@ -44,17 +45,6 @@ const ManageBookings = () => {
   const getPhotogLastName = (fullName) => {
     const nameParts = fullName.trim().split(" ");
     return nameParts.length > 1 ? nameParts[nameParts.length - 1] : fullName;
-  };
-
-  const getShortEmail = (email) => {
-    if (!email) return "";
-    const [name, domain] = email.split("@");
-    const [domainName, domainExt] = domain.split(".");
-
-    const shortDomain =
-      domainName.length > 2 ? `${domainName.slice(0, 2)}...` : domainName;
-
-    return `${name}@${shortDomain}.${domainExt}`;
   };
 
   return (
@@ -141,7 +131,7 @@ const ManageBookings = () => {
                           component="div"
                           sx={{ textOverflow: "ellipsis" }}
                         >
-                          {booking?.user?.email}
+                          {getShortEmail(booking?.user?.email)}
                         </Typography>
                       </Box>
                     </Box>
