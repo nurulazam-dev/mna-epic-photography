@@ -18,6 +18,8 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { GppBad, VerifiedUser } from "@mui/icons-material";
 import { getShortEmail } from "../../utils/getShortEmail";
+import { useState } from "react";
+import PaginationComponent from "../../components/Shared/PaginationComponent";
 
 const MyBookings = () => {
   const {
@@ -25,6 +27,14 @@ const MyBookings = () => {
     loading,
     error,
   } = useFetchData(`${BASE_URL}/users/booking/my-bookings`);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 4;
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const paginatedBookings = bookings?.slice(
+    startIndex,
+    startIndex + itemsPerPage
+  );
 
   return (
     <Box mt={2}>
@@ -61,7 +71,7 @@ const MyBookings = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {bookings?.map((booking) => (
+              {paginatedBookings?.map((booking) => (
                 <TableRow key={booking._id} hover>
                   <TableCell sx={{ padding: "2px 10px" }}>
                     <Box display="flex" alignItems="center">
@@ -174,6 +184,16 @@ const MyBookings = () => {
           </Table>
         </TableContainer>
       )}
+
+      {bookings?.length > itemsPerPage && (
+        <PaginationComponent
+          totalItems={bookings?.length}
+          itemsPerPage={itemsPerPage}
+          currentPage={currentPage}
+          onPageChange={setCurrentPage}
+        />
+      )}
+
       {!loading && !error && bookings.length === 0 && (
         <Typography
           mt={5}
