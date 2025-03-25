@@ -21,20 +21,19 @@ import { useState } from "react";
 import UpdateUserModal from "./UpdateModal/UpdateUserModal";
 import DeleteUserModal from "./UpdateModal/DeleteUserModel";
 import { getShortEmail } from "../../utils/getShortEmail";
+import PaginationComponent from "../../components/Shared/PaginationComponent";
 
 const ManageUsers = () => {
   const { data: users, loading, error } = useUsers(`${BASE_URL}/users`);
 
   const [selectedUser, setSelectedUser] = useState(null);
   const [deleteUser, setDeleteUser] = useState(null);
-  // ========================
-  /* const [currentPage, setCurrentPage] = useState(1);
-  const usersPerPage = 2; 
-  const indexOfLastUser = currentPage * usersPerPage;
-  const indexOfFirstUser = indexOfLastUser - usersPerPage;
-  const currentUsers = users?.slice(indexOfFirstUser, indexOfLastUser);
-  const pageCount = Math.ceil(users?.length / usersPerPage); */
-  // ========================
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 2;
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const paginatedUsers = users?.slice(startIndex, startIndex + itemsPerPage);
+
   const handleOpenUpdateModal = (user) => {
     setSelectedUser(user);
   };
@@ -90,8 +89,7 @@ const ManageUsers = () => {
 
           {!loading && !error && (
             <TableBody>
-              {/* {currentUsers?.map((user) => ( */}
-              {users?.map((user) => (
+              {paginatedUsers?.map((user) => (
                 <TableRow key={user?._id} hover>
                   <TableCell sx={{ padding: "2px 10px" }}>
                     <Box display="flex" alignItems="center" gap={2}>
@@ -173,6 +171,15 @@ const ManageUsers = () => {
         </Table>
       </TableContainer>
 
+      {users?.length > itemsPerPage && (
+        <PaginationComponent
+          totalItems={users?.length}
+          itemsPerPage={itemsPerPage}
+          currentPage={currentPage}
+          onPageChange={setCurrentPage}
+        />
+      )}
+
       {users?.length === 0 && (
         <Typography
           variant="h6"
@@ -182,19 +189,6 @@ const ManageUsers = () => {
           No users available.
         </Typography>
       )}
-
-      {/* Pagination */}
-      {/* {users?.length > usersPerPage && (
-        <Stack spacing={2} alignItems="center" sx={{ my: 3 }}>
-          <Pagination
-            count={pageCount}
-            page={currentPage}
-            onChange={(event, value) => setCurrentPage(value)}
-            color="primary"
-            shape="rounded"
-          />
-        </Stack>
-      )} */}
 
       {/* Update User Modal */}
       {selectedUser && (
