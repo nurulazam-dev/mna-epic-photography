@@ -30,7 +30,7 @@ const ManageUsers = () => {
   const [deleteUser, setDeleteUser] = useState(null);
 
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 2;
+  const itemsPerPage = 5;
   const startIndex = (currentPage - 1) * itemsPerPage;
   const paginatedUsers = users?.slice(startIndex, startIndex + itemsPerPage);
 

@@ -19,6 +19,7 @@ import Error from "../../components/Shared/Error";
 import { useState } from "react";
 import UpdatePhotogModal from "./UpdateModal/UpdatePhotogModal";
 import { getShortEmail } from "../../utils/getShortEmail";
+import PaginationComponent from "../../components/Shared/PaginationComponent";
 
 const ManagePhotographers = () => {
   const {
@@ -28,6 +29,14 @@ const ManagePhotographers = () => {
   } = usePhotogs(`${BASE_URL}/photographers`);
 
   const [selectedPhotog, setSelectedPhotog] = useState(null);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const paginatedPhotogs = photogs?.slice(
+    startIndex,
+    startIndex + itemsPerPage
+  );
 
   const handleOpenModal = (photographer) => {
     setSelectedPhotog(photographer);
@@ -76,7 +85,7 @@ const ManagePhotographers = () => {
 
           {!loading && !error && (
             <TableBody>
-              {photogs?.map((photog) => (
+              {paginatedPhotogs?.map((photog) => (
                 <TableRow key={photog?._id} hover>
                   <TableCell sx={{ padding: "2px 10px" }}>
                     <Box display="flex" alignItems="center" gap={2}>
@@ -155,6 +164,15 @@ const ManagePhotographers = () => {
           )}
         </Table>
       </TableContainer>
+
+      {photogs?.length > itemsPerPage && (
+        <PaginationComponent
+          totalItems={photogs?.length}
+          itemsPerPage={itemsPerPage}
+          currentPage={currentPage}
+          onPageChange={setCurrentPage}
+        />
+      )}
 
       {photogs?.length === 0 && (
         <Typography
