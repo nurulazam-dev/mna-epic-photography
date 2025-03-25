@@ -22,6 +22,7 @@ import Error from "../../components/Shared/Error";
 import useBookings from "../../hooks/useFetchData";
 import { formatDate } from "../../utils/formatDate";
 import { getShortEmail } from "../../utils/getShortEmail";
+import PaginationComponent from "../../components/Shared/PaginationComponent";
 
 const ManageBookings = () => {
   const {
@@ -30,9 +31,15 @@ const ManageBookings = () => {
     error,
   } = useBookings(`${BASE_URL}/bookings`);
 
-  console.log("bookings: ", bookings);
-
   const [selectedBooking, setSelectedBooking] = useState(null);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const paginatedBookings = bookings?.slice(
+    startIndex,
+    startIndex + itemsPerPage
+  );
 
   const handleOpenModal = (booking) => {
     setSelectedBooking(booking);
@@ -86,7 +93,7 @@ const ManageBookings = () => {
 
           {!loading && !error && (
             <TableBody>
-              {bookings?.map((booking) => (
+              {paginatedBookings?.map((booking) => (
                 <TableRow key={booking?._id} hover>
                   <TableCell sx={{ padding: "2px 10px" }}>
                     <Box display="flex" alignItems="center" gap={1}>
@@ -246,6 +253,15 @@ const ManageBookings = () => {
           )}
         </Table>
       </TableContainer>
+
+      {bookings?.length > itemsPerPage && (
+        <PaginationComponent
+          totalItems={bookings?.length}
+          itemsPerPage={itemsPerPage}
+          currentPage={currentPage}
+          onPageChange={setCurrentPage}
+        />
+      )}
 
       {bookings?.length === 0 && (
         <Typography
