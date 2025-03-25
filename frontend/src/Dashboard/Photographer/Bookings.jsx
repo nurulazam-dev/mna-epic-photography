@@ -22,7 +22,7 @@ import { useState } from "react";
 
 const Bookings = ({ bookings }) => {
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 5;
+  const itemsPerPage = 4;
   const startIndex = (currentPage - 1) * itemsPerPage;
   const paginatedBookings = bookings?.slice(
     startIndex,
