@@ -27,7 +27,14 @@ const ManageUsers = () => {
 
   const [selectedUser, setSelectedUser] = useState(null);
   const [deleteUser, setDeleteUser] = useState(null);
-
+  // ========================
+  /* const [currentPage, setCurrentPage] = useState(1);
+  const usersPerPage = 2; 
+  const indexOfLastUser = currentPage * usersPerPage;
+  const indexOfFirstUser = indexOfLastUser - usersPerPage;
+  const currentUsers = users?.slice(indexOfFirstUser, indexOfLastUser);
+  const pageCount = Math.ceil(users?.length / usersPerPage); */
+  // ========================
   const handleOpenUpdateModal = (user) => {
     setSelectedUser(user);
   };
@@ -83,6 +90,7 @@ const ManageUsers = () => {
 
           {!loading && !error && (
             <TableBody>
+              {/* {currentUsers?.map((user) => ( */}
               {users?.map((user) => (
                 <TableRow key={user?._id} hover>
                   <TableCell sx={{ padding: "2px 10px" }}>
@@ -174,6 +182,19 @@ const ManageUsers = () => {
           No users available.
         </Typography>
       )}
+
+      {/* Pagination */}
+      {/* {users?.length > usersPerPage && (
+        <Stack spacing={2} alignItems="center" sx={{ my: 3 }}>
+          <Pagination
+            count={pageCount}
+            page={currentPage}
+            onChange={(event, value) => setCurrentPage(value)}
+            color="primary"
+            shape="rounded"
+          />
+        </Stack>
+      )} */}
 
       {/* Update User Modal */}
       {selectedUser && (
