@@ -17,8 +17,18 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import { formatDate } from "../../utils/formatDate";
 import { GppBad, VerifiedUser } from "@mui/icons-material";
 import { getShortEmail } from "../../utils/getShortEmail";
+import PaginationComponent from "../../components/Shared/PaginationComponent";
+import { useState } from "react";
 
 const Bookings = ({ bookings }) => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const paginatedBookings = bookings?.slice(
+    startIndex,
+    startIndex + itemsPerPage
+  );
+
   return (
     <Box>
       <Typography
@@ -32,7 +42,7 @@ const Bookings = ({ bookings }) => {
           fontFamily: "serif",
         }}
       >
-        Bookings
+        Bookings ({bookings?.length})
       </Typography>
 
       <TableContainer component={Paper}>
@@ -50,7 +60,7 @@ const Bookings = ({ bookings }) => {
           </TableHead>
 
           <TableBody>
-            {bookings?.map((item) => (
+            {paginatedBookings?.map((item) => (
               <TableRow key={item?._id} hover>
                 <TableCell sx={{ padding: "2px 10px" }}>
                   <Box display="flex" alignItems="center" gap={2}>
@@ -131,6 +141,15 @@ const Bookings = ({ bookings }) => {
           </TableBody>
         </Table>
       </TableContainer>
+
+      {bookings?.length > itemsPerPage && (
+        <PaginationComponent
+          totalItems={bookings?.length}
+          itemsPerPage={itemsPerPage}
+          currentPage={currentPage}
+          onPageChange={setCurrentPage}
+        />
+      )}
 
       {bookings?.length === 0 && (
         <Typography

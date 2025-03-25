@@ -46,7 +46,7 @@ const MyBookings = () => {
         color="black"
         mb={2}
       >
-        My Bookings
+        My Bookings ({bookings?.length})
       </Typography>
 
       {loading && !error && (
