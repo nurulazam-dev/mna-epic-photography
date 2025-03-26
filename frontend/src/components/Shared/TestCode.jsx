@@ -1,9 +1,6 @@
 import { Link, Outlet } from "react-router-dom";
 import { useContext, useState } from "react";
 import { authContext } from "../../context/AuthContext";
-import brandLogo from "../../assets/images/logo.png";
-
-// MUI Components
 import {
   Drawer,
   List,
@@ -14,13 +11,10 @@ import {
   Box,
   Typography,
 } from "@mui/material";
-
-// MUI Icons
 import HomeIcon from "@mui/icons-material/Home";
 import ReceiptIcon from "@mui/icons-material/Receipt";
 import PeopleIcon from "@mui/icons-material/People";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import SettingsIcon from "@mui/icons-material/Settings";
 
 const TestCode = () => {
   const [tab, setTab] = useState("overview");
@@ -42,11 +36,6 @@ const TestCode = () => {
         }}
       >
         <Box sx={{ textAlign: "center", p: 2 }}>
-          <img
-            src={brandLogo}
-            alt="Brand_Logo"
-            style={{ width: 36, height: 36 }}
-          />
           <Typography
             variant="h6"
             sx={{ color: "#facc15", fontWeight: "bold", mt: 1 }}
@@ -69,31 +58,31 @@ const TestCode = () => {
             <ListItemText primary="Overview" />
           </ListItemButton>
 
-          {(role === "billingOfficer" || role === "admin") && (
+          {(role === "client" || role === "admin") && (
             <ListItemButton
               component={Link}
-              to="/dashboard/add-bill"
-              selected={tab === "addBill"}
-              onClick={() => setTab("addBill")}
+              to="/dashboard/my-bookings"
+              selected={tab === "myBookings"}
+              onClick={() => setTab("myBookings")}
             >
               <ListItemIcon>
                 <ReceiptIcon sx={{ color: "white" }} />
               </ListItemIcon>
-              <ListItemText primary="Add Bill" />
+              <ListItemText primary="My Bookings" />
             </ListItemButton>
           )}
 
-          {(role === "accountant" || role === "admin") && (
+          {(role === "photographer" || role === "admin") && (
             <ListItemButton
               component={Link}
-              to="/dashboard/unpaid-bills"
-              selected={tab === "unpaidBills"}
-              onClick={() => setTab("unpaidBills")}
+              to="/dashboard/bookings"
+              selected={tab === "bookings"}
+              onClick={() => setTab("bookings")}
             >
               <ListItemIcon>
                 <ReceiptIcon sx={{ color: "white" }} />
               </ListItemIcon>
-              <ListItemText primary="Unpaid Bills" />
+              <ListItemText primary="Bookings" />
             </ListItemButton>
           )}
 
@@ -146,18 +135,6 @@ const TestCode = () => {
               <AccountCircleIcon sx={{ color: "white" }} />
             </ListItemIcon>
             <ListItemText primary="Profile" />
-          </ListItemButton>
-
-          <ListItemButton
-            component={Link}
-            to="/dashboard/settings"
-            selected={tab === "settings"}
-            onClick={() => setTab("settings")}
-          >
-            <ListItemIcon>
-              <SettingsIcon sx={{ color: "white" }} />
-            </ListItemIcon>
-            <ListItemText primary="Settings" />
           </ListItemButton>
         </List>
       </Drawer>
