@@ -14,6 +14,17 @@ import ContactUs from "../Pages/ContactUs";
 import AdminDashboard from "../Dashboard/Admin/AdminDashboard";
 import TestCode from "../components/Shared/TestCode";
 import PhotogDashboard from "../Dashboard/Photographer/PhotogDashboard";
+import RequireAuth from "./RequireAuth";
+import Dashboard from "../Pages/Dashboard";
+import Overview from "../Dashboard/Overview";
+import MyBookings from "../Dashboard/User/MyBookings";
+import UserProfile from "../Dashboard/User/UserProfile";
+import AdminProfile from "../Dashboard/Admin/AdminProfile";
+import PhotographerProfile from "../Dashboard/Photographer/PhotographerProfile";
+import ManageUsers from "../Dashboard/Admin/ManageUsers";
+import ManagePhotographers from "../Dashboard/Admin/ManagePhotographers";
+import ManageBookings from "../Dashboard/Admin/ManageBookings";
+import Bookings from "../Dashboard/Photographer/Bookings";
 
 const Routers = () => {
   return (
@@ -29,31 +40,105 @@ const Routers = () => {
       <Route path="/checkout-success" element={<CheckoutSuccess />} />
       <Route path="/photographers" element={<Photographers />} />
       <Route path="/photographers/:id" element={<PhotographerDetails />} />
+      <Route
+        path="/dashboard"
+        element={
+          <RequireAuth>
+            <Dashboard />
+          </RequireAuth>
+        }
+      >
+        <Route index element={<Overview />} />
 
-      <Route
-        path="/users/profile/me"
-        element={
-          <ProtectedRoutes allowedRoles={["client"]}>
-            <UserAccount />
-          </ProtectedRoutes>
-        }
-      />
-      <Route
-        path="/admin/profile/me"
-        element={
-          <ProtectedRoutes allowedRoles={["admin"]}>
-            <AdminDashboard />
-          </ProtectedRoutes>
-        }
-      />
-      <Route
-        path="/photographers/profile/me"
-        element={
-          <ProtectedRoutes allowedRoles={["photographer"]}>
-            <PhotogDashboard />
-          </ProtectedRoutes>
-        }
-      />
+        <Route
+          path="users/profile/me"
+          element={
+            <ProtectedRoutes allowedRoles={["client"]}>
+              <UserAccount />
+            </ProtectedRoutes>
+          }
+        />
+        <Route
+          path="my-bookings"
+          element={
+            <ProtectedRoutes allowedRoles={["client"]}>
+              <MyBookings />
+            </ProtectedRoutes>
+          }
+        />
+        <Route
+          path="manage-users"
+          element={
+            <ProtectedRoutes allowedRoles={["admin"]}>
+              <ManageUsers />
+            </ProtectedRoutes>
+          }
+        />
+        <Route
+          path="manage-photogs"
+          element={
+            <ProtectedRoutes allowedRoles={["admin"]}>
+              <ManagePhotographers />
+            </ProtectedRoutes>
+          }
+        />
+        <Route
+          path="manage-bookings"
+          element={
+            <ProtectedRoutes allowedRoles={["admin"]}>
+              <ManageBookings />
+            </ProtectedRoutes>
+          }
+        />
+        <Route
+          path="user-profile"
+          element={
+            <ProtectedRoutes allowedRoles={["client"]}>
+              <UserProfile />
+            </ProtectedRoutes>
+          }
+        />
+        <Route
+          path="admin/profile/me"
+          element={
+            <ProtectedRoutes allowedRoles={["admin"]}>
+              <AdminDashboard />
+            </ProtectedRoutes>
+          }
+        />
+        <Route
+          path="admin-profile"
+          element={
+            <ProtectedRoutes allowedRoles={["admin"]}>
+              <AdminProfile />
+            </ProtectedRoutes>
+          }
+        />
+        <Route
+          path="photog-profile"
+          element={
+            <ProtectedRoutes allowedRoles={["photographer"]}>
+              <PhotographerProfile />
+            </ProtectedRoutes>
+          }
+        />
+        <Route
+          path="bookings"
+          element={
+            <ProtectedRoutes allowedRoles={["photographer"]}>
+              <Bookings />
+            </ProtectedRoutes>
+          }
+        />
+        <Route
+          path="photographers/profile/me"
+          element={
+            <ProtectedRoutes allowedRoles={["photographer"]}>
+              <PhotogDashboard />
+            </ProtectedRoutes>
+          }
+        />
+      </Route>
 
       <Route path="*" element={<NotFound />} />
     </Routes>

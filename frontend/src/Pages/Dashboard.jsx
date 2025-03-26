@@ -59,31 +59,57 @@ const Dashboard = () => {
           </ListItemButton>
 
           {role === "client" && (
-            <ListItemButton
-              component={Link}
-              to="/dashboard/my-bookings"
-              selected={tab === "myBookings"}
-              onClick={() => setTab("myBookings")}
-            >
-              <ListItemIcon>
-                <ReceiptIcon sx={{ color: "white" }} />
-              </ListItemIcon>
-              <ListItemText primary="My Bookings" />
-            </ListItemButton>
+            <>
+              <ListItemButton
+                component={Link}
+                to="/dashboard/my-bookings"
+                selected={tab === "myBookings"}
+                onClick={() => setTab("myBookings")}
+              >
+                <ListItemIcon>
+                  <ReceiptIcon sx={{ color: "white" }} />
+                </ListItemIcon>
+                <ListItemText primary="My Bookings" />
+              </ListItemButton>
+              <ListItemButton
+                component={Link}
+                to="/dashboard/user-profile"
+                selected={tab === "profile"}
+                onClick={() => setTab("profile")}
+              >
+                <ListItemIcon>
+                  <AccountCircleIcon sx={{ color: "white" }} />
+                </ListItemIcon>
+                <ListItemText primary="Profile" />
+              </ListItemButton>
+            </>
           )}
 
           {role === "photographer" && (
-            <ListItemButton
-              component={Link}
-              to="/dashboard/bookings"
-              selected={tab === "bookings"}
-              onClick={() => setTab("bookings")}
-            >
-              <ListItemIcon>
-                <ReceiptIcon sx={{ color: "white" }} />
-              </ListItemIcon>
-              <ListItemText primary="Bookings" />
-            </ListItemButton>
+            <>
+              <ListItemButton
+                component={Link}
+                to="/dashboard/bookings"
+                selected={tab === "bookings"}
+                onClick={() => setTab("bookings")}
+              >
+                <ListItemIcon>
+                  <ReceiptIcon sx={{ color: "white" }} />
+                </ListItemIcon>
+                <ListItemText primary="Bookings" />
+              </ListItemButton>
+              <ListItemButton
+                component={Link}
+                to="/dashboard/photog-profile"
+                selected={tab === "profile"}
+                onClick={() => setTab("profile")}
+              >
+                <ListItemIcon>
+                  <AccountCircleIcon sx={{ color: "white" }} />
+                </ListItemIcon>
+                <ListItemText primary="Profile" />
+              </ListItemButton>
+            </>
           )}
 
           {role === "admin" && (
@@ -122,20 +148,19 @@ const Dashboard = () => {
                 </ListItemIcon>
                 <ListItemText primary="Manage Bookings" />
               </ListItemButton>
+              <ListItemButton
+                component={Link}
+                to="/dashboard/admin-profile"
+                selected={tab === "profile"}
+                onClick={() => setTab("profile")}
+              >
+                <ListItemIcon>
+                  <AccountCircleIcon sx={{ color: "white" }} />
+                </ListItemIcon>
+                <ListItemText primary="Profile" />
+              </ListItemButton>
             </>
           )}
-
-          <ListItemButton
-            component={Link}
-            to="/dashboard/profile"
-            selected={tab === "profile"}
-            onClick={() => setTab("profile")}
-          >
-            <ListItemIcon>
-              <AccountCircleIcon sx={{ color: "white" }} />
-            </ListItemIcon>
-            <ListItemText primary="Profile" />
-          </ListItemButton>
         </List>
       </Drawer>
 

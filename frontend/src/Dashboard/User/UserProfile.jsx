@@ -37,11 +37,11 @@ const UserProfile = ({ user }) => {
 
   useEffect(() => {
     setFormData({
-      name: user.name,
-      email: user.email,
-      phone: user.phone,
-      photo: user.photo || defaultAvatar,
-      gender: user.gender,
+      name: user?.name,
+      email: user?.email,
+      phone: user?.phone,
+      photo: user?.photo || defaultAvatar,
+      gender: user?.gender,
     });
   }, [user]);
 

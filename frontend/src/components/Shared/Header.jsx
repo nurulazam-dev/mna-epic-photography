@@ -23,7 +23,8 @@ const navLinks = [
   { path: "/services", display: "SERVICES" },
   { path: "/about-us", display: "ABOUT US" },
   { path: "/contact-us", display: "CONTACT" },
-  { path: "/test", display: "TEST" },
+  { path: "/test", display: "T" },
+  { path: "/dashboard", display: "DB" },
 ];
 
 const Header = () => {
@@ -83,10 +84,10 @@ const Header = () => {
                 }}
                 to={
                   role == "admin"
-                    ? "/admin/profile/me"
+                    ? "dashboard/admin/profile/me"
                     : role == "photographer"
-                    ? "/photographers/profile/me"
-                    : "/users/profile/me"
+                    ? "dashboard/photographers/profile/me"
+                    : "dashboard/users/profile/me"
                 }
               >
                 {user?.name} <CallMadeOutlinedIcon sx={{ ml: 1 }} />
