@@ -59,7 +59,6 @@ const ManageBookings = () => {
       {loading && !error && (
         <CircularProgress sx={{ display: "block", mx: "auto" }} />
       )}
-
       {error && !loading && <Error errMessage={error} />}
 
       <Typography
