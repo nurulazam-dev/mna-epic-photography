@@ -101,18 +101,6 @@ const TestCode = () => {
             <>
               <ListItemButton
                 component={Link}
-                to="/dashboard/manage-bills"
-                selected={tab === "manageBills"}
-                onClick={() => setTab("manageBills")}
-              >
-                <ListItemIcon>
-                  <ReceiptIcon sx={{ color: "white" }} />
-                </ListItemIcon>
-                <ListItemText primary="Manage Bills" />
-              </ListItemButton>
-
-              <ListItemButton
-                component={Link}
                 to="/dashboard/manage-users"
                 selected={tab === "manageUsers"}
                 onClick={() => setTab("manageUsers")}
@@ -121,6 +109,29 @@ const TestCode = () => {
                   <PeopleIcon sx={{ color: "white" }} />
                 </ListItemIcon>
                 <ListItemText primary="Manage Users" />
+              </ListItemButton>
+              <ListItemButton
+                component={Link}
+                to="/dashboard/manage-photogs"
+                selected={tab === "managePhotogs"}
+                onClick={() => setTab("managePhotogs")}
+              >
+                <ListItemIcon>
+                  <PeopleIcon sx={{ color: "white" }} />
+                </ListItemIcon>
+                <ListItemText primary="Manage Photogs" />
+              </ListItemButton>
+
+              <ListItemButton
+                component={Link}
+                to="/dashboard/manage-bookings"
+                selected={tab === "manageBookings"}
+                onClick={() => setTab("manageBookings")}
+              >
+                <ListItemIcon>
+                  <ReceiptIcon sx={{ color: "white" }} />
+                </ListItemIcon>
+                <ListItemText primary="Manage Bookings" />
               </ListItemButton>
             </>
           )}
