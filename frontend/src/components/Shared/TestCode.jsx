@@ -26,16 +26,16 @@ const TestCode = () => {
       <Drawer
         variant="permanent"
         sx={{
-          width: 240,
+          width: 230,
           flexShrink: 0,
           "& .MuiDrawer-paper": {
-            width: 240,
+            width: 230,
             backgroundColor: "#1e293b",
             color: "white",
           },
         }}
       >
-        <Box sx={{ textAlign: "center", p: 2 }}>
+        <Box sx={{ textAlign: "center", p: 1 }}>
           <Typography
             variant="h6"
             sx={{ color: "#facc15", fontWeight: "bold", mt: 1 }}
@@ -58,7 +58,7 @@ const TestCode = () => {
             <ListItemText primary="Overview" />
           </ListItemButton>
 
-          {(role === "client" || role === "admin") && (
+          {role === "client" && (
             <ListItemButton
               component={Link}
               to="/dashboard/my-bookings"
@@ -72,7 +72,7 @@ const TestCode = () => {
             </ListItemButton>
           )}
 
-          {(role === "photographer" || role === "admin") && (
+          {role === "photographer" && (
             <ListItemButton
               component={Link}
               to="/dashboard/bookings"
