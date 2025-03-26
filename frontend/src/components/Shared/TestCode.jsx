@@ -1,57 +1,160 @@
-import { Box, Grid, Card, CardMedia, Typography } from "@mui/material";
-import img1 from "../../assets/images/eventPhotos/2.png";
-import img2 from "../../assets/images/eventPhotos/5.png";
-import img3 from "../../assets/images/eventPhotos/4.png";
-import img4 from "../../assets/images/eventPhotos/6.png";
-import img5 from "../../assets/images/eventPhotos/3.png";
-import img6 from "../../assets/images/eventPhotos/7.png";
+import { Link, Outlet } from "react-router-dom";
+import { useContext, useState } from "react";
+import { authContext } from "../../context/AuthContext";
+import brandLogo from "../../assets/images/logo.png";
+
+// MUI Components
+import {
+  Drawer,
+  List,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  Divider,
+  Box,
+  Typography,
+} from "@mui/material";
+
+// MUI Icons
+import HomeIcon from "@mui/icons-material/Home";
+import ReceiptIcon from "@mui/icons-material/Receipt";
+import PeopleIcon from "@mui/icons-material/People";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import SettingsIcon from "@mui/icons-material/Settings";
 
 const TestCode = () => {
-  const galleryImages = [
-    { src: img1, span: { xs: 12, sm: 6 }, rows: 2 },
-    { src: img2, span: { xs: 6, sm: 3 }, rows: 1 },
-    { src: img3, span: { xs: 6, sm: 3 }, rows: 1 },
-    { src: img4, span: { xs: 12, sm: 6 }, rows: 1 },
-    { src: img5, span: { xs: 4, sm: 4 }, rows: 1 },
-    { src: img6, span: { xs: 4, sm: 4 }, rows: 1 },
-    { src: img1, span: { xs: 4, sm: 4 }, rows: 1 },
-  ];
+  const [tab, setTab] = useState("overview");
+  const { role } = useContext(authContext);
 
   return (
-    <Box sx={{ px: 5, py: 2 }}>
-      <Typography variant="h4" fontWeight="bold" textAlign="center" mb={5}>
-        Our Gallery Test
-      </Typography>
-
-      <Grid
-        container
-        spacing={2}
+    <Box display="flex">
+      {/* Sidebar */}
+      <Drawer
+        variant="permanent"
         sx={{
-          display: "grid",
-          gridTemplateColumns: "repeat(12, 1fr)",
-          gridTemplateRows: "auto",
-          gap: 3,
+          width: 240,
+          flexShrink: 0,
+          "& .MuiDrawer-paper": {
+            width: 240,
+            backgroundColor: "#1e293b",
+            color: "white",
+          },
         }}
       >
-        {galleryImages.map((image, index) => (
-          <Box
-            key={index}
-            sx={{
-              gridColumn: `span ${image.span.sm}`,
-              gridRow: `span ${image.rows}`,
-            }}
+        <Box sx={{ textAlign: "center", p: 2 }}>
+          <img
+            src={brandLogo}
+            alt="Brand_Logo"
+            style={{ width: 36, height: 36 }}
+          />
+          <Typography
+            variant="h6"
+            sx={{ color: "#facc15", fontWeight: "bold", mt: 1 }}
           >
-            <Card sx={{ height: "100%", borderRadius: 2, overflow: "hidden" }}>
-              <CardMedia
-                component="img"
-                image={image.src}
-                alt={`Gallery Image ${index + 1}`}
-                sx={{ objectFit: "cover", width: "100%", height: "100%" }}
-              />
-            </Card>
-          </Box>
-        ))}
-      </Grid>
+            DASHBOARD
+          </Typography>
+        </Box>
+        <Divider />
+
+        <List>
+          <ListItemButton
+            component={Link}
+            to="/dashboard"
+            selected={tab === "overview"}
+            onClick={() => setTab("overview")}
+          >
+            <ListItemIcon>
+              <HomeIcon sx={{ color: "white" }} />
+            </ListItemIcon>
+            <ListItemText primary="Overview" />
+          </ListItemButton>
+
+          {(role === "billingOfficer" || role === "admin") && (
+            <ListItemButton
+              component={Link}
+              to="/dashboard/add-bill"
+              selected={tab === "addBill"}
+              onClick={() => setTab("addBill")}
+            >
+              <ListItemIcon>
+                <ReceiptIcon sx={{ color: "white" }} />
+              </ListItemIcon>
+              <ListItemText primary="Add Bill" />
+            </ListItemButton>
+          )}
+
+          {(role === "accountant" || role === "admin") && (
+            <ListItemButton
+              component={Link}
+              to="/dashboard/unpaid-bills"
+              selected={tab === "unpaidBills"}
+              onClick={() => setTab("unpaidBills")}
+            >
+              <ListItemIcon>
+                <ReceiptIcon sx={{ color: "white" }} />
+              </ListItemIcon>
+              <ListItemText primary="Unpaid Bills" />
+            </ListItemButton>
+          )}
+
+          {role === "admin" && (
+            <>
+              <ListItemButton
+                component={Link}
+                to="/dashboard/manage-bills"
+                selected={tab === "manageBills"}
+                onClick={() => setTab("manageBills")}
+              >
+                <ListItemIcon>
+                  <ReceiptIcon sx={{ color: "white" }} />
+                </ListItemIcon>
+                <ListItemText primary="Manage Bills" />
+              </ListItemButton>
+
+              <ListItemButton
+                component={Link}
+                to="/dashboard/manage-users"
+                selected={tab === "manageUsers"}
+                onClick={() => setTab("manageUsers")}
+              >
+                <ListItemIcon>
+                  <PeopleIcon sx={{ color: "white" }} />
+                </ListItemIcon>
+                <ListItemText primary="Manage Users" />
+              </ListItemButton>
+            </>
+          )}
+
+          <ListItemButton
+            component={Link}
+            to="/dashboard/profile"
+            selected={tab === "profile"}
+            onClick={() => setTab("profile")}
+          >
+            <ListItemIcon>
+              <AccountCircleIcon sx={{ color: "white" }} />
+            </ListItemIcon>
+            <ListItemText primary="Profile" />
+          </ListItemButton>
+
+          <ListItemButton
+            component={Link}
+            to="/dashboard/settings"
+            selected={tab === "settings"}
+            onClick={() => setTab("settings")}
+          >
+            <ListItemIcon>
+              <SettingsIcon sx={{ color: "white" }} />
+            </ListItemIcon>
+            <ListItemText primary="Settings" />
+          </ListItemButton>
+        </List>
+      </Drawer>
+
+      {/* Main Content */}
+      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+        <Outlet />
+      </Box>
     </Box>
   );
 };
