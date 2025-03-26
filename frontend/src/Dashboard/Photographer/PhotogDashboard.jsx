@@ -23,7 +23,7 @@ import { BASE_URL } from "../../../config";
 import Bookings from "./Bookings";
 import PhotographerProfile from "./PhotographerProfile";
 
-const Dashboard = () => {
+const PhotogDashboard = () => {
   const [tab, setTab] = useState("overview");
 
   const userAvatar =
@@ -155,4 +155,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default PhotogDashboard;

@@ -7,13 +7,13 @@ import Photographers from "../Pages/Photographers/Photographers";
 import PhotographerDetails from "../Pages/Photographers/PhotographerDetails";
 import CheckoutSuccess from "../Pages/CheckoutSuccess";
 import ProtectedRoutes from "./ProtectedRoutes";
-import Dashboard from "../Dashboard/Photographer/Dashboard";
 import UserAccount from "../Dashboard/User/UserAccount";
 import Services from "../Pages/Services";
 import AboutUs from "../Pages/AboutUs";
 import ContactUs from "../Pages/ContactUs";
 import AdminDashboard from "../Dashboard/Admin/AdminDashboard";
 import TestCode from "../components/Shared/TestCode";
+import PhotogDashboard from "../Dashboard/Photographer/PhotogDashboard";
 
 const Routers = () => {
   return (
@@ -50,7 +50,7 @@ const Routers = () => {
         path="/photographers/profile/me"
         element={
           <ProtectedRoutes allowedRoles={["photographer"]}>
-            <Dashboard />
+            <PhotogDashboard />
           </ProtectedRoutes>
         }
       />
