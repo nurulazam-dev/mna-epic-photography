@@ -19,19 +19,32 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 const Dashboard = () => {
   const [tab, setTab] = useState("overview");
   const { role } = useContext(authContext);
+  const drawerWidth = 230;
 
   return (
     <Box display="flex">
       {/* Sidebar */}
       <Drawer
         variant="permanent"
-        sx={{
+        /*  sx={{
           width: 230,
           flexShrink: 0,
           "& .MuiDrawer-paper": {
             width: 230,
             backgroundColor: "#1e293b",
             color: "white",
+          },
+        }} */
+        sx={{
+          width: drawerWidth,
+          flexShrink: 0,
+          zIndex: 1, // Lower z-index than the header
+          "& .MuiDrawer-paper": {
+            width: drawerWidth,
+            height: "85%",
+            backgroundColor: "#1e293b",
+            color: "white",
+            pt: "75px", // Adjust margin-top to avoid overlaying header
           },
         }}
       >
@@ -165,7 +178,7 @@ const Dashboard = () => {
       </Drawer>
 
       {/* Main Content */}
-      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+      <Box component="main" sx={{ flexGrow: 1, p: 3, height: "420px" }}>
         <Outlet />
       </Box>
     </Box>
