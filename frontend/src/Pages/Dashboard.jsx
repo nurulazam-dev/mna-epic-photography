@@ -23,28 +23,17 @@ const Dashboard = () => {
 
   return (
     <Box display="flex">
-      {/* Sidebar */}
       <Drawer
         variant="permanent"
-        /*  sx={{
-          width: 230,
-          flexShrink: 0,
-          "& .MuiDrawer-paper": {
-            width: 230,
-            backgroundColor: "#1e293b",
-            color: "white",
-          },
-        }} */
         sx={{
           width: drawerWidth,
           flexShrink: 0,
-          zIndex: 1, // Lower z-index than the header
+          zIndex: 1,
           "& .MuiDrawer-paper": {
             width: drawerWidth,
-            height: "85%",
             backgroundColor: "#1e293b",
             color: "white",
-            pt: "75px", // Adjust margin-top to avoid overlaying header
+            pt: "75px",
           },
         }}
       >
