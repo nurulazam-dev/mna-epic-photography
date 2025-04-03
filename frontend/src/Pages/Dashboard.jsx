@@ -10,16 +10,18 @@ import {
   Divider,
   Box,
   Typography,
+  Button,
 } from "@mui/material";
 import HomeIcon from "@mui/icons-material/Home";
 import ReceiptIcon from "@mui/icons-material/Receipt";
 import PeopleIcon from "@mui/icons-material/People";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import { DeleteForever } from "@mui/icons-material";
 
 const Dashboard = () => {
   const [tab, setTab] = useState("overview");
   const { role } = useContext(authContext);
-  const drawerWidth = 230;
+  const drawerWidth = 235;
 
   return (
     <Box display="flex">
@@ -47,7 +49,7 @@ const Dashboard = () => {
         </Box>
         <Divider />
 
-        <List>
+        <List sx={{ px: 1 }}>
           <ListItemButton
             component={Link}
             to="/dashboard"
@@ -163,6 +165,15 @@ const Dashboard = () => {
               </ListItemButton>
             </>
           )}
+          <Button
+            fullWidth
+            variant="contained"
+            startIcon={<DeleteForever />}
+            color="error"
+            sx={{ mt: 11, height: 45 }}
+          >
+            Delete Account
+          </Button>
         </List>
       </Drawer>
 
