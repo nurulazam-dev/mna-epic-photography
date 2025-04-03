@@ -25,8 +25,22 @@ import ManageUsers from "../Dashboard/Admin/ManageUsers";
 import ManagePhotographers from "../Dashboard/Admin/ManagePhotographers";
 import ManageBookings from "../Dashboard/Admin/ManageBookings";
 import Bookings from "../Dashboard/Photographer/Bookings";
+import { useContext } from "react";
+import { authContext } from "../context/AuthContext";
+import UserOverview from "../Dashboard/User/UserOverview";
+import PhotogOverview from "../Dashboard/Photographer/PhotogOverview";
+import AdminOverview from "../Dashboard/Admin/AdminOverview";
 
 const Routers = () => {
+  const { role } = useContext(authContext);
+
+  const getDashboardComponent = () => {
+    if (role === "client") return <UserOverview />;
+    if (role === "photographer") return <PhotogOverview />;
+    if (role === "admin") return <AdminOverview />;
+    return <Home />;
+  };
+
   return (
     <Routes>
       <Route path="/" element={<Home />} />
@@ -48,7 +62,8 @@ const Routers = () => {
           </RequireAuth>
         }
       >
-        <Route index element={<Overview />} />
+        {/* <Route index element={<Overview />} /> */}
+        <Route index element={getDashboardComponent()} />
 
         <Route
           path="users/profile/me"
