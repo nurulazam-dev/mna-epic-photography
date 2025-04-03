@@ -5,7 +5,10 @@ import Routers from "../Routes/Routers";
 
 const Layout = () => {
   const location = useLocation();
-  const hideFooter = location.pathname.startsWith("/dashboard");
+
+  const hideFooter = ["/dashboard", "/login", "/register"].some((path) =>
+    location.pathname.startsWith(path)
+  );
 
   return (
     <>
