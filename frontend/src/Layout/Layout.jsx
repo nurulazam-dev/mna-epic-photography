@@ -10,7 +10,7 @@ const Layout = () => {
   return (
     <>
       <Header />
-      <main>
+      <main style={{ paddingTop: 60 }}>
         <Routers />
       </main>
       {!hideFooter && <Footer />}

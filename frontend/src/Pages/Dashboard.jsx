@@ -33,7 +33,7 @@ const Dashboard = () => {
             width: drawerWidth,
             backgroundColor: "#1e293b",
             color: "white",
-            mt: "82px",
+            pt: "70px",
           },
         }}
       >

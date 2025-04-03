@@ -42,7 +42,8 @@ const Header = () => {
   };
 
   return (
-    <AppBar position="sticky" color="inherit" elevation={3}>
+    <AppBar position="fixed" color="inherit" elevation={3}>
+      {/* <AppBar position="sticky" color="inherit" elevation={3}> */}
       <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
         {/* Logo */}
         <Box>
