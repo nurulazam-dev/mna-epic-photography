@@ -22,7 +22,7 @@ const AboutUs = () => {
       sx={{
         minHeight: { xs: "60vh", md: "70vh", lg: "80vh" },
         px: 3,
-        py: 5,
+        py: 2,
         // bgcolor: "#f5f5f5",
       }}
     >
@@ -63,7 +63,7 @@ const AboutUs = () => {
         ))}
       </Grid>
 
-      <Box textAlign="center" mt={3} mb={1}>
+      <Box textAlign="center" mt={4} mb={2}>
         <Typography variant="h3" fontWeight="bold" color="primary">
           Meet Our Team
         </Typography>

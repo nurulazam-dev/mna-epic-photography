@@ -12,7 +12,7 @@ import { servicesData } from "../assets/data/localData";
 const Services = () => {
   return (
     <Container
-      sx={{ minHeight: { xs: "60vh", md: "70vh", lg: "80vh" }, py: 5 }}
+      sx={{ minHeight: { xs: "60vh", md: "70vh", lg: "80vh" }, py: 2 }}
     >
       <Box textAlign="center" mb={3}>
         <Typography variant="h3" fontWeight="bold" color="primary">
