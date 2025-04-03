@@ -3,7 +3,14 @@ import Error from "../../components/Shared/Error";
 import { BASE_URL } from "../../../config";
 import useFetchData from "../../hooks/useFetchData";
 import PhotographerCard from "../../components/Photographers/PhotographerCard";
-import { TextField, Button, Container, Grid, Typography } from "@mui/material";
+import {
+  TextField,
+  Button,
+  Container,
+  Grid,
+  Typography,
+  Box,
+} from "@mui/material";
 import Loading from "../../components/Shared/Loading";
 
 const Photographers = () => {
@@ -29,7 +36,7 @@ const Photographers = () => {
   } = useFetchData(`${BASE_URL}/photographers?query=${debounceQuery}`);
 
   return (
-    <Container sx={{ mb: 10 }}>
+    <Container>
       <Typography variant="h4" align="center" sx={{ mt: 3, fontWeight: 700 }}>
         Search a Photographer
       </Typography>
@@ -38,7 +45,7 @@ const Photographers = () => {
         <TextField
           fullWidth
           variant="outlined"
-          placeholder="Photographer's name or specialty"
+          placeholder="Photographer's name or expertise"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
         />
@@ -52,7 +59,7 @@ const Photographers = () => {
         </Button>
       </Container>
 
-      <Container sx={{ my: 7 }}>
+      <Box sx={{ my: 4 }}>
         {loading && <Loading />}
         {error && <Error />}
         {!loading && !error && (
@@ -64,7 +71,7 @@ const Photographers = () => {
             ))}
           </Grid>
         )}
-      </Container>
+      </Box>
     </Container>
   );
 };
