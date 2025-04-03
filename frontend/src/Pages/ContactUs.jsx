@@ -27,7 +27,7 @@ const ContactUs = () => {
       sx={{
         minHeight: { xs: "60vh", md: "70vh", lg: "80vh" },
         px: 3,
-        // py: 2,
+        py: 2,
       }}
     >
       <Box textAlign="center" mb={3}>
