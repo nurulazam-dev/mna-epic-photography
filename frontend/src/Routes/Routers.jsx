@@ -16,7 +16,6 @@ import TestCode from "../components/Shared/TestCode";
 import PhotogDashboard from "../Dashboard/Photographer/PhotogDashboard";
 import RequireAuth from "./RequireAuth";
 import Dashboard from "../Pages/Dashboard";
-import Overview from "../Dashboard/Overview";
 import MyBookings from "../Dashboard/User/MyBookings";
 import UserProfile from "../Dashboard/User/UserProfile";
 import AdminProfile from "../Dashboard/Admin/AdminProfile";
@@ -28,16 +27,14 @@ import Bookings from "../Dashboard/Photographer/Bookings";
 import { useContext } from "react";
 import { authContext } from "../context/AuthContext";
 import UserOverview from "../Dashboard/User/UserOverview";
-import PhotogOverview from "../Dashboard/Photographer/PhotogOverview";
-import AdminOverview from "../Dashboard/Admin/AdminOverview";
 
 const Routers = () => {
   const { role } = useContext(authContext);
 
   const getDashboardComponent = () => {
     if (role === "client") return <UserOverview />;
-    if (role === "photographer") return <PhotogOverview />;
-    if (role === "admin") return <AdminOverview />;
+    if (role === "photographer") return <PhotogDashboard />;
+    if (role === "admin") return <AdminDashboard />;
     return <Home />;
   };
 

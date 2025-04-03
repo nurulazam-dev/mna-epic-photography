@@ -14,72 +14,70 @@ const AdminDashboard = () => {
   );
 
   return (
-    <Box maxWidth={1220} mx="auto" my={3} px={2}>
+    <Box>
       {loading && !error && <Loading />}
       {error && !loading && <Error errMessage={error} />}
 
       {!loading && !error && (
-        <Box display="flex" width="100%" mx="auto">
-          <Box flex={1} px={2}>
-            <Box>
-              <Paper
-                elevation={3}
+        <Box flex={1} px={1}>
+          <Box>
+            <Paper
+              elevation={3}
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                gap: 3,
+                padding: 3,
+                backgroundColor: "primary.main",
+                color: "white",
+                borderRadius: 2,
+              }}
+            >
+              <Box
                 sx={{
                   display: "flex",
+                  flexDirection: { xs: "column", md: "row" },
                   alignItems: "center",
                   gap: 3,
-                  padding: 3,
-                  backgroundColor: "primary.main",
-                  color: "white",
-                  borderRadius: 2,
                 }}
               >
-                <Box
+                <Avatar
+                  src={data?.photo || userAvatar}
                   sx={{
-                    display: "flex",
-                    flexDirection: { xs: "column", md: "row" },
-                    alignItems: "center",
-                    gap: 3,
+                    width: 120,
+                    height: 120,
+                    border: "3px solid white",
                   }}
-                >
-                  <Avatar
-                    src={data?.photo || userAvatar}
-                    sx={{
-                      width: 120,
-                      height: 120,
-                      border: "3px solid white",
-                    }}
-                  />
-                  <Box>
-                    <Typography variant="h5" fontWeight="bold">
-                      {data?.name}
-                    </Typography>
-                    <Typography variant="body1" sx={{ opacity: 0.8 }}>
-                      {data?.phone}
-                    </Typography>
-                    <Typography variant="h6" sx={{ fontStyle: "italic" }}>
-                      {data?.email}
-                    </Typography>
-                  </Box>
+                />
+                <Box>
+                  <Typography variant="h5" fontWeight="bold">
+                    {data?.name}
+                  </Typography>
+                  <Typography variant="body1" sx={{ opacity: 0.8 }}>
+                    {data?.phone}
+                  </Typography>
+                  <Typography variant="h6" sx={{ fontStyle: "italic" }}>
+                    {data?.email}
+                  </Typography>
                 </Box>
-                <Typography
-                  sx={{
-                    opacity: 0.8,
-                    fontFamily: "Monospace",
-                    textAlign: "justify",
-                  }}
-                >
-                  Welcome back, {data?.name}! 👋 As an admin, you have full
-                  control over managing users, photographers, and bookings. Stay
-                  updated with the latest platform insights and ensure
-                  everything runs smoothly. Let’s make today productive!
-                </Typography>
-              </Paper>
-
-              {/* Admin Dashboard Summary */}
-              <Box sx={{ marginTop: 3 }}>
-                <AdminDashboardHome />
               </Box>
+              <Typography
+                sx={{
+                  opacity: 0.8,
+                  fontFamily: "Monospace",
+                  textAlign: "justify",
+                }}
+              >
+                Welcome back, {data?.name}! 👋 As an admin, you have full
+                control over managing users, photographers, and bookings. Stay
+                updated with the latest platform insights and ensure everything
+                runs smoothly. Let’s make today productive!
+              </Typography>
+            </Paper>
+
+            {/* Admin Dashboard Summary */}
+            <Box sx={{ marginTop: 3 }}>
+              <AdminDashboardHome />
             </Box>
           </Box>
         </Box>
