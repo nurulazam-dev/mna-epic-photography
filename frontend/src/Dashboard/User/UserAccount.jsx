@@ -26,10 +26,25 @@ const UserAccount = () => {
     "https://p7.hiclipart.com/preview/717/24/975/computer-icons-user-profile-user-account-clip-art-avatar.jpg";
 
   return (
-    <Box maxWidth={1220} mx="auto" my={3} px={2}>
+    <Box maxWidth={1220} mx="auto" my={1} px={2}>
       {loading && !error && (
         <CircularProgress sx={{ display: "block", mx: "auto" }} />
       )}
+
+      <Typography
+        variant="h4"
+        align="center"
+        gutterBottom
+        sx={{
+          backgroundColor: "#2E7D32",
+          color: "white",
+          py: 1,
+          fontFamily: "serif",
+          borderRadius: 1,
+        }}
+      >
+        Dashboard
+      </Typography>
 
       {error && !loading && <Error errMessage={error} />}
 
