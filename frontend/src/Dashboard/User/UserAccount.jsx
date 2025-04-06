@@ -103,20 +103,21 @@ const UserAccount = () => {
               )}
             </Box>
 
-            <Typography variant="body2" color="success">
+            {/* <Typography variant="body2" color="success">
               ({userData?.role})
-            </Typography>
-            <Typography variant="body2" color="textSecondary">
+            </Typography> */}
+            <Typography variant="body2" color="primary">
               {userData?.email}
             </Typography>
             <Typography variant="body2" color="textSecondary">
-              Phone : {userData?.phone}
+              <span style={{ fontWeight: "bold" }}>Phone : </span>
+              {userData?.phone}
             </Typography>
-            <Typography variant="body2" color="textSecondary">
+            {/*   <Typography variant="body2" color="textSecondary">
               Gender : {userData?.gender}
-            </Typography>
+            </Typography> */}
             <Typography variant="body2" color="textSecondary">
-              Registered :{" "}
+              <span style={{ fontWeight: "bold" }}>Registered : </span>
               {userData?.createdAt
                 ? new Date(userData.createdAt).toLocaleDateString("en-GB", {
                     day: "2-digit",
