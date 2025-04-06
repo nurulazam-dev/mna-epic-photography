@@ -37,14 +37,18 @@ const MyBookings = () => {
   );
 
   return (
-    <Box mt={2}>
+    <Box mt={1}>
       <Typography
         variant="h4"
         align="center"
-        fontFamily="serif"
-        fontWeight="bold"
-        color="black"
-        mb={2}
+        gutterBottom
+        sx={{
+          backgroundColor: "#2E7D32",
+          color: "white",
+          py: 1,
+          fontFamily: "serif",
+          borderRadius: 1,
+        }}
       >
         My Bookings ({bookings?.length})
       </Typography>
