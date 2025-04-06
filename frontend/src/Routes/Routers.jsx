@@ -26,13 +26,12 @@ import ManageBookings from "../Dashboard/Admin/ManageBookings";
 import Bookings from "../Dashboard/Photographer/Bookings";
 import { useContext } from "react";
 import { authContext } from "../context/AuthContext";
-import UserOverview from "../Dashboard/User/UserOverview";
 
 const Routers = () => {
   const { role } = useContext(authContext);
 
   const getDashboardComponent = () => {
-    if (role === "client") return <UserOverview />;
+    if (role === "client") return <UserAccount />;
     if (role === "photographer") return <PhotogDashboard />;
     if (role === "admin") return <AdminDashboard />;
     return <Home />;
