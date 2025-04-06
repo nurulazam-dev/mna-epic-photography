@@ -20,7 +20,6 @@ const UserAccount = () => {
     loading,
     error,
   } = useGetProfile(`${BASE_URL}/users/profile/me`);
-  console.log("user : ", userData);
 
   const userAvatar =
     "https://p7.hiclipart.com/preview/717/24/975/computer-icons-user-profile-user-account-clip-art-avatar.jpg";

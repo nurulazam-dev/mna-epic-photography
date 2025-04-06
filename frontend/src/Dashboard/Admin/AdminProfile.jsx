@@ -57,6 +57,12 @@ const AdminProfile = ({ adminData }) => {
 
   const updateProfileHandler = async (e) => {
     e.preventDefault();
+
+    if (!adminData || !adminData._id) {
+      toast.error("Admin data not loaded yet!");
+      return;
+    }
+
     setLoading(true);
     try {
       const res = await fetch(`${BASE_URL}/users/${adminData._id}`, {

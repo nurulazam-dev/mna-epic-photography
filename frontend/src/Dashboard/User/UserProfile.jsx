@@ -49,6 +49,8 @@ const UserProfile = ({ user }) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  console.log(user);
+
   const handleFileInputChange = async (event) => {
     const file = event.target.files[0];
     const data = await uploadImageToCloudinary(file);
@@ -57,6 +59,11 @@ const UserProfile = ({ user }) => {
 
   const submitHandler = async (event) => {
     event.preventDefault();
+    if (!user || !user._id) {
+      toast.error("User data not loaded yet!");
+      return;
+    }
+
     setLoading(true);
 
     try {
@@ -84,13 +91,18 @@ const UserProfile = ({ user }) => {
   };
 
   return (
-    <Box mt={2}>
+    <Box mt={1}>
       <Typography
         variant="h4"
-        textAlign="center"
-        fontFamily="serif"
-        fontWeight="bold"
-        mb={2}
+        align="center"
+        gutterBottom
+        sx={{
+          backgroundColor: "#2E7D32",
+          color: "white",
+          py: 1,
+          fontFamily: "serif",
+          borderRadius: 1,
+        }}
       >
         Profile Information
       </Typography>
@@ -120,7 +132,7 @@ const UserProfile = ({ user }) => {
                 name="phone"
                 value={formData.phone}
                 onChange={handleInputChange}
-                required
+                disabled
                 margin="normal"
               />
             </Grid>
@@ -130,7 +142,7 @@ const UserProfile = ({ user }) => {
                 label="Email"
                 name="email"
                 value={formData.email}
-                InputProps={{ readOnly: true }}
+                disabled
                 margin="normal"
               />
             </Grid>
