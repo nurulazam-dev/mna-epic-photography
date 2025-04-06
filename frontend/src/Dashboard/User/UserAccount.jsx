@@ -11,7 +11,8 @@ import {
 import Error from "../../components/Shared/Error";
 import useGetProfile from "../../hooks/useFetchData";
 import { BASE_URL } from "../../../config";
-import { GppBad, VerifiedUser } from "@mui/icons-material";
+import { ArrowOutward, GppBad, VerifiedUser } from "@mui/icons-material";
+import { Link } from "react-router-dom";
 
 const UserAccount = () => {
   const {
@@ -125,14 +126,26 @@ const UserAccount = () => {
                 : "???"}
             </Typography>
 
-            <Button
-              variant="contained"
-              color="success"
-              fullWidth
-              sx={{ mt: 2 }}
-            >
-              Update Account
-            </Button>
+            <Box sx={{ px: 2, mt: 2 }}>
+              <Link
+                to={`/dashboard/user-profile`}
+                style={{ textDecoration: "none" }}
+              >
+                <Button
+                  variant="contained"
+                  fullWidth
+                  size="large"
+                  sx={{
+                    bgcolor: "green",
+                    color: "white",
+                    "&:hover": { bgcolor: "darkgreen" },
+                  }}
+                  endIcon={<ArrowOutward />}
+                >
+                  Update Account
+                </Button>
+              </Link>
+            </Box>
           </CardContent>
         </Card>
       )}
