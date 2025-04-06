@@ -17,7 +17,20 @@ const AdminDashboard = () => {
     <Box>
       {loading && !error && <Loading />}
       {error && !loading && <Error errMessage={error} />}
-
+      <Typography
+        variant="h4"
+        align="center"
+        gutterBottom
+        sx={{
+          backgroundColor: "#2E7D32",
+          color: "white",
+          py: 1,
+          fontFamily: "serif",
+          borderRadius: 1,
+        }}
+      >
+        Dashboard
+      </Typography>
       {!loading && !error && (
         <Box>
           <Paper
