@@ -28,7 +28,6 @@ const UserProfile = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    password: "",
     photo: null,
     gender: "",
     phone: "",
