@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
 import {
   Button,
@@ -8,7 +7,6 @@ import {
   InputLabel,
   FormControl,
   Typography,
-  // Container,
   Avatar,
   CircularProgress,
   Box,
@@ -18,9 +16,15 @@ import { CloudUpload, Update } from "@mui/icons-material";
 import { toast } from "react-toastify";
 import { BASE_URL, token } from "../../../config";
 import uploadImageToCloudinary from "../../utils/uploadCloudinary";
+import useGetProfile from "../../hooks/useFetchData";
 import Loading from "../../components/Shared/Loading";
+import Error from "../../components/Shared/Error";
 
-const PhotographerProfile = ({ photographerData }) => {
+const PhotographerProfile = () => {
+  const { data: photogData, error } = useGetProfile(
+    `${BASE_URL}/photographers/profile/me`
+  );
+
   const [loading, setLoading] = useState(false);
 
   const avatarImg =
@@ -31,7 +35,6 @@ const PhotographerProfile = ({ photographerData }) => {
     email: "",
     password: "",
     phone: "",
-    // bio: "",
     gender: "",
     expertise: "",
     servicePrice: 0,
@@ -42,18 +45,17 @@ const PhotographerProfile = ({ photographerData }) => {
 
   useEffect(() => {
     setFormData({
-      name: photographerData?.name,
-      email: photographerData?.email,
-      phone: photographerData?.phone,
-      // bio: photographerData?.bio,
-      gender: photographerData?.gender,
-      expertise: photographerData?.expertise,
-      servicePrice: photographerData?.servicePrice,
-      experience: photographerData?.experience,
-      about: photographerData?.about,
-      photo: photographerData?.photo,
+      name: photogData?.name,
+      email: photogData?.email,
+      phone: photogData?.phone,
+      gender: photogData?.gender,
+      expertise: photogData?.expertise,
+      servicePrice: photogData?.servicePrice,
+      experience: photogData?.experience,
+      about: photogData?.about,
+      photo: photogData?.photo,
     });
-  }, [photographerData]);
+  }, [photogData]);
 
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -69,17 +71,14 @@ const PhotographerProfile = ({ photographerData }) => {
     e.preventDefault();
     setLoading(true);
     try {
-      const res = await fetch(
-        `${BASE_URL}/photographers/${photographerData._id}`,
-        {
-          method: "PUT",
-          headers: {
-            "content-type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify(formData),
-        }
-      );
+      const res = await fetch(`${BASE_URL}/photographers/${photogData?._id}`, {
+        method: "PUT",
+        headers: {
+          "content-type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(formData),
+      });
       const result = await res.json();
       if (!res.ok) {
         throw Error(result.message);
@@ -93,23 +92,26 @@ const PhotographerProfile = ({ photographerData }) => {
 
   return (
     <Box>
-      {loading && <Loading />}
-      {!loading && (
+      <Typography
+        variant="h4"
+        align="center"
+        sx={{
+          backgroundColor: "#2E7D32",
+          color: "white",
+          py: 1,
+          fontFamily: "serif",
+          borderRadius: 1,
+        }}
+      >
+        Profile Information
+      </Typography>
+
+      {loading && !error && <Loading />}
+
+      {error && !loading && <Error errMessage={error} />}
+
+      {!loading && !error && (
         <Box>
-          <Typography
-            variant="h4"
-            align="center"
-            gutterBottom
-            sx={{
-              backgroundColor: "#2E7D32",
-              color: "white",
-              py: 1,
-              fontFamily: "serif",
-              borderRadius: 1,
-            }}
-          >
-            Profile Information
-          </Typography>
           <form>
             <Grid container spacing={2}>
               <Grid item xs={12} md={4}>
