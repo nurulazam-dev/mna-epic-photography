@@ -189,16 +189,24 @@ const ManageBookings = () => {
                   </TableCell>
 
                   <TableCell align="center">
-                    {booking?.status === "approved" ? (
-                      <Typography variant="body2" color="green">
-                        Approved
-                      </Typography>
-                    ) : (
-                      <Typography variant="body2" color="red">
-                        {booking?.status}
-                      </Typography>
-                    )}
+                    <Typography
+                      variant="body2"
+                      sx={{
+                        color:
+                          booking?.status === "pending"
+                            ? "orange"
+                            : booking?.status === "approved"
+                            ? "green"
+                            : booking?.status === "completed"
+                            ? "blue"
+                            : "black",
+                      }}
+                    >
+                      {booking?.status?.charAt(0).toUpperCase() +
+                        booking?.status?.slice(1)}
+                    </Typography>
                   </TableCell>
+
                   <TableCell align="center">${booking?.servicePrice}</TableCell>
                   <TableCell align="center">
                     {booking?.isPaid ? (
