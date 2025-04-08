@@ -4,7 +4,6 @@ import {
   Button,
   Card,
   CardContent,
-  CircularProgress,
   Divider,
   Typography,
 } from "@mui/material";
@@ -13,6 +12,7 @@ import useGetProfile from "../../hooks/useFetchData";
 import { BASE_URL } from "../../../config";
 import { ArrowOutward, GppBad, VerifiedUser } from "@mui/icons-material";
 import { Link } from "react-router-dom";
+import Loading from "../../components/Shared/Loading";
 
 const UserAccount = () => {
   const {
@@ -40,9 +40,8 @@ const UserAccount = () => {
       >
         Dashboard
       </Typography>
-      {loading && !error && (
-        <CircularProgress sx={{ display: "block", mx: "auto" }} />
-      )}
+
+      {loading && !error && <Loading />}
 
       {error && !loading && <Error errMessage={error} />}
 
@@ -116,9 +115,6 @@ const UserAccount = () => {
               )}
             </Box>
 
-            {/* <Typography variant="body2" color="success">
-              ({userData?.role})
-            </Typography> */}
             <Typography variant="body2" color="primary">
               {userData?.email}
             </Typography>
@@ -126,9 +122,6 @@ const UserAccount = () => {
               <span style={{ fontWeight: "bold" }}>Phone : </span>
               {userData?.phone}
             </Typography>
-            {/*   <Typography variant="body2" color="textSecondary">
-              Gender : {userData?.gender}
-            </Typography> */}
             <Typography variant="body2" color="textSecondary">
               <span style={{ fontWeight: "bold" }}>Registered : </span>
               {userData?.createdAt

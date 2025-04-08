@@ -1,7 +1,5 @@
-/* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
 import { CloudUpload, Update } from "@mui/icons-material";
-import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import {
   // Container,
@@ -18,12 +16,15 @@ import {
 } from "@mui/material";
 import { BASE_URL, token } from "../../../config.js";
 import uploadImageToCloudinary from "../../utils/uploadCloudinary.js";
+import useGetProfile from "../../hooks/useFetchData.jsx";
+import Loading from "../../components/Shared/Loading.jsx";
+import Error from "../../components/Shared/Error.jsx";
 
-const defaultAvatar =
-  "https://p7.hiclipart.com/preview/717/24/975/computer-icons-user-profile-user-account-clip-art-avatar.jpg";
+const UserProfile = () => {
+  const { data: user, error } = useGetProfile(`${BASE_URL}/users/profile/me`);
 
-const UserProfile = ({ user }) => {
   const [loading, setLoading] = useState(false);
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -33,7 +34,8 @@ const UserProfile = ({ user }) => {
     phone: "",
   });
 
-  const navigate = useNavigate();
+  const defaultAvatar =
+    "https://p7.hiclipart.com/preview/717/24/975/computer-icons-user-profile-user-account-clip-art-avatar.jpg";
 
   useEffect(() => {
     setFormData({
@@ -49,8 +51,6 @@ const UserProfile = ({ user }) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  console.log(user);
-
   const handleFileInputChange = async (event) => {
     const file = event.target.files[0];
     const data = await uploadImageToCloudinary(file);
@@ -59,10 +59,6 @@ const UserProfile = ({ user }) => {
 
   const submitHandler = async (event) => {
     event.preventDefault();
-    if (!user || !user._id) {
-      toast.error("User data not loaded yet!");
-      return;
-    }
 
     setLoading(true);
 
@@ -83,7 +79,6 @@ const UserProfile = ({ user }) => {
 
       setLoading(false);
       toast.success(message);
-      navigate("/users/profile/me");
     } catch (error) {
       toast.error(error.message);
       setLoading(false);
@@ -106,14 +101,24 @@ const UserProfile = ({ user }) => {
       >
         Profile Information
       </Typography>
-      {loading && (
-        <Box mt={10} display="flex" justifyContent="center">
-          <CircularProgress />
-        </Box>
-      )}
-      {!loading && (
+
+      {loading && !error && <Loading />}
+
+      {error && !loading && <Error errMessage={error} />}
+
+      {!loading && !error && (
         <form onSubmit={submitHandler}>
           <Grid container spacing={2}>
+            <Grid item xs={12} md={4}>
+              <TextField
+                fullWidth
+                label="Email"
+                name="email"
+                value={formData.email}
+                disabled
+                margin="normal"
+              />
+            </Grid>
             <Grid item xs={12} md={4}>
               <TextField
                 fullWidth
@@ -136,27 +141,7 @@ const UserProfile = ({ user }) => {
                 margin="normal"
               />
             </Grid>
-            <Grid item xs={12} md={4}>
-              <TextField
-                fullWidth
-                label="Email"
-                name="email"
-                value={formData.email}
-                disabled
-                margin="normal"
-              />
-            </Grid>
-            <Grid item xs={12} md={4}>
-              <TextField
-                fullWidth
-                label="Password"
-                name="password"
-                type="password"
-                value={formData.password}
-                onChange={handleInputChange}
-                margin="normal"
-              />
-            </Grid>
+
             <Grid item xs={12} md={4}>
               <FormControl fullWidth margin="normal">
                 <InputLabel>Gender</InputLabel>
@@ -174,11 +159,19 @@ const UserProfile = ({ user }) => {
             </Grid>
             <Grid item xs={12} md={4}>
               <Box
-                display="flex"
-                alignItems="center"
-                justifyContent="space-between"
-                mt={2}
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "16px",
+                  margin: "16px 0",
+                }}
               >
+                {" "}
+                <img
+                  src={formData.photo || defaultAvatar}
+                  alt="User"
+                  style={{ width: 56, height: 56, borderRadius: "50%" }}
+                />
                 <input
                   type="file"
                   accept=".jpg, .png, .jpeg"
@@ -195,28 +188,32 @@ const UserProfile = ({ user }) => {
                     Upload Photo
                   </Button>
                 </label>
-                <img
-                  src={formData.photo || defaultAvatar}
-                  alt="User"
-                  style={{ width: 48, height: 48, borderRadius: "50%" }}
-                />
               </Box>
             </Grid>
-          </Grid>
-
-          <Box mt={3} textAlign="center">
-            <Button
-              type="submit"
-              variant="contained"
-              color="primary"
-              size="large"
-              fullWidth
-              disabled={loading}
-              startIcon={loading ? <CircularProgress size={24} /> : <Update />}
+            <Grid
+              item
+              xs={12}
+              md={4}
+              sx={{
+                display: "flex",
+                alignItems: "center",
+              }}
             >
-              {loading ? "Updating..." : "Update Profile"}
-            </Button>
-          </Box>
+              <Button
+                variant="contained"
+                type="submit"
+                color="success"
+                size="large"
+                fullWidth
+                disabled={loading}
+                startIcon={
+                  loading ? <CircularProgress size={24} /> : <Update />
+                }
+              >
+                {loading ? "Updating..." : "Update Profile"}
+              </Button>
+            </Grid>
+          </Grid>
         </form>
       )}
     </Box>

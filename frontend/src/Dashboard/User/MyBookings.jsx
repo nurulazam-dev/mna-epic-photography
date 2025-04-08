@@ -12,7 +12,6 @@ import {
   Avatar,
   Typography,
   Box,
-  CircularProgress,
 } from "@mui/material";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
@@ -20,6 +19,7 @@ import { GppBad, VerifiedUser } from "@mui/icons-material";
 import { getShortEmail } from "../../utils/getShortEmail";
 import { useState } from "react";
 import PaginationComponent from "../../components/Shared/PaginationComponent";
+import Loading from "../../components/Shared/Loading";
 
 const MyBookings = () => {
   const {
@@ -53,12 +53,10 @@ const MyBookings = () => {
         My Bookings ({bookings?.length})
       </Typography>
 
-      {loading && !error && (
-        <Box mt={10} display="flex" justifyContent="center">
-          <CircularProgress />
-        </Box>
-      )}
+      {loading && !error && <Loading />}
+
       {error && !loading && <Error errMessage={error} />}
+
       {!loading && !error && (
         <TableContainer component={Paper}>
           <Table>

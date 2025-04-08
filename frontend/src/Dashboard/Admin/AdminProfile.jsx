@@ -21,11 +21,11 @@ import useGetProfile from "../../hooks/useFetchData";
 import Error from "../../components/Shared/Error";
 
 const AdminProfile = () => {
-  const [loading, setLoading] = useState(false);
-
   const { data: adminData, error } = useGetProfile(
     `${BASE_URL}/users/profile/me`
   );
+
+  const [loading, setLoading] = useState(false);
 
   const avatarImg =
     "https://p7.hiclipart.com/preview/717/24/975/computer-icons-user-profile-user-account-clip-art-avatar.jpg";
@@ -62,12 +62,8 @@ const AdminProfile = () => {
   const updateProfileHandler = async (e) => {
     e.preventDefault();
 
-    if (!adminData || !adminData._id) {
-      toast.error("Admin data not loaded yet!");
-      return;
-    }
-
     setLoading(true);
+
     try {
       const res = await fetch(`${BASE_URL}/users/${adminData._id}`, {
         method: "PUT",
