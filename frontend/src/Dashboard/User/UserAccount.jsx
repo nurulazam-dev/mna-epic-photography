@@ -26,10 +26,6 @@ const UserAccount = () => {
 
   return (
     <Box maxWidth={1220} mx="auto" my={1} px={2}>
-      {loading && !error && (
-        <CircularProgress sx={{ display: "block", mx: "auto" }} />
-      )}
-
       <Typography
         variant="h4"
         align="center"
@@ -44,6 +40,9 @@ const UserAccount = () => {
       >
         Dashboard
       </Typography>
+      {loading && !error && (
+        <CircularProgress sx={{ display: "block", mx: "auto" }} />
+      )}
 
       {error && !loading && <Error errMessage={error} />}
 

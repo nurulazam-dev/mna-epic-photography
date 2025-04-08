@@ -86,23 +86,23 @@ const AdminProfile = ({ adminData }) => {
 
   return (
     <Box>
+      <Typography
+        variant="h4"
+        align="center"
+        gutterBottom
+        sx={{
+          backgroundColor: "#2E7D32",
+          color: "white",
+          py: 1,
+          fontFamily: "serif",
+          borderRadius: 1,
+        }}
+      >
+        Profile Information
+      </Typography>
       {loading && <Loading />}
       {!loading && (
         <Box>
-          <Typography
-            variant="h4"
-            align="center"
-            gutterBottom
-            sx={{
-              backgroundColor: "#2E7D32",
-              color: "white",
-              py: 1,
-              fontFamily: "serif",
-              borderRadius: 1,
-            }}
-          >
-            Profile Information
-          </Typography>
           <form>
             <Grid container spacing={2}>
               <Grid item xs={12} md={4}>
