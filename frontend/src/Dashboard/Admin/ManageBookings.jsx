@@ -56,11 +56,6 @@ const ManageBookings = () => {
 
   return (
     <Box>
-      {loading && !error && (
-        <CircularProgress sx={{ display: "block", mx: "auto" }} />
-      )}
-      {error && !loading && <Error errMessage={error} />}
-
       <Typography
         variant="h4"
         align="center"
@@ -75,22 +70,27 @@ const ManageBookings = () => {
       >
         Manage Bookings ({bookings?.length})
       </Typography>
-      <TableContainer component={Paper}>
-        <Table>
-          <TableHead>
-            <TableRow sx={{ backgroundColor: "#f3f3f3" }}>
-              <TableCell align="center">Client</TableCell>
-              <TableCell align="center">Photogs</TableCell>
-              <TableCell align="center">B.Status</TableCell>
-              <TableCell align="center">Price</TableCell>
-              <TableCell align="center">Payment</TableCell>
-              <TableCell align="center">Booked</TableCell>
-              <TableCell align="center">Program</TableCell>
-              <TableCell align="center">Action</TableCell>
-            </TableRow>
-          </TableHead>
+      {loading && !error && (
+        <CircularProgress sx={{ display: "block", mx: "auto" }} />
+      )}
+      {error && !loading && <Error errMessage={error} />}
 
-          {!loading && !error && (
+      {!loading && !error && (
+        <TableContainer component={Paper}>
+          <Table>
+            <TableHead>
+              <TableRow sx={{ backgroundColor: "#f3f3f3" }}>
+                <TableCell align="center">Client</TableCell>
+                <TableCell align="center">Photogs</TableCell>
+                <TableCell align="center">B.Status</TableCell>
+                <TableCell align="center">Price</TableCell>
+                <TableCell align="center">Payment</TableCell>
+                <TableCell align="center">Booked</TableCell>
+                <TableCell align="center">Program</TableCell>
+                <TableCell align="center">Action</TableCell>
+              </TableRow>
+            </TableHead>
+
             <TableBody>
               {paginatedBookings?.map((booking) => (
                 <TableRow key={booking?._id} hover>
@@ -249,9 +249,9 @@ const ManageBookings = () => {
                 </TableRow>
               ))}
             </TableBody>
-          )}
-        </Table>
-      </TableContainer>
+          </Table>
+        </TableContainer>
+      )}
 
       {bookings?.length > itemsPerPage && (
         <PaginationComponent
