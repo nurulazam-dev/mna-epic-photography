@@ -25,17 +25,17 @@ import Error from "../../components/Shared/Error";
 
 const Bookings = () => {
   const {
-    data: bookings,
+    data: photogData,
     loading,
     error,
   } = useGetProfile(`${BASE_URL}/photographers/profile/me`);
 
-  console.log(bookings?.bookings);
+  const bookings = photogData?.bookings || [];
 
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 4;
   const startIndex = (currentPage - 1) * itemsPerPage;
-  const paginatedBookings = bookings?.bookings?.slice(
+  const paginatedBookings = bookings?.slice(
     startIndex,
     startIndex + itemsPerPage
   );
@@ -53,7 +53,7 @@ const Bookings = () => {
           fontFamily: "serif",
         }}
       >
-        Bookings ({bookings?.bookings?.length})
+        Bookings ({bookings?.length})
       </Typography>
 
       {loading && !error && <Loading />}
