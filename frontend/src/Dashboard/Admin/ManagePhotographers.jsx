@@ -48,12 +48,6 @@ const ManagePhotographers = () => {
 
   return (
     <Box>
-      {loading && !error && (
-        <CircularProgress sx={{ display: "block", mx: "auto" }} />
-      )}
-
-      {error && !loading && <Error errMessage={error} />}
-
       <Typography
         variant="h4"
         align="center"
@@ -68,22 +62,26 @@ const ManagePhotographers = () => {
       >
         Manage Photographers ({photogs?.length})
       </Typography>
+      {loading && !error && (
+        <CircularProgress sx={{ display: "block", mx: "auto" }} />
+      )}
 
-      <TableContainer component={Paper}>
-        <Table>
-          <TableHead>
-            <TableRow sx={{ backgroundColor: "#f3f3f3" }}>
-              <TableCell align="center">Photographer</TableCell>
-              <TableCell align="center">Expertise</TableCell>
-              <TableCell align="center">Phone</TableCell>
-              <TableCell align="center">Experience</TableCell>
-              <TableCell align="center">Reg.Status</TableCell>
-              <TableCell align="center">S.Price</TableCell>
-              <TableCell align="center">Action</TableCell>
-            </TableRow>
-          </TableHead>
+      {error && !loading && <Error errMessage={error} />}
+      {!loading && !error && (
+        <TableContainer component={Paper}>
+          <Table>
+            <TableHead>
+              <TableRow sx={{ backgroundColor: "#f3f3f3" }}>
+                <TableCell align="center">Photographer</TableCell>
+                <TableCell align="center">Expertise</TableCell>
+                <TableCell align="center">Phone</TableCell>
+                <TableCell align="center">Experience</TableCell>
+                <TableCell align="center">Reg.Status</TableCell>
+                <TableCell align="center">S.Price</TableCell>
+                <TableCell align="center">Action</TableCell>
+              </TableRow>
+            </TableHead>
 
-          {!loading && !error && (
             <TableBody>
               {paginatedPhotogs?.map((photog) => (
                 <TableRow key={photog?._id} hover>
@@ -161,9 +159,9 @@ const ManagePhotographers = () => {
                 </TableRow>
               ))}
             </TableBody>
-          )}
-        </Table>
-      </TableContainer>
+          </Table>
+        </TableContainer>
+      )}
 
       {photogs?.length > itemsPerPage && (
         <PaginationComponent
