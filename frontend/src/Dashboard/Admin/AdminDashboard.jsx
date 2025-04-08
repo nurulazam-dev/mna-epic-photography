@@ -30,8 +30,11 @@ const AdminDashboard = () => {
       >
         Dashboard
       </Typography>
+
       {loading && !error && <Loading />}
+
       {error && !loading && <Error errMessage={error} />}
+
       {!loading && !error && (
         <Box>
           <Paper
@@ -88,6 +91,10 @@ const AdminDashboard = () => {
             </Typography>
           </Paper>
 
+          {/* {
+              data?(<AdminProfile adminData={data} />):" "
+            }
+             */}
           {/* Admin Profile Info */}
           <Box sx={{ marginTop: 3 }}>
             <AdminProfile adminData={data} />

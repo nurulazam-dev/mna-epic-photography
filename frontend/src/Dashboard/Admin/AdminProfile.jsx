@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
 import {
   Button,
@@ -8,7 +7,6 @@ import {
   InputLabel,
   FormControl,
   Typography,
-  // Container,
   Avatar,
   CircularProgress,
   Box,
@@ -19,9 +17,15 @@ import { toast } from "react-toastify";
 import { BASE_URL, token } from "../../../config";
 import uploadImageToCloudinary from "../../utils/uploadCloudinary";
 import Loading from "../../components/Shared/Loading";
+import useGetProfile from "../../hooks/useFetchData";
+import Error from "../../components/Shared/Error";
 
-const AdminProfile = ({ adminData }) => {
+const AdminProfile = () => {
   const [loading, setLoading] = useState(false);
+
+  const { data: adminData, error } = useGetProfile(
+    `${BASE_URL}/users/profile/me`
+  );
 
   const avatarImg =
     "https://p7.hiclipart.com/preview/717/24/975/computer-icons-user-profile-user-account-clip-art-avatar.jpg";
@@ -100,8 +104,12 @@ const AdminProfile = ({ adminData }) => {
       >
         Profile Information
       </Typography>
-      {loading && <Loading />}
-      {!loading && (
+
+      {loading && !error && <Loading />}
+
+      {error && !loading && <Error errMessage={error} />}
+
+      {!loading && !error && (
         <Box>
           <form>
             <Grid container spacing={2}>
