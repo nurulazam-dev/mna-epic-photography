@@ -52,12 +52,6 @@ const ManageUsers = () => {
 
   return (
     <Box>
-      {loading && !error && (
-        <CircularProgress sx={{ display: "block", mx: "auto" }} />
-      )}
-
-      {error && !loading && <Error errMessage={error} />}
-
       <Typography
         variant="h4"
         align="center"
@@ -73,21 +67,26 @@ const ManageUsers = () => {
         Manage Users ({users?.length})
       </Typography>
 
-      <TableContainer component={Paper}>
-        <Table>
-          <TableHead>
-            <TableRow sx={{ backgroundColor: "#f3f3f3" }}>
-              <TableCell align="center">Client</TableCell>
-              <TableCell align="center">Role</TableCell>
-              <TableCell align="center">V. Status</TableCell>
-              <TableCell align="center">Phone</TableCell>
-              <TableCell align="center">Gender</TableCell>
-              <TableCell align="center">Registered</TableCell>
-              <TableCell align="center">Action</TableCell>
-            </TableRow>
-          </TableHead>
+      {loading && !error && (
+        <CircularProgress sx={{ display: "block", mx: "auto" }} />
+      )}
 
-          {!loading && !error && (
+      {error && !loading && <Error errMessage={error} />}
+      {!loading && !error && (
+        <TableContainer component={Paper}>
+          <Table>
+            <TableHead>
+              <TableRow sx={{ backgroundColor: "#f3f3f3" }}>
+                <TableCell align="center">Client</TableCell>
+                <TableCell align="center">Role</TableCell>
+                <TableCell align="center">V. Status</TableCell>
+                <TableCell align="center">Phone</TableCell>
+                <TableCell align="center">Gender</TableCell>
+                <TableCell align="center">Registered</TableCell>
+                <TableCell align="center">Action</TableCell>
+              </TableRow>
+            </TableHead>
+
             <TableBody>
               {paginatedUsers?.map((user) => (
                 <TableRow key={user?._id} hover>
@@ -167,9 +166,9 @@ const ManageUsers = () => {
                 </TableRow>
               ))}
             </TableBody>
-          )}
-        </Table>
-      </TableContainer>
+          </Table>
+        </TableContainer>
+      )}
 
       {users?.length > itemsPerPage && (
         <PaginationComponent
