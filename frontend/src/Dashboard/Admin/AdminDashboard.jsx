@@ -4,7 +4,6 @@ import Error from "../../components/Shared/Error";
 import Loading from "../../components/Shared/Loading";
 import useGetProfile from "../../hooks/useFetchData";
 import AdminDashboardHome from "./AdminDashboardHome";
-import AdminProfile from "./AdminProfile";
 
 const AdminDashboard = () => {
   const userAvatar =
@@ -90,15 +89,6 @@ const AdminDashboard = () => {
               smoothly. Let’s make today productive!
             </Typography>
           </Paper>
-
-          {/* {
-              data?(<AdminProfile adminData={data} />):" "
-            }
-             */}
-          {/* Admin Profile Info */}
-          <Box sx={{ marginTop: 3 }}>
-            <AdminProfile adminData={data} />
-          </Box>
 
           {/* Admin Dashboard Summary */}
           <Box sx={{ marginTop: 3 }}>
