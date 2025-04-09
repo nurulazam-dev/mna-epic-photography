@@ -61,8 +61,8 @@ const PhotographerDetails = () => {
                     fontWeight: 700,
                     fontSize: {
                       xs: "1.25rem",
-                      sm: "1.75rem",
-                      md: "2.15rem",
+                      sm: "1.5rem",
+                      md: "2rem",
                     },
                   }}
                 >
@@ -73,8 +73,8 @@ const PhotographerDetails = () => {
                   sx={{
                     fontSize: {
                       xs: ".75rem",
-                      sm: "1.15rem",
-                      md: "1.75rem",
+                      sm: "1rem",
+                      md: "1.5rem",
                     },
                   }}
                 >

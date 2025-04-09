@@ -46,7 +46,7 @@ const FeedbackForm = () => {
       component="form"
       onSubmit={handleSubmitReview}
       sx={{
-        maxWidth: 500,
+        maxWidth: 700,
         mx: "auto",
         p: 3,
         bgcolor: "white",
@@ -60,8 +60,8 @@ const FeedbackForm = () => {
         sx={{
           fontSize: {
             xs: "1rem",
-            sm: "1.25rem",
-            md: "2rem",
+            sm: "1.05rem",
+            md: "1.15rem",
           },
           mb: 1,
         }}
@@ -82,8 +82,8 @@ const FeedbackForm = () => {
         sx={{
           fontSize: {
             xs: "1rem",
-            sm: "1.25rem",
-            md: "2rem",
+            sm: "1.05rem",
+            md: "1.15rem",
           },
           mb: 1,
         }}

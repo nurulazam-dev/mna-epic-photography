@@ -28,28 +28,28 @@ const Feedback = ({ reviews, totalRating }) => {
       {reviews?.map((review, index) => (
         <Stack
           key={index}
+          sx={{
+            mb: 2,
+            border: 1,
+            borderColor: "secondary.main",
+            p: 1,
+            borderRadius: 1,
+          }}
           direction="row"
-          justifyContent="space-between"
           spacing={2}
-          sx={{ mb: 3 }}
+          alignItems="center"
         >
-          <Stack direction="row" spacing={2} alignItems="center">
-            <Avatar src={review?.user?.photo} alt={review?.user?.name} />
-            <Box>
-              <Typography variant="subtitle1" fontWeight="bold" color="primary">
-                {review?.user?.name}
-              </Typography>
-              <Typography variant="body2" color="textSecondary">
-                {formatDate(review?.createdAt)}
-              </Typography>
-              <Typography variant="body1" sx={{ mt: 1.5 }}>
-                {review?.reviewText}
-              </Typography>
-            </Box>
-          </Stack>
-
-          {/* Star Rating */}
-          <Rating value={review?.rating} precision={1} readOnly />
+          <Avatar src={review?.user?.photo} alt={review?.user?.name} />
+          <Box>
+            <Typography variant="subtitle1" fontWeight="bold" color="primary">
+              {review?.user?.name}
+            </Typography>
+            <Rating value={review?.rating} precision={1} readOnly />
+            <Typography variant="body2">{review?.reviewText}</Typography>
+            <Typography variant="body2" color="textSecondary">
+              {formatDate(review?.createdAt)}
+            </Typography>
+          </Box>
         </Stack>
       ))}
 
