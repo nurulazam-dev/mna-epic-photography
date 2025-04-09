@@ -11,6 +11,8 @@ import {
   Box,
   Typography,
   Button,
+  useTheme,
+  useMediaQuery,
 } from "@mui/material";
 import HomeIcon from "@mui/icons-material/Home";
 import ReceiptIcon from "@mui/icons-material/Receipt";
@@ -21,7 +23,10 @@ import { DeleteForever } from "@mui/icons-material";
 const Dashboard = () => {
   const [tab, setTab] = useState("overview");
   const { role } = useContext(authContext);
-  const drawerWidth = 235;
+
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+  const drawerWidth = isSmallScreen ? 55 : 235;
 
   return (
     <Box display="flex">
@@ -39,17 +44,21 @@ const Dashboard = () => {
           },
         }}
       >
-        <Box sx={{ textAlign: "center", p: 1 }}>
-          <Typography
-            variant="h6"
-            sx={{ color: "#facc15", fontWeight: "bold", mt: 1 }}
-          >
-            DASHBOARD
-          </Typography>
-        </Box>
-        <Divider />
+        {!isSmallScreen && (
+          <>
+            <Box sx={{ textAlign: "center", p: 1 }}>
+              <Typography
+                variant="h6"
+                sx={{ color: "#facc15", fontWeight: "bold", mt: 1 }}
+              >
+                DASHBOARD
+              </Typography>
+            </Box>
+            <Divider />
+          </>
+        )}
 
-        <List sx={{ px: 1 }}>
+        <List sx={{ px: isSmallScreen ? 0.3 : 1 }}>
           <ListItemButton
             component={Link}
             to="/dashboard"
@@ -59,7 +68,7 @@ const Dashboard = () => {
             <ListItemIcon>
               <HomeIcon sx={{ color: "white" }} />
             </ListItemIcon>
-            <ListItemText primary="Overview" />
+            {!isSmallScreen && <ListItemText primary="Overview" />}
           </ListItemButton>
 
           {role === "client" && (
@@ -73,7 +82,7 @@ const Dashboard = () => {
                 <ListItemIcon>
                   <ReceiptIcon sx={{ color: "white" }} />
                 </ListItemIcon>
-                <ListItemText primary="My Bookings" />
+                {!isSmallScreen && <ListItemText primary="My Bookings" />}
               </ListItemButton>
               <ListItemButton
                 component={Link}
@@ -84,7 +93,7 @@ const Dashboard = () => {
                 <ListItemIcon>
                   <AccountCircleIcon sx={{ color: "white" }} />
                 </ListItemIcon>
-                <ListItemText primary="Profile" />
+                {!isSmallScreen && <ListItemText primary="Profile" />}
               </ListItemButton>
             </>
           )}
@@ -100,7 +109,7 @@ const Dashboard = () => {
                 <ListItemIcon>
                   <ReceiptIcon sx={{ color: "white" }} />
                 </ListItemIcon>
-                <ListItemText primary="Bookings" />
+                {!isSmallScreen && <ListItemText primary="Bookings" />}
               </ListItemButton>
               <ListItemButton
                 component={Link}
@@ -111,7 +120,7 @@ const Dashboard = () => {
                 <ListItemIcon>
                   <AccountCircleIcon sx={{ color: "white" }} />
                 </ListItemIcon>
-                <ListItemText primary="Profile" />
+                {!isSmallScreen && <ListItemText primary="Profile" />}
               </ListItemButton>
             </>
           )}
@@ -127,7 +136,7 @@ const Dashboard = () => {
                 <ListItemIcon>
                   <PeopleIcon sx={{ color: "white" }} />
                 </ListItemIcon>
-                <ListItemText primary="Manage Users" />
+                {!isSmallScreen && <ListItemText primary="Manage Users" />}
               </ListItemButton>
               <ListItemButton
                 component={Link}
@@ -138,7 +147,7 @@ const Dashboard = () => {
                 <ListItemIcon>
                   <PeopleIcon sx={{ color: "white" }} />
                 </ListItemIcon>
-                <ListItemText primary="Manage Photogs" />
+                {!isSmallScreen && <ListItemText primary="Manage Photogs" />}
               </ListItemButton>
 
               <ListItemButton
@@ -150,7 +159,7 @@ const Dashboard = () => {
                 <ListItemIcon>
                   <ReceiptIcon sx={{ color: "white" }} />
                 </ListItemIcon>
-                <ListItemText primary="Manage Bookings" />
+                {!isSmallScreen && <ListItemText primary="Manage Bookings" />}
               </ListItemButton>
               <ListItemButton
                 component={Link}
@@ -161,19 +170,21 @@ const Dashboard = () => {
                 <ListItemIcon>
                   <AccountCircleIcon sx={{ color: "white" }} />
                 </ListItemIcon>
-                <ListItemText primary="Profile" />
+                {!isSmallScreen && <ListItemText primary="Profile" />}
               </ListItemButton>
             </>
           )}
-          <Button
-            fullWidth
-            variant="contained"
-            startIcon={<DeleteForever />}
-            color="error"
-            sx={{ mt: 11, height: 45 }}
-          >
-            Delete Account
-          </Button>
+          {!isSmallScreen && (
+            <Button
+              fullWidth
+              variant="contained"
+              startIcon={<DeleteForever />}
+              color="error"
+              sx={{ mt: 11, height: 45 }}
+            >
+              Delete Account
+            </Button>
+          )}
         </List>
       </Drawer>
 
