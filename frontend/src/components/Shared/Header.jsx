@@ -158,10 +158,10 @@ const Header = () => {
                   sx={{ color: "primary.dark", fontWeight: "bold" }}
                   to={
                     role == "admin"
-                      ? "/admin/profile/me"
+                      ? "dashboard/admin/profile/me"
                       : role == "photographer"
-                      ? "/photographers/profile/me"
-                      : "/users/profile/me"
+                      ? "dashboard/photographers/profile/me"
+                      : "dashboard/users/profile/me"
                   }
                 >
                   PROFILE <CallMadeOutlinedIcon />
