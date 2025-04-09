@@ -37,7 +37,19 @@ const Photographers = () => {
 
   return (
     <Container>
-      <Typography variant="h4" align="center" sx={{ mt: 3, fontWeight: 700 }}>
+      <Typography
+        variant="h4"
+        align="center"
+        sx={{
+          mt: 3,
+          fontWeight: 700,
+          fontSize: {
+            xs: "1.5rem",
+            sm: "2rem",
+            md: "2.5rem",
+          },
+        }}
+      >
         Search a Photographer
       </Typography>
 

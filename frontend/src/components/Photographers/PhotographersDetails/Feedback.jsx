@@ -9,7 +9,19 @@ const Feedback = ({ reviews, totalRating }) => {
 
   return (
     <Box sx={{ mb: 7 }}>
-      <Typography variant="h5" fontWeight="bold" color="primary" sx={{ mb: 3 }}>
+      <Typography
+        variant="h5"
+        fontWeight="bold"
+        color="primary"
+        sx={{
+          fontSize: {
+            xs: "1.25rem",
+            sm: "1.75rem",
+            md: "2.15rem",
+          },
+          mb: 3,
+        }}
+      >
         All reviews ({totalRating})
       </Typography>
 

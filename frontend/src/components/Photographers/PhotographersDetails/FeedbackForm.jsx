@@ -55,7 +55,17 @@ const FeedbackForm = () => {
       }}
     >
       {/* Rating Section */}
-      <Typography variant="h6" sx={{ mb: 2 }}>
+      <Typography
+        variant="h6"
+        sx={{
+          fontSize: {
+            xs: "1rem",
+            sm: "1.25rem",
+            md: "2rem",
+          },
+          mb: 1,
+        }}
+      >
         How would you rate the photographer?
       </Typography>
       <Rating
@@ -63,11 +73,21 @@ const FeedbackForm = () => {
         value={rating}
         precision={1}
         onChange={(_, newValue) => setRating(newValue)}
-        sx={{ mb: 3 }}
+        sx={{ mb: 1 }}
       />
 
       {/* Feedback Input */}
-      <Typography variant="h6" sx={{ mb: 2 }}>
+      <Typography
+        variant="h6"
+        sx={{
+          fontSize: {
+            xs: "1rem",
+            sm: "1.25rem",
+            md: "2rem",
+          },
+          mb: 1,
+        }}
+      >
         Share your feedback or suggestions.
       </Typography>
       <TextField

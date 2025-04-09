@@ -55,10 +55,29 @@ const PhotographerDetails = () => {
                 sx={{ width: 120, height: 120, borderRadius: 2 }}
               />
               <Box>
-                <Typography variant="h5" fontWeight="bold">
+                <Typography
+                  variant="h5"
+                  sx={{
+                    fontWeight: 700,
+                    fontSize: {
+                      xs: "1.25rem",
+                      sm: "1.75rem",
+                      md: "2.15rem",
+                    },
+                  }}
+                >
                   {name}
                 </Typography>
-                <Typography variant="subtitle1" color="textSecondary">
+                <Typography
+                  color="textSecondary"
+                  sx={{
+                    fontSize: {
+                      xs: ".75rem",
+                      sm: "1.15rem",
+                      md: "1.75rem",
+                    },
+                  }}
+                >
                   {expertise} photography expert
                 </Typography>
                 <Typography variant="body2" fontWeight="bold">

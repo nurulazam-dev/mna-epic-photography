@@ -12,7 +12,6 @@ import Services from "../Pages/Services";
 import AboutUs from "../Pages/AboutUs";
 import ContactUs from "../Pages/ContactUs";
 import AdminDashboard from "../Dashboard/Admin/AdminDashboard";
-import TestCode from "../components/Shared/TestCode";
 import PhotogDashboard from "../Dashboard/Photographer/PhotogDashboard";
 import RequireAuth from "./RequireAuth";
 import Dashboard from "../Pages/Dashboard";
@@ -45,7 +44,6 @@ const Routers = () => {
       <Route path="/services" element={<Services />} />
       <Route path="/contact-us" element={<ContactUs />} />
       <Route path="/about-us" element={<AboutUs />} />
-      <Route path="/test" element={<TestCode />} />
       <Route path="/register" element={<Register />} />
       <Route path="/checkout-success" element={<CheckoutSuccess />} />
       <Route path="/photographers" element={<Photographers />} />
