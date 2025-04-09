@@ -133,7 +133,7 @@ const Header = () => {
            Mobile Drawer
       ==================== */}
       <Drawer anchor="right" open={mobileOpen} onClose={toggleMobileMenu}>
-        <Box sx={{ width: 250 }}>
+        <Box sx={{ width: 200 }}>
           <List>
             {navLinks.map((link) => (
               <ListItem
@@ -143,7 +143,10 @@ const Header = () => {
                 key={link.path}
                 onClick={toggleMobileMenu}
               >
-                <ListItemText primary={link.display} />
+                <ListItemText
+                  sx={{ color: "primary.dark" }}
+                  primary={link.display}
+                />
               </ListItem>
             ))}
 
@@ -152,7 +155,7 @@ const Header = () => {
                 <ListItem
                   button
                   component={NavLink}
-                  sx={{ color: "black", fontWeight: "bold" }}
+                  sx={{ color: "primary.dark", fontWeight: "bold" }}
                   to={
                     role == "admin"
                       ? "/admin/profile/me"
@@ -163,12 +166,17 @@ const Header = () => {
                 >
                   PROFILE <CallMadeOutlinedIcon />
                 </ListItem>
-                <ListItem
-                  button
-                  onClick={handleLogout}
-                  sx={{ color: "red", border: "1px solid red" }}
-                >
-                  <ListItemText primary="LOGOUT" />
+                <ListItem button onClick={handleLogout}>
+                  <ListItemText
+                    primary="LOGOUT"
+                    sx={{
+                      color: "red",
+                      border: "1px solid red",
+                      borderRadius: 1,
+                      p: 1,
+                      textAlign: "center",
+                    }}
+                  />
                 </ListItem>
               </MenuList>
             ) : (
@@ -178,7 +186,16 @@ const Header = () => {
                 to="/login"
                 onClick={toggleMobileMenu}
               >
-                <ListItemText primary="LOGIN" />
+                <ListItemText
+                  primary="LOGIN"
+                  sx={{
+                    color: "blue",
+                    border: "1px solid blue",
+                    borderRadius: 1,
+                    p: 1,
+                    textAlign: "center",
+                  }}
+                />
               </ListItem>
             )}
           </List>
