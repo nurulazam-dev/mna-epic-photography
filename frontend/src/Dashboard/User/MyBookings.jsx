@@ -129,7 +129,24 @@ const MyBookings = () => {
                   <TableCell align="center">
                     {booking?.photographer?.expertise}
                   </TableCell>
-                  <TableCell align="center">{booking?.status}</TableCell>
+                  <TableCell align="center">
+                    <Typography
+                      variant="body2"
+                      sx={{
+                        color:
+                          booking?.status === "pending"
+                            ? "orange"
+                            : booking?.status === "approved"
+                            ? "green"
+                            : booking?.status === "completed"
+                            ? "blue"
+                            : "black",
+                      }}
+                    >
+                      {booking?.status?.charAt(0).toUpperCase() +
+                        booking?.status?.slice(1)}
+                    </Typography>
+                  </TableCell>
                   <TableCell align="center">
                     {booking?.isPaid ? (
                       <Box

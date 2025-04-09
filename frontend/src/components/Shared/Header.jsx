@@ -23,8 +23,6 @@ const navLinks = [
   { path: "/services", display: "SERVICES" },
   { path: "/about-us", display: "ABOUT US" },
   { path: "/contact-us", display: "CONTACT" },
-  { path: "/test", display: "T" },
-  { path: "/dashboard", display: "DB" },
 ];
 
 const Header = () => {
@@ -43,16 +41,16 @@ const Header = () => {
 
   return (
     <AppBar position="fixed" color="inherit" elevation={3}>
-      {/* <AppBar position="sticky" color="inherit" elevation={3}> */}
       <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
-        {/* Logo */}
         <Box>
           <NavLink to="/">
             <img src={logo} alt="Logo" style={{ width: 65 }} />
           </NavLink>
         </Box>
 
-        {/* Desktop Nav Links */}
+        {/* ====================
+           Desktop Nav Links
+        ==================== */}
         <Box
           sx={{
             flexGrow: 1,
@@ -72,7 +70,9 @@ const Header = () => {
           ))}
         </Box>
 
-        {/* User Info or Login/Logout */}
+        {/* ========================
+          User Info or Login/Logout
+        ======================== */}
         <Box sx={{ display: "flex", alignItems: "center" }}>
           {token && user ? (
             <>
@@ -114,7 +114,9 @@ const Header = () => {
             </Button>
           )}
 
-          {/* Mobile Menu Button */}
+          {/* ====================
+             Mobile Menu Button
+          ==================== */}
           <IconButton
             edge="end"
             color="inherit"
@@ -127,7 +129,9 @@ const Header = () => {
         </Box>
       </Toolbar>
 
-      {/* Mobile Drawer */}
+      {/* ====================
+           Mobile Drawer
+      ==================== */}
       <Drawer anchor="right" open={mobileOpen} onClose={toggleMobileMenu}>
         <Box sx={{ width: 250 }}>
           <List>

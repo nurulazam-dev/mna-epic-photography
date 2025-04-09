@@ -3,6 +3,7 @@ import { Button, Typography, Avatar, Box, Alert } from "@mui/material";
 import Error from "../../components/Shared/Error";
 import Loading from "../../components/Shared/Loading";
 import useGetProfile from "../../hooks/useFetchData";
+import AboutPhotographer from "../../components/Photographers/PhotographersDetails/AboutPhotographer";
 import { BASE_URL } from "../../../config";
 import { Link } from "react-router-dom";
 
@@ -10,21 +11,9 @@ const PhotogDashboard = () => {
   const userAvatar =
     "https://p7.hiclipart.com/preview/717/24/975/computer-icons-user-profile-user-account-clip-art-avatar.jpg";
 
-  const {
-    data: photogData,
-    loading,
-    error,
-  } = useGetProfile(`${BASE_URL}/photographers/profile/me`);
-
-  const {
-    name,
-    photo,
-    expertise,
-    isApproved,
-    about,
-    averageRating,
-    experience,
-  } = photogData || {};
+  const { data, loading, error } = useGetProfile(
+    `${BASE_URL}/photographers/profile/me`
+  );
 
   return (
     <Box>
@@ -33,7 +22,7 @@ const PhotogDashboard = () => {
 
       {!loading && !error && (
         <Box px={2}>
-          {isApproved === "pending" && (
+          {data?.isApproved === "pending" && (
             <Alert severity="warning" icon={<Warning />} sx={{ my: 2 }}>
               To get approval, please complete your profile. We&apos;ll review
               manually and approve within 3 days.
@@ -51,7 +40,7 @@ const PhotogDashboard = () => {
                 fontFamily: "serif",
               }}
             >
-              About {name}
+              About {data?.name}
             </Typography>
             <Box
               display="flex"
@@ -61,13 +50,13 @@ const PhotogDashboard = () => {
               pt={1}
             >
               <Avatar
-                src={photo || userAvatar}
+                src={data?.photo || userAvatar}
                 sx={{ width: 120, height: 120 }}
               />
               <Box>
-                <Typography variant="h6">{name}</Typography>
+                <Typography variant="h6">{data?.name}</Typography>
                 <Typography color="textSecondary" fontSize={14}>
-                  {expertise + " Photography Expert" || (
+                  {data?.expertise + " Photography Expert" || (
                     <Typography color="error">
                       Expertise profile isn&apos;t updated. Please update your
                       expertise profile.
@@ -77,48 +66,18 @@ const PhotogDashboard = () => {
                 <Box display="flex" alignItems="center" gap={1} mt={1}>
                   {<Star />}
                   <Typography>
-                    {averageRating > 0
-                      ? averageRating?.toFixed(1)
-                      : averageRating}
+                    {data?.averageRating > 0
+                      ? data?.averageRating?.toFixed(1)
+                      : data?.averageRating}
                   </Typography>
                 </Box>
               </Box>
             </Box>
-
-            <Box mb={2}>
-              <Box>
-                <Typography variant="body1" fontSize={{ xs: 14, lg: 16 }}>
-                  {about ? (
-                    about
-                  ) : (
-                    <Typography
-                      color="error"
-                      sx={{ animation: "pulse 1s infinite" }}
-                    >
-                      Bio/About profile isn&apos;t updated. Please update your
-                      bio/about profile.
-                    </Typography>
-                  )}
-                </Typography>
-              </Box>
-
-              <Box mt={3}>
-                <Typography variant="h6" fontWeight="bold" color="primary">
-                  Experience
-                </Typography>
-                {experience ? (
-                  experience + " years of professional experience."
-                ) : (
-                  <Typography
-                    color="error"
-                    sx={{ animation: "pulse 1s infinite" }}
-                  >
-                    Experience profile isn&apos;t updated. Please update your
-                    experience profile.
-                  </Typography>
-                )}
-              </Box>
-            </Box>
+            <AboutPhotographer
+              name={data?.name}
+              about={data?.about}
+              experience={data?.experience}
+            />
           </Box>
         </Box>
       )}
@@ -132,7 +91,7 @@ const PhotogDashboard = () => {
             variant="contained"
             size="large"
             sx={{
-              bgcolor: "black",
+              bgcolor: "blue",
               color: "white",
               "&:hover": { bgcolor: "darkgreen" },
             }}

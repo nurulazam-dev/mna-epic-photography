@@ -143,7 +143,24 @@ const Bookings = () => {
                     )}
                   </TableCell>
 
-                  <TableCell align="center">{item?.status}</TableCell>
+                  <TableCell align="center">
+                    <Typography
+                      variant="body2"
+                      sx={{
+                        color:
+                          item?.status === "pending"
+                            ? "orange"
+                            : item?.status === "approved"
+                            ? "green"
+                            : item?.status === "completed"
+                            ? "blue"
+                            : "black",
+                      }}
+                    >
+                      {item?.status?.charAt(0).toUpperCase() +
+                        item?.status?.slice(1)}
+                    </Typography>
+                  </TableCell>
                   <TableCell align="center">$ {item?.servicePrice}</TableCell>
 
                   <TableCell align="center">
