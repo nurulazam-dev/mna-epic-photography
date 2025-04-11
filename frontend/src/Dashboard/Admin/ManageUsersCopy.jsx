@@ -188,8 +188,107 @@ const ManageUsers = () => {
 
       {error && !loading && <Error errMessage={error} />}
 
+      {/*  {!loading && !error && (
+          <TableContainer component={Paper}>
+            <Table>
+              <TableHead>
+                <TableRow sx={{ backgroundColor: "#f3f3f3" }}>
+                  <TableCell align="center">Client</TableCell>
+                  <TableCell align="center">Role</TableCell>
+                  <TableCell align="center">V. Status</TableCell>
+                  <TableCell align="center">Phone</TableCell>
+                  <TableCell align="center">Gender</TableCell>
+                  <TableCell align="center">Registered</TableCell>
+                  <TableCell align="center">Action</TableCell>
+                </TableRow>
+              </TableHead>
+  
+              <TableBody>
+                {paginatedUsers?.map((user) => (
+                  <TableRow key={user?._id} hover>
+                    <TableCell sx={{ padding: "2px 10px" }}>
+                      <Box display="flex" alignItems="center" gap={2}>
+                        <Avatar src={user?.photo} alt={user?.name} />
+                        <Box>
+                          <Typography
+                            fontWeight="bold"
+                            display="flex"
+                            alignItems="center"
+                          >
+                            {user?.name}
+                            {user?.isVerified ? (
+                              <Box
+                                display="flex"
+                                alignItems="center"
+                                justifyContent="center"
+                                color="green"
+                                height={16}
+                                width={16}
+                                sx={{ marginLeft: "3px" }}
+                              >
+                                <VerifiedUser fontSize="10px" />
+                              </Box>
+                            ) : (
+                              <Box
+                                display="flex"
+                                alignItems="center"
+                                justifyContent="center"
+                                color="red"
+                                height={16}
+                                width={16}
+                                sx={{ marginLeft: "3px" }}
+                              >
+                                <GppBad fontSize="10px" />
+                              </Box>
+                            )}
+                          </Typography>
+                          <Typography variant="body2" color="textSecondary">
+                            {getShortEmail(user?.email)}
+                          </Typography>
+                        </Box>
+                      </Box>
+                    </TableCell>
+  
+                    <TableCell align="center" sx={{ textTransform: "uppercase" }}>
+                      {user?.role}
+                    </TableCell>
+                    <TableCell align="center">
+                      {user?.isVerified ? "Verified" : "Not Verify"}
+                    </TableCell>
+                    <TableCell align="center">{user?.phone}</TableCell>
+                    <TableCell align="center">{user?.gender}</TableCell>
+                    <TableCell align="center">
+                      {formatDate(user?.createdAt)}
+                    </TableCell>
+                    <TableCell align="center" sx={{ padding: "6px" }}>
+                      <Button
+                        variant="contained"
+                        color="success"
+                        size="small"
+                        sx={{ marginRight: "6px" }}
+                        onClick={() => handleOpenUpdateModal(user)}
+                      >
+                        Update
+                      </Button>
+                      <Button
+                        variant="contained"
+                        color="error"
+                        size="small"
+                        onClick={() => handleOpenDeleteModal(user)}
+                      >
+                        Delete
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        )} */}
+
       {!loading && !error && (
         <>
+          {/* Table view for medium to large screens */}
           <TableContainer
             component={Paper}
             sx={{ display: { xs: "none", md: "block" } }}
@@ -285,6 +384,7 @@ const ManageUsers = () => {
               mt: 2,
             }}
           >
+            {/* {paginatedUsers?.map((user) => ( */}
             {filteredUsers?.map((user) => (
               <Paper key={user?._id} elevation={3} sx={{ p: 2 }}>
                 <Box display="flex" alignItems="center" gap={2} mb={1}>
@@ -350,6 +450,15 @@ const ManageUsers = () => {
           </Box>
         </>
       )}
+
+      {/* {users?.length > itemsPerPage && (
+          <PaginationComponent
+            totalItems={users?.length}
+            itemsPerPage={itemsPerPage}
+            currentPage={currentPage}
+            onPageChange={setCurrentPage}
+          />
+        )} */}
 
       {filteredUsers?.length === 0 && (
         <Typography
