@@ -39,7 +39,9 @@ const AdminDashboard = () => {
           <Paper
             elevation={3}
             sx={{
-              display: "flex",
+              display: {
+                md: "flex",
+              },
               alignItems: "center",
               gap: 3,
               padding: 3,
@@ -64,7 +66,17 @@ const AdminDashboard = () => {
                   border: "3px solid white",
                 }}
               />
-              <Box>
+              <Box
+                sx={{
+                  textAlign: {
+                    xs: "center",
+                    md: "start",
+                  },
+                  mb: {
+                    xs: 2,
+                  },
+                }}
+              >
                 <Typography variant="h5" fontWeight="bold">
                   {data?.name}
                 </Typography>
