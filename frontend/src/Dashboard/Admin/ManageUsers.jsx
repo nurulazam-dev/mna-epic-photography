@@ -110,7 +110,6 @@ const ManageUsers = () => {
 
   return (
     <Box>
-      {/* Title */}
       <Typography
         variant="h4"
         align="center"
@@ -126,7 +125,6 @@ const ManageUsers = () => {
         Manage Users ({users?.length || 0})
       </Typography>
 
-      {/* Filters */}
       <Box
         display="flex"
         flexDirection={{ xs: "column", sm: "row" }}
@@ -137,8 +135,8 @@ const ManageUsers = () => {
           label="Search (Name, Email, Phone)"
           variant="outlined"
           size="small"
-          fullWidth
           value={searchText}
+          sx={{ flex: 1 }}
           onChange={(e) => setSearchText(e.target.value)}
         />
 
@@ -201,11 +199,13 @@ const ManageUsers = () => {
         </Box>
       </Box>
 
-      {/* Loading & Error */}
-      {loading && <Loading />}
-      {error && <Error errMessage={error} />}
+      {loading && !error && <Loading />}
 
-      {/* Table view for Desktop */}
+      {error && !loading && <Error errMessage={error} />}
+
+      {/* =========================
+          Table view for Desktop
+      =========================== */}
       {!loading && !error && (
         <>
           <TableContainer
@@ -227,22 +227,24 @@ const ManageUsers = () => {
               <TableBody>
                 {paginatedUsers?.map((user) => (
                   <TableRow key={user._id} hover>
-                    <TableCell>{renderUserInfo(user)}</TableCell>
+                    <TableCell sx={{ padding: "2px 10px" }}>
+                      {renderUserInfo(user)}
+                    </TableCell>
                     <TableCell
                       align="center"
                       sx={{ textTransform: "capitalize" }}
                     >
-                      {user.role}
+                      {user?.role}
                     </TableCell>
                     <TableCell align="center">
-                      {user.isVerified ? "Verified" : "Not Verify"}
+                      {user?.isVerified ? "Verified" : "Not Verify"}
                     </TableCell>
-                    <TableCell align="center">{user.phone}</TableCell>
-                    <TableCell align="center">{user.gender}</TableCell>
+                    <TableCell align="center">{user?.phone}</TableCell>
+                    <TableCell align="center">{user?.gender}</TableCell>
                     <TableCell align="center">
-                      {formatDate(user.createdAt)}
+                      {formatDate(user?.createdAt)}
                     </TableCell>
-                    <TableCell align="center">
+                    <TableCell align="center" sx={{ padding: "6px" }}>
                       {renderUserActions(user)}
                     </TableCell>
                   </TableRow>
@@ -251,7 +253,9 @@ const ManageUsers = () => {
             </Table>
           </TableContainer>
 
-          {/* Mobile View */}
+          {/* ============================
+             Card view for small screens
+          ============================== */}
           <Box
             sx={{
               display: { xs: "flex", md: "none" },
@@ -261,30 +265,46 @@ const ManageUsers = () => {
             }}
           >
             {paginatedUsers?.map((user) => (
-              <Paper key={user._id} elevation={3} sx={{ p: 2 }}>
+              <Paper key={user?._id} elevation={3} sx={{ p: 2 }}>
                 {renderUserInfo(user)}
                 <Typography>
-                  <strong>Role:</strong> {user.role.toUpperCase()}
+                  <strong>Role:</strong> {user?.role?.toUpperCase()}
                 </Typography>
                 <Typography>
                   <strong>Status:</strong>{" "}
-                  {user.isVerified ? "Verified" : "Not Verify"}
+                  {user?.isVerified ? "Verified" : "Not Verify"}
                 </Typography>
                 <Typography>
-                  <strong>Phone:</strong> {user.phone}
+                  <strong>Phone:</strong> {user?.phone}
                 </Typography>
                 <Typography>
-                  <strong>Gender:</strong> {user.gender}
+                  <strong>Gender:</strong> {user?.gender}
                 </Typography>
                 <Typography>
-                  <strong>Registered:</strong> {formatDate(user.createdAt)}
+                  <strong>Registered:</strong> {formatDate(user?.createdAt)}
                 </Typography>
                 <Box mt={1}>{renderUserActions(user)}</Box>
               </Paper>
             ))}
           </Box>
 
-          {/* Pagination */}
+          {filteredUsers?.length === 0 && (
+            <Typography
+              variant="body1"
+              color="error"
+              sx={{
+                textAlign: "center",
+                mt: 1,
+                animation: "pulse 1s infinite",
+              }}
+            >
+              No users available.
+            </Typography>
+          )}
+
+          {/* ===========================
+                    Pagination
+          =========================== */}
           <PaginationComponent
             currentPage={currentPage}
             setCurrentPage={setCurrentPage}
