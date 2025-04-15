@@ -189,7 +189,7 @@ const Dashboard = () => {
       </Drawer>
 
       {/* Main Content */}
-      <Box component="main" sx={{ flexGrow: 1, p: 3, height: "420px" }}>
+      <Box component="main" sx={{ flexGrow: 1, p: 2, height: "420px" }}>
         <Outlet />
       </Box>
     </Box>
