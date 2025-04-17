@@ -25,6 +25,7 @@ import UpdatePhotogModal from "./UpdateModal/UpdatePhotogModal";
 import { getShortEmail } from "../../utils/getShortEmail";
 import PaginationComponent from "../../components/Shared/PaginationComponent";
 import Loading from "../../components/Shared/Loading";
+import PriceRangeSlider from "../../components/Shared/PriceRangeSlider";
 
 const ManagePhotographers = () => {
   const {
@@ -37,6 +38,8 @@ const ManagePhotographers = () => {
   const [searchText, setSearchText] = useState("");
   const [filterExpertise, setFilterExpertise] = useState("all");
   const [filterRStatus, setFilterRStatus] = useState("all");
+  const [servicePriceRange, setServicePriceRange] = useState([0, 1000]);
+
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
 
@@ -49,11 +52,13 @@ const ManagePhotographers = () => {
       filterExpertise === "all" || photog?.expertise === filterExpertise;
 
     const matchesRStutus =
-      filterRStatus === "all" ||
-      (filterRStatus === "approved" && photog?.isApproved) ||
-      (filterRStatus === "pending" && !photog?.isApproved);
+      filterRStatus === "all" || photog?.isApproved === filterRStatus;
 
-    return matchesSearch && matchesExpertise && matchesRStutus;
+    const matchesPrice =
+      photog?.servicePrice >= servicePriceRange[0] &&
+      photog?.servicePrice <= servicePriceRange[1];
+
+    return matchesSearch && matchesExpertise && matchesRStutus && matchesPrice;
   });
 
   const paginatedPhotogs = filteredPhotogs?.slice(
@@ -141,6 +146,11 @@ const ManagePhotographers = () => {
           value={searchText}
           sx={{ flex: 1 }}
           onChange={(e) => setSearchText(e.target.value)}
+        />
+
+        <PriceRangeSlider
+          servicePriceRange={servicePriceRange}
+          setServicePriceRange={setServicePriceRange}
         />
 
         <FormControl size="small" sx={{ minWidth: 120 }}>
