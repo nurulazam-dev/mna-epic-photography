@@ -14,8 +14,7 @@ import {
   FormControl,
   InputLabel,
   Select,
-  MenuItem,
-} from "@mui/material"; // ✅ Correct import
+} from "@mui/material";
 import { GppBad, VerifiedUser } from "@mui/icons-material";
 import { BASE_URL } from "../../../config";
 import usePhotogs from "../../hooks/useFetchData";
@@ -24,6 +23,7 @@ import { useState } from "react";
 import UpdatePhotogModal from "./UpdateModal/UpdatePhotogModal";
 import { getShortEmail } from "../../utils/getShortEmail";
 import PaginationComponent from "../../components/Shared/PaginationComponent";
+import { MenuItem } from "material-ui";
 import Loading from "../../components/Shared/Loading";
 
 const ManagePhotographers = () => {
@@ -34,6 +34,7 @@ const ManagePhotographers = () => {
   } = usePhotogs(`${BASE_URL}/photographers`);
 
   const [selectedPhotog, setSelectedPhotog] = useState(null);
+
   const [searchText, setSearchText] = useState("");
   const [filterExpertise, setFilterExpertise] = useState("all");
   const [filterRStatus, setFilterRStatus] = useState("all");
@@ -50,8 +51,8 @@ const ManagePhotographers = () => {
 
     const matchesRStutus =
       filterRStatus === "all" ||
-      (filterRStatus === "approved" && photog?.isApproved) ||
-      (filterRStatus === "pending" && !photog?.isApproved);
+      (filterRStatus === "pending" && photog?.isApproved) ||
+      (filterRStatus === "approved" && !photog?.isApproved);
 
     return matchesSearch && matchesExpertise && matchesRStutus;
   });
@@ -67,7 +68,7 @@ const ManagePhotographers = () => {
       <Box>
         <Typography fontWeight="bold" display="flex" alignItems="center">
           {photog?.name}
-          {photog?.isApproved === "approved" ? (
+          {photog?.isApproved == "approved" ? (
             <Box
               display="flex"
               alignItems="center"
@@ -192,6 +193,7 @@ const ManagePhotographers = () => {
       </Box>
 
       {loading && !error && <Loading />}
+
       {error && !loading && <Error errMessage={error} />}
       {!loading && !error && (
         <TableContainer component={Paper}>
@@ -207,19 +209,21 @@ const ManagePhotographers = () => {
                 <TableCell align="center">Action</TableCell>
               </TableRow>
             </TableHead>
+
             <TableBody>
               {paginatedPhotogs?.map((photog) => (
                 <TableRow key={photog?._id} hover>
                   <TableCell sx={{ padding: "2px 10px" }}>
                     {renderPhotogInfo(photog)}
                   </TableCell>
+
                   <TableCell align="center">{photog?.expertise}</TableCell>
                   <TableCell align="center">{photog?.phone}</TableCell>
                   <TableCell align="center">
                     {photog?.experience} years
                   </TableCell>
                   <TableCell align="center">
-                    {photog?.isApproved === "approved" ? (
+                    {photog?.isApproved == "approved" ? (
                       <Typography variant="body2" sx={{ color: "green" }}>
                         Approved
                       </Typography>
@@ -230,6 +234,7 @@ const ManagePhotographers = () => {
                     )}
                   </TableCell>
                   <TableCell align="center">$ {photog?.servicePrice}</TableCell>
+
                   <TableCell align="center" sx={{ padding: "2px" }}>
                     {renderPhotogActions(photog)}
                   </TableCell>
@@ -240,7 +245,9 @@ const ManagePhotographers = () => {
         </TableContainer>
       )}
 
-      {/* Card View for Small Screens */}
+      {/* ============================
+             Card view for small screens
+          ============================== */}
       <Box
         sx={{
           display: { xs: "flex", md: "none" },
@@ -287,6 +294,9 @@ const ManagePhotographers = () => {
         </Typography>
       )}
 
+      {/* ===========================
+                    Pagination
+          =========================== */}
       {photogs?.length > itemsPerPage && (
         <PaginationComponent
           currentPage={currentPage}
@@ -296,6 +306,9 @@ const ManagePhotographers = () => {
         />
       )}
 
+      {/* ==============================
+            Update photographer Modal
+      ================================= */}
       {selectedPhotog && (
         <UpdatePhotogModal
           photographer={selectedPhotog}

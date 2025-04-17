@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
+import AppBar from "@mui/material/AppBar";
 import {
-  AppBar,
   Toolbar,
   Button,
   IconButton,
