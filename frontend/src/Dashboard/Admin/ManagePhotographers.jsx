@@ -43,10 +43,6 @@ const ManagePhotographers = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
   const startIndex = (currentPage - 1) * itemsPerPage;
-  const paginatedPhotogs = photogs?.slice(
-    startIndex,
-    startIndex + itemsPerPage
-  );
 
   const filteredPhotogs = photogs?.filter((photog) => {
     const matchesSearch = [photog?.name, photog?.email, photog?.phone].some(
@@ -65,6 +61,12 @@ const ManagePhotographers = () => {
 
     return matchesSearch && matchesExpertise && matchesRStutus && matchesPrice;
   });
+  console.log(filteredPhotogs);
+
+  const paginatedPhotogs = filteredPhotogs?.slice(
+    startIndex,
+    startIndex + itemsPerPage
+  );
 
   const renderPhotogInfo = (photog) => (
     <Box display="flex" alignItems="center" gap={2}>
@@ -307,11 +309,11 @@ const ManagePhotographers = () => {
         </Typography>
       )}
 
-      {photogs?.length > itemsPerPage && (
+      {filteredPhotogs?.length > itemsPerPage && (
         <PaginationComponent
           currentPage={currentPage}
           onPageChange={setCurrentPage}
-          totalItems={photogs?.length}
+          totalItems={filteredPhotogs?.length}
           itemsPerPage={itemsPerPage}
         />
       )}
