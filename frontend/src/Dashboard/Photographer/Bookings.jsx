@@ -51,6 +51,11 @@ const Bookings = () => {
           fontWeight: "bold",
           py: 1,
           fontFamily: "serif",
+          fontSize: {
+            xs: "1.2rem",
+            sm: "1.5rem",
+            md: "2.1rem",
+          },
         }}
       >
         Bookings ({bookings?.length})

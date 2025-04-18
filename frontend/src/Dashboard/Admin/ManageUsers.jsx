@@ -42,13 +42,13 @@ const ManageUsers = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
 
-  // Filtering logic
   const filteredUsers = users?.filter((user) => {
     const matchesSearch = [user.name, user.email, user.phone].some((field) =>
       field?.toLowerCase().includes(searchText.toLowerCase())
     );
 
     const matchesRole = filterRole === "all" || user.role === filterRole;
+
     const matchesVerification =
       filterVerification === "all" ||
       (filterVerification === "verified" && user.isVerified) ||
@@ -64,7 +64,6 @@ const ManageUsers = () => {
     currentPage * itemsPerPage
   );
 
-  // Reusable row/card renderer
   const renderUserInfo = (user) => (
     <>
       <Box display="flex" alignItems="center" gap={2}>
@@ -120,6 +119,11 @@ const ManageUsers = () => {
           py: 1,
           fontFamily: "serif",
           borderRadius: 1,
+          fontSize: {
+            xs: "1.2rem",
+            sm: "1.5rem",
+            md: "2.1rem",
+          },
         }}
       >
         Manage Users ({users?.length || 0})

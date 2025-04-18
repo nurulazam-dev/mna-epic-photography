@@ -66,6 +66,11 @@ const ManageBookings = () => {
           py: 1,
           fontFamily: "serif",
           borderRadius: 1,
+          fontSize: {
+            xs: "1.2rem",
+            sm: "1.5rem",
+            md: "2.1rem",
+          },
         }}
       >
         Manage Bookings ({bookings?.length})

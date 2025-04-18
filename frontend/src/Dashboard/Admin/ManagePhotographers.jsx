@@ -128,6 +128,11 @@ const ManagePhotographers = () => {
           py: 1,
           fontFamily: "serif",
           borderRadius: 1,
+          fontSize: {
+            xs: "1.2rem",
+            sm: "1.5rem",
+            md: "2.1rem",
+          },
         }}
       >
         Manage Photographers ({photogs?.length || 0})
@@ -202,9 +207,14 @@ const ManagePhotographers = () => {
       </Box>
 
       {loading && !error && <Loading />}
+
       {error && !loading && <Error errMessage={error} />}
+
       {!loading && !error && (
-        <TableContainer component={Paper}>
+        <TableContainer
+          component={Paper}
+          sx={{ display: { xs: "none", md: "block" } }}
+        >
           <Table>
             <TableHead>
               <TableRow sx={{ backgroundColor: "#f3f3f3" }}>
