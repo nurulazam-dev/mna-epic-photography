@@ -13,8 +13,8 @@ const PriceRangeSlider = ({ servicePriceRange, setServicePriceRange }) => {
       display="flex"
       flexDirection="column"
       gap={2}
-      width="100%"
-      maxWidth={360}
+      size="small"
+      maxWidth={{ xs: "full", md: 220 }}
     >
       <Box display="flex" gap={2}>
         <TextField
