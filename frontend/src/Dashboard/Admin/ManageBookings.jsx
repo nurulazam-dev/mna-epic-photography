@@ -32,6 +32,9 @@ const ManageBookings = () => {
   } = useBookings(`${BASE_URL}/bookings`);
 
   const [selectedBooking, setSelectedBooking] = useState(null);
+  /* const [searchText, setSearchText] = useState("");
+  const [filterPayment, setFilterPayment] = useState("all");
+  const [filterBStatus, setFilterBStatus] = useState("all"); */
 
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
@@ -53,6 +56,95 @@ const ManageBookings = () => {
     const nameParts = fullName.trim().split(" ");
     return nameParts.length > 1 ? nameParts[nameParts.length - 1] : fullName;
   };
+
+  const renderClientInfo = (booking) => (
+    <Box display="flex" alignItems="center" gap={1}>
+      <Avatar src={booking?.user?.photo} alt={booking?.user?.name} />
+      <Box>
+        <Typography variant="body2" display="flex">
+          {booking?.user?.name}
+          {booking?.user?.isVerified === true ? (
+            <Box
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+              color="green"
+              height={16}
+              width={16}
+              sx={{ marginLeft: "3px" }}
+            >
+              <VerifiedUser fontSize="10px" />
+              {/* <CheckCircleIcon fontSize="10px" /> */}
+            </Box>
+          ) : (
+            <Box
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+              color="red"
+              height={16}
+              width={16}
+              sx={{ marginLeft: "3px" }}
+            >
+              <GppBad fontSize="10px" />
+              {/* <CancelIcon fontSize="10px" /> */}
+            </Box>
+          )}
+        </Typography>
+        <Typography
+          variant="caption"
+          color="textSecondary"
+          component="div"
+          sx={{ textOverflow: "ellipsis" }}
+        >
+          {getShortEmail(booking?.user?.email)}
+        </Typography>
+      </Box>
+    </Box>
+  );
+  const renderPhotogInfo = (booking) => (
+    <Box display="flex" alignItems="center" gap={1}>
+      <Avatar
+        src={booking?.photographer?.photo}
+        alt={booking?.photographer?.name}
+      />
+      <Box>
+        <Typography variant="body2" display="flex">
+          {getPhotogLastName(booking?.photographer?.name)}
+          {booking?.photographer?.isApproved === "approved" ? (
+            <Box
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+              color="green"
+              height={16}
+              width={16}
+              sx={{ marginLeft: "3px" }}
+            >
+              <VerifiedUser fontSize="10px" />
+              {/* <CheckCircleIcon fontSize="10px" /> */}
+            </Box>
+          ) : (
+            <Box
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+              color="red"
+              height={16}
+              width={16}
+              sx={{ marginLeft: "3px" }}
+            >
+              <GppBad fontSize="10px" />
+              {/* <CancelIcon fontSize="10px" /> */}
+            </Box>
+          )}
+        </Typography>
+        <Typography variant="caption" color="textSecondary">
+          {getShortEmail(booking?.photographer?.email)}
+        </Typography>
+      </Box>
+    </Box>
+  );
 
   return (
     <Box>
@@ -100,97 +192,12 @@ const ManageBookings = () => {
               {paginatedBookings?.map((booking) => (
                 <TableRow key={booking?._id} hover>
                   <TableCell sx={{ padding: "2px 10px" }}>
-                    <Box display="flex" alignItems="center" gap={1}>
-                      <Avatar
-                        src={booking?.user?.photo}
-                        alt={booking?.user?.name}
-                      />
-                      <Box>
-                        <Typography variant="body2" display="flex">
-                          {booking?.user?.name}
-                          {booking?.user?.isVerified === true ? (
-                            <Box
-                              display="flex"
-                              alignItems="center"
-                              justifyContent="center"
-                              color="green"
-                              height={16}
-                              width={16}
-                              sx={{ marginLeft: "3px" }}
-                            >
-                              <VerifiedUser fontSize="10px" />
-                              {/* <CheckCircleIcon fontSize="10px" /> */}
-                            </Box>
-                          ) : (
-                            <Box
-                              display="flex"
-                              alignItems="center"
-                              justifyContent="center"
-                              color="red"
-                              height={16}
-                              width={16}
-                              sx={{ marginLeft: "3px" }}
-                            >
-                              <GppBad fontSize="10px" />
-                              {/* <CancelIcon fontSize="10px" /> */}
-                            </Box>
-                          )}
-                        </Typography>
-                        <Typography
-                          variant="caption"
-                          color="textSecondary"
-                          component="div"
-                          sx={{ textOverflow: "ellipsis" }}
-                        >
-                          {getShortEmail(booking?.user?.email)}
-                        </Typography>
-                      </Box>
-                    </Box>
+                    {renderClientInfo(booking)}
                   </TableCell>
 
                   {/* photographer */}
                   <TableCell sx={{ padding: "2px 10px" }}>
-                    <Box display="flex" alignItems="center" gap={1}>
-                      <Avatar
-                        src={booking?.photographer?.photo}
-                        alt={booking?.photographer?.name}
-                      />
-                      <Box>
-                        <Typography variant="body2" display="flex">
-                          {getPhotogLastName(booking?.photographer?.name)}
-                          {booking?.photographer?.isApproved === "approved" ? (
-                            <Box
-                              display="flex"
-                              alignItems="center"
-                              justifyContent="center"
-                              color="green"
-                              height={16}
-                              width={16}
-                              sx={{ marginLeft: "3px" }}
-                            >
-                              <VerifiedUser fontSize="10px" />
-                              {/* <CheckCircleIcon fontSize="10px" /> */}
-                            </Box>
-                          ) : (
-                            <Box
-                              display="flex"
-                              alignItems="center"
-                              justifyContent="center"
-                              color="red"
-                              height={16}
-                              width={16}
-                              sx={{ marginLeft: "3px" }}
-                            >
-                              <GppBad fontSize="10px" />
-                              {/* <CancelIcon fontSize="10px" /> */}
-                            </Box>
-                          )}
-                        </Typography>
-                        <Typography variant="caption" color="textSecondary">
-                          {getShortEmail(booking?.photographer?.email)}
-                        </Typography>
-                      </Box>
-                    </Box>
+                    {renderPhotogInfo(booking)}
                   </TableCell>
 
                   <TableCell align="center">

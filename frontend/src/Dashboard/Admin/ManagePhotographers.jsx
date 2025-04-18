@@ -61,7 +61,6 @@ const ManagePhotographers = () => {
 
     return matchesSearch && matchesExpertise && matchesRStutus && matchesPrice;
   });
-  console.log(filteredPhotogs);
 
   const paginatedPhotogs = filteredPhotogs?.slice(
     startIndex,
