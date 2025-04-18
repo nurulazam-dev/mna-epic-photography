@@ -10,7 +10,6 @@ import {
   Avatar,
   Box,
   Button,
-  CircularProgress,
 } from "@mui/material";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
@@ -23,6 +22,7 @@ import useBookings from "../../hooks/useFetchData";
 import { formatDate } from "../../utils/formatDate";
 import { getShortEmail } from "../../utils/getShortEmail";
 import PaginationComponent from "../../components/Shared/PaginationComponent";
+import Loading from "../../components/Shared/Loading";
 
 const ManageBookings = () => {
   const {
@@ -43,14 +43,6 @@ const ManageBookings = () => {
     startIndex,
     startIndex + itemsPerPage
   );
-
-  const handleOpenModal = (booking) => {
-    setSelectedBooking(booking);
-  };
-
-  const handleCloseModal = () => {
-    setSelectedBooking(null);
-  };
 
   const getPhotogLastName = (fullName) => {
     const nameParts = fullName.trim().split(" ");
@@ -102,6 +94,7 @@ const ManageBookings = () => {
       </Box>
     </Box>
   );
+
   const renderPhotogInfo = (booking) => (
     <Box display="flex" alignItems="center" gap={1}>
       <Avatar
@@ -146,6 +139,17 @@ const ManageBookings = () => {
     </Box>
   );
 
+  const renderBookingAction = (booking) => (
+    <Button
+      variant="contained"
+      color="success"
+      size="small"
+      onClick={() => setSelectedBooking(booking)}
+    >
+      Update
+    </Button>
+  );
+
   return (
     <Box>
       <Typography
@@ -167,13 +171,16 @@ const ManageBookings = () => {
       >
         Manage Bookings ({bookings?.length})
       </Typography>
-      {loading && !error && (
-        <CircularProgress sx={{ display: "block", mx: "auto" }} />
-      )}
+
+      {loading && !error && <Loading />}
+
       {error && !loading && <Error errMessage={error} />}
 
       {!loading && !error && (
-        <TableContainer component={Paper}>
+        <TableContainer
+          component={Paper}
+          sx={{ display: { xs: "none", md: "block" } }}
+        >
           <Table>
             <TableHead>
               <TableRow sx={{ backgroundColor: "#f3f3f3" }}>
@@ -195,7 +202,6 @@ const ManageBookings = () => {
                     {renderClientInfo(booking)}
                   </TableCell>
 
-                  {/* photographer */}
                   <TableCell sx={{ padding: "2px 10px" }}>
                     {renderPhotogInfo(booking)}
                   </TableCell>
@@ -257,14 +263,7 @@ const ManageBookings = () => {
                     </Typography>
                   </TableCell>
                   <TableCell align="center" sx={{ padding: "2px" }}>
-                    <Button
-                      variant="contained"
-                      color="success"
-                      size="small"
-                      onClick={() => handleOpenModal(booking)}
-                    >
-                      Update
-                    </Button>
+                    {renderBookingAction(booking)}
                   </TableCell>
                 </TableRow>
               ))}
@@ -272,6 +271,81 @@ const ManageBookings = () => {
           </Table>
         </TableContainer>
       )}
+
+      {/* Card View for Small Screens */}
+      <Box
+        sx={{
+          display: { xs: "flex", md: "none" },
+          flexDirection: "column",
+          gap: 2,
+          mt: 2,
+        }}
+      >
+        {paginatedBookings?.map((booking) => (
+          <Paper key={booking?._id} elevation={3} sx={{ p: 2 }}>
+            <Box marginY={1} boxShadow={1} p={1}>
+              {renderClientInfo(booking)}
+            </Box>
+            <Box marginY={1} boxShadow={1} p={1}>
+              {renderPhotogInfo(booking)}
+            </Box>
+            <Typography display="flex">
+              <strong>B.Status:</strong>
+              <Typography
+                sx={{
+                  pl: 1,
+                  color:
+                    booking?.status === "pending"
+                      ? "orange"
+                      : booking?.status === "approved"
+                      ? "green"
+                      : booking?.status === "completed"
+                      ? "blue"
+                      : "black",
+                }}
+              >
+                {booking?.status?.charAt(0).toUpperCase() +
+                  booking?.status?.slice(1)}
+              </Typography>
+            </Typography>
+            <Typography>
+              <strong>Price:</strong> ${booking?.servicePrice}
+            </Typography>
+            <Typography display="flex" alignItems="center">
+              <strong>Payment:</strong>{" "}
+              {booking?.isPaid ? (
+                <Box
+                  paddingLeft={1}
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                  color="green"
+                >
+                  <CheckCircleIcon sx={{ mr: 1 }} /> Paid
+                </Box>
+              ) : (
+                <Box
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                  color="red"
+                >
+                  <CancelIcon sx={{ mr: 1 }} /> Unpaid
+                </Box>
+              )}
+            </Typography>
+            <Typography>
+              <strong>Booked:</strong>{" "}
+              {booking?.createdAt ? formatDate(booking.createdAt) : "???"}
+            </Typography>
+            <Typography>
+              <strong>Program:</strong>{" "}
+              {booking?.programDate ? formatDate(booking.programDate) : "???"}
+            </Typography>
+            <Box mt={1}>{renderBookingAction(booking)}</Box>
+          </Paper>
+        ))}
+      </Box>
 
       {bookings?.length > itemsPerPage && (
         <PaginationComponent
@@ -292,11 +366,13 @@ const ManageBookings = () => {
         </Typography>
       )}
 
-      {/* Update booking Modal */}
+      {/* =======================
+          Update booking Modal
+      ======================= */}
       {selectedBooking && (
         <UpdateBookingModal
           booking={selectedBooking}
-          onClose={handleCloseModal}
+          onClose={() => setSelectedBooking(null)}
         />
       )}
     </Box>
