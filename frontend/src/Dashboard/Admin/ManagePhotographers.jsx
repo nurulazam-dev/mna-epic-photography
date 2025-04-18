@@ -15,7 +15,7 @@ import {
   InputLabel,
   Select,
   MenuItem,
-} from "@mui/material"; // ✅ Correct import
+} from "@mui/material";
 import { GppBad, VerifiedUser } from "@mui/icons-material";
 import { BASE_URL } from "../../../config";
 import usePhotogs from "../../hooks/useFetchData";
@@ -42,6 +42,11 @@ const ManagePhotographers = () => {
 
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const paginatedPhotogs = photogs?.slice(
+    startIndex,
+    startIndex + itemsPerPage
+  );
 
   const filteredPhotogs = photogs?.filter((photog) => {
     const matchesSearch = [photog?.name, photog?.email, photog?.phone].some(
@@ -60,11 +65,6 @@ const ManagePhotographers = () => {
 
     return matchesSearch && matchesExpertise && matchesRStutus && matchesPrice;
   });
-
-  const paginatedPhotogs = filteredPhotogs?.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
-  );
 
   const renderPhotogInfo = (photog) => (
     <Box display="flex" alignItems="center" gap={2}>
@@ -310,8 +310,8 @@ const ManagePhotographers = () => {
       {photogs?.length > itemsPerPage && (
         <PaginationComponent
           currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
-          totalItems={photogs?.length || 0}
+          onPageChange={setCurrentPage}
+          totalItems={photogs?.length}
           itemsPerPage={itemsPerPage}
         />
       )}

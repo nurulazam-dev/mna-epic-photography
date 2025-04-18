@@ -29,7 +29,7 @@ const MyBookings = () => {
   } = useFetchData(`${BASE_URL}/users/booking/my-bookings`);
 
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 4;
+  const itemsPerPage = 2;
   const startIndex = (currentPage - 1) * itemsPerPage;
   const paginatedBookings = bookings?.slice(
     startIndex,

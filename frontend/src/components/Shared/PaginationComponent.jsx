@@ -16,6 +16,9 @@ const PaginationComponent = ({
         page={currentPage}
         onChange={(event, value) => onPageChange(value)}
         color="primary"
+        shape="rounded"
+        variant="outlined"
+        size="medium"
       />
     </Box>
   );
