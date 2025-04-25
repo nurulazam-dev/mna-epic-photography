@@ -29,8 +29,6 @@ import { formatDate } from "../../utils/formatDate";
 import { getShortEmail } from "../../utils/getShortEmail";
 import Loading from "../../components/Shared/Loading";
 
-const ITEMS_PER_PAGE = 2;
-
 const ManageBookings = () => {
   const {
     data: bookings,
@@ -62,10 +60,11 @@ const ManageBookings = () => {
     return matchesSearch && matchesPaymentStatus && matchesBStutus;
   });
 
-  const totalPages = Math.ceil(filteredBookings?.length / ITEMS_PER_PAGE);
+  const itemsPerPage = 5;
+  const totalPages = Math.ceil(filteredBookings?.length / itemsPerPage);
   const paginatedBookings = filteredBookings?.slice(
-    (currentPage - 1) * ITEMS_PER_PAGE,
-    currentPage * ITEMS_PER_PAGE
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
   );
 
   const handlePageChange = (event, value) => {
@@ -219,7 +218,6 @@ const ManageBookings = () => {
           <Select
             value={filterBStatus}
             label="Booking Status"
-            // onChange={(e) => setFilterBStatus(e.target.value)}
             onChange={(e) => {
               setFilterBStatus(e.target.value);
               setCurrentPage(1);
@@ -237,7 +235,6 @@ const ManageBookings = () => {
           <Select
             value={filterPaymentStatus}
             label="Payment Status"
-            // onChange={(e) => setFilterPaymentStatus(e.target.value)}
             onChange={(e) => {
               setFilterPaymentStatus(e.target.value);
               setCurrentPage(1);
