@@ -15,6 +15,7 @@ import {
   InputLabel,
   Select,
   MenuItem,
+  Pagination,
 } from "@mui/material";
 import { GppBad, VerifiedUser } from "@mui/icons-material";
 import { BASE_URL } from "../../../config";
@@ -23,9 +24,7 @@ import Error from "../../components/Shared/Error";
 import { useState } from "react";
 import UpdatePhotogModal from "./UpdateModal/UpdatePhotogModal";
 import { getShortEmail } from "../../utils/getShortEmail";
-import PaginationComponent from "../../components/Shared/PaginationComponent";
 import Loading from "../../components/Shared/Loading";
-import PriceRangeSlider from "../../components/Shared/PriceRangeSlider";
 
 const ManagePhotographers = () => {
   const {
@@ -38,11 +37,8 @@ const ManagePhotographers = () => {
   const [searchText, setSearchText] = useState("");
   const [filterExpertise, setFilterExpertise] = useState("all");
   const [filterRStatus, setFilterRStatus] = useState("all");
-  const [servicePriceRange, setServicePriceRange] = useState([0, 1000]);
 
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 5;
-  const startIndex = (currentPage - 1) * itemsPerPage;
 
   const filteredPhotogs = photogs?.filter((photog) => {
     const matchesSearch = [photog?.name, photog?.email, photog?.phone].some(
@@ -55,17 +51,19 @@ const ManagePhotographers = () => {
     const matchesRStutus =
       filterRStatus === "all" || photog?.isApproved === filterRStatus;
 
-    const matchesPrice =
-      photog?.servicePrice >= servicePriceRange[0] &&
-      photog?.servicePrice <= servicePriceRange[1];
-
-    return matchesSearch && matchesExpertise && matchesRStutus && matchesPrice;
+    return matchesSearch && matchesExpertise && matchesRStutus;
   });
 
+  const itemsPerPage = 5;
+  const totalPages = Math.ceil(filteredPhotogs?.length / itemsPerPage);
   const paginatedPhotogs = filteredPhotogs?.slice(
-    startIndex,
-    startIndex + itemsPerPage
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
   );
+
+  const handlePageChange = (event, value) => {
+    setCurrentPage(value);
+  };
 
   const renderPhotogInfo = (photog) => (
     <Box display="flex" alignItems="center" gap={2}>
@@ -151,12 +149,10 @@ const ManagePhotographers = () => {
           size="small"
           value={searchText}
           sx={{ flex: 1 }}
-          onChange={(e) => setSearchText(e.target.value)}
-        />
-
-        <PriceRangeSlider
-          servicePriceRange={servicePriceRange}
-          setServicePriceRange={setServicePriceRange}
+          onChange={(e) => {
+            setSearchText(e.target.value);
+            setCurrentPage(1);
+          }}
         />
 
         <FormControl size="small" sx={{ minWidth: 120 }}>
@@ -164,7 +160,10 @@ const ManagePhotographers = () => {
           <Select
             value={filterExpertise}
             label="Expertise"
-            onChange={(e) => setFilterExpertise(e.target.value)}
+            onChange={(e) => {
+              setFilterExpertise(e.target.value);
+              setCurrentPage(1);
+            }}
           >
             <MenuItem value="all">All</MenuItem>
             <MenuItem value="Wedding">Wedding</MenuItem>
@@ -180,7 +179,10 @@ const ManagePhotographers = () => {
           <Select
             value={filterRStatus}
             label="Reg. Status"
-            onChange={(e) => setFilterRStatus(e.target.value)}
+            onChange={(e) => {
+              setFilterRStatus(e.target.value);
+              setCurrentPage(1);
+            }}
           >
             <MenuItem value="all">All</MenuItem>
             <MenuItem value="approved">Approved</MenuItem>
@@ -261,7 +263,9 @@ const ManagePhotographers = () => {
         </TableContainer>
       )}
 
-      {/* Card View for Small Screens */}
+      {/* ===========================
+        Card View for Small Screens
+      ============================ */}
       <Box
         sx={{
           display: { xs: "flex", md: "none" },
@@ -294,7 +298,7 @@ const ManagePhotographers = () => {
         ))}
       </Box>
 
-      {filteredPhotogs?.length === 0 && (
+      {paginatedPhotogs?.length === 0 && (
         <Typography
           variant="body1"
           color="error"
@@ -308,13 +312,21 @@ const ManagePhotographers = () => {
         </Typography>
       )}
 
-      {filteredPhotogs?.length > itemsPerPage && (
-        <PaginationComponent
-          currentPage={currentPage}
-          onPageChange={setCurrentPage}
-          totalItems={filteredPhotogs?.length}
-          itemsPerPage={itemsPerPage}
-        />
+      {/* ===============
+               pagination
+          ================ */}
+      {totalPages > 1 && (
+        <Box display="flex" justifyContent="center" mt={2}>
+          <Pagination
+            count={totalPages}
+            page={currentPage}
+            onChange={handlePageChange}
+            color="primary"
+            shape="rounded"
+            variant="outlined"
+            size="medium"
+          />
+        </Box>
       )}
 
       {selectedPhotog && (

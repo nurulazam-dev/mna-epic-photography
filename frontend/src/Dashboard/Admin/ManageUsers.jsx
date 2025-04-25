@@ -323,9 +323,9 @@ const ManageUsers = () => {
             </Typography>
           )}
 
-          {/* ===========
-                    pagination
-                ============= */}
+          {/* ===============
+               pagination
+          ================ */}
           {totalPages > 1 && (
             <Box display="flex" justifyContent="center" mt={2}>
               <Pagination

@@ -1,173 +1,115 @@
 import {
+  TextField,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
   TableRow,
-  Paper,
-  Typography,
   Avatar,
-  Box,
   Button,
-  TextField,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
+  Typography,
+  Paper,
+  Box,
+  Pagination,
 } from "@mui/material";
-import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import CancelIcon from "@mui/icons-material/Cancel";
-import { GppBad, VerifiedUser } from "@mui/icons-material";
-import { BASE_URL } from "../../../config";
+import { VerifiedUser, GppBad } from "@mui/icons-material";
 import { useState } from "react";
-import UpdateBookingModal from "./UpdateModal/UpdateBookingModal";
-import Error from "../../components/Shared/Error";
-import useBookings from "../../hooks/useFetchData";
+
+import useUsers from "../../hooks/useFetchData";
 import { formatDate } from "../../utils/formatDate";
 import { getShortEmail } from "../../utils/getShortEmail";
-import PaginationComponent from "../../components/Shared/PaginationComponent";
+import { BASE_URL } from "../../../config";
+
 import Loading from "../../components/Shared/Loading";
+import Error from "../../components/Shared/Error";
+import UpdateUserModal from "./UpdateModal/UpdateUserModal";
+import DeleteUserModal from "./UpdateModal/DeleteUserModel";
 
-const ManageBookings = () => {
-  const {
-    data: bookings,
-    loading,
-    error,
-  } = useBookings(`${BASE_URL}/bookings`);
+const ManageUsers = () => {
+  const { data: users, loading, error } = useUsers(`${BASE_URL}/users`);
 
-  const [selectedBooking, setSelectedBooking] = useState(null);
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [deleteUser, setDeleteUser] = useState(null);
   const [searchText, setSearchText] = useState("");
-  const [filterPaymentStatus, setFilterPaymentStatus] = useState("all");
-  const [filterBStatus, setFilterBStatus] = useState("all");
+  const [filterRole, setFilterRole] = useState("all");
+  const [filterVerification, setFilterVerification] = useState("all");
+  const [filterGender, setFilterGender] = useState("all");
+  const [currentPage, setCurrentPage] = useState(1);
 
-  const filteredBookings = bookings?.filter((booking) => {
-    const matchesSearch = [
-      booking?.user?.name,
-      booking?.user?.email,
-      booking?.user?.phone,
-      booking?.photographer?.name,
-      booking?.photographer?.email,
-      booking?.photographer?.phone,
-    ].some((field) => field?.toLowerCase().includes(searchText.toLowerCase()));
+  const filteredUsers = users?.filter((user) => {
+    const matchesSearch = [user.name, user.email, user.phone].some((field) =>
+      field?.toLowerCase().includes(searchText.toLowerCase())
+    );
 
-    const matchesPaymentStatus =
-      filterPaymentStatus === "all" || booking?.isPaid === filterPaymentStatus;
+    const matchesRole = filterRole === "all" || user.role === filterRole;
 
-    const matchesBStutus =
-      filterBStatus === "all" || booking?.status === filterBStatus;
+    const matchesVerification =
+      filterVerification === "all" ||
+      (filterVerification === "verified" && user.isVerified) ||
+      (filterVerification === "notVerified" && !user.isVerified);
+    const matchesGender =
+      filterGender === "all" || user.gender?.toLowerCase() === filterGender;
 
-    return matchesSearch && matchesPaymentStatus && matchesBStutus;
+    return matchesSearch && matchesRole && matchesVerification && matchesGender;
   });
 
-  const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const paginatedBookings = bookings?.slice(
-    startIndex,
-    startIndex + itemsPerPage
+  const totalPages = Math.ceil(filteredUsers?.length / itemsPerPage);
+  const paginatedUsers = filteredUsers?.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
   );
 
-  const getPhotogLastName = (fullName) => {
-    const nameParts = fullName.trim().split(" ");
-    return nameParts.length > 1 ? nameParts[nameParts.length - 1] : fullName;
+  const handlePageChange = (event, value) => {
+    setCurrentPage(value);
   };
 
-  const renderClientInfo = (booking) => (
-    <Box display="flex" alignItems="center" gap={1}>
-      <Avatar src={booking?.user?.photo} alt={booking?.user?.name} />
-      <Box>
-        <Typography variant="body2" display="flex">
-          {booking?.user?.name}
-          {booking?.user?.isVerified === true ? (
-            <Box
-              display="flex"
-              alignItems="center"
-              justifyContent="center"
-              color="green"
-              height={16}
-              width={16}
-              sx={{ marginLeft: "3px" }}
-            >
-              <VerifiedUser fontSize="10px" />
-            </Box>
-          ) : (
-            <Box
-              display="flex"
-              alignItems="center"
-              justifyContent="center"
-              color="red"
-              height={16}
-              width={16}
-              sx={{ marginLeft: "3px" }}
-            >
-              <GppBad fontSize="10px" />
-            </Box>
-          )}
-        </Typography>
-        <Typography
-          variant="caption"
-          color="textSecondary"
-          component="div"
-          sx={{ textOverflow: "ellipsis" }}
-        >
-          {getShortEmail(booking?.user?.email)}
-        </Typography>
+  const renderUserInfo = (user) => (
+    <>
+      <Box display="flex" alignItems="center" gap={2}>
+        <Avatar src={user?.photo} alt={user?.name} />
+        <Box>
+          <Typography fontWeight="bold" display="flex" alignItems="center">
+            {user?.name}
+            {user?.isVerified ? (
+              <VerifiedUser sx={{ fontSize: 16, color: "green", ml: 0.5 }} />
+            ) : (
+              <GppBad sx={{ fontSize: 16, color: "red", ml: 0.5 }} />
+            )}
+          </Typography>
+          <Typography variant="body2" color="textSecondary">
+            {getShortEmail(user?.email)}
+          </Typography>
+        </Box>
       </Box>
-    </Box>
+    </>
   );
 
-  const renderPhotogInfo = (booking) => (
-    <Box display="flex" alignItems="center" gap={1}>
-      <Avatar
-        src={booking?.photographer?.photo}
-        alt={booking?.photographer?.name}
-      />
-      <Box>
-        <Typography variant="body2" display="flex">
-          {getPhotogLastName(booking?.photographer?.name)}
-          {booking?.photographer?.isApproved === "approved" ? (
-            <Box
-              display="flex"
-              alignItems="center"
-              justifyContent="center"
-              color="green"
-              height={16}
-              width={16}
-              sx={{ marginLeft: "3px" }}
-            >
-              <VerifiedUser fontSize="10px" />
-            </Box>
-          ) : (
-            <Box
-              display="flex"
-              alignItems="center"
-              justifyContent="center"
-              color="red"
-              height={16}
-              width={16}
-              sx={{ marginLeft: "3px" }}
-            >
-              <GppBad fontSize="10px" />
-            </Box>
-          )}
-        </Typography>
-        <Typography variant="caption" color="textSecondary">
-          {getShortEmail(booking?.photographer?.email)}
-        </Typography>
-      </Box>
-    </Box>
-  );
-
-  const renderBookingAction = (booking) => (
-    <Button
-      variant="contained"
-      color="success"
-      size="small"
-      onClick={() => setSelectedBooking(booking)}
-    >
-      Update
-    </Button>
+  const renderUserActions = (user) => (
+    <>
+      <Button
+        variant="contained"
+        color="success"
+        size="small"
+        sx={{ mr: 1 }}
+        onClick={() => setSelectedUser(user)}
+      >
+        Update
+      </Button>
+      <Button
+        variant="contained"
+        color="error"
+        size="small"
+        onClick={() => setDeleteUser(user)}
+      >
+        Delete
+      </Button>
+    </>
   );
 
   return (
@@ -189,7 +131,7 @@ const ManageBookings = () => {
           },
         }}
       >
-        Manage Bookings ({bookings?.length})
+        Manage Users ({users?.length || 0})
       </Typography>
 
       <Box
@@ -204,33 +146,58 @@ const ManageBookings = () => {
           size="small"
           value={searchText}
           sx={{ flex: 1 }}
-          onChange={(e) => setSearchText(e.target.value)}
+          onChange={(e) => {
+            setSearchText(e.target.value);
+            setCurrentPage(1);
+          }}
         />
 
         <FormControl size="small" sx={{ minWidth: 120 }}>
-          <InputLabel>Booking Status</InputLabel>
+          <InputLabel>Role</InputLabel>
           <Select
-            value={filterBStatus}
-            label="Booking Status"
-            onChange={(e) => setFilterBStatus(e.target.value)}
+            value={filterRole}
+            label="Role"
+            onChange={(e) => {
+              setFilterRole(e.target.value);
+              setCurrentPage(1);
+            }}
           >
             <MenuItem value="all">All</MenuItem>
-            <MenuItem value="pending">Pending</MenuItem>
-            <MenuItem value="approved">Approved</MenuItem>
-            <MenuItem value="completed">Completed</MenuItem>
+            <MenuItem value="client">Client</MenuItem>
+            <MenuItem value="admin">Admin</MenuItem>
           </Select>
         </FormControl>
 
         <FormControl size="small" sx={{ minWidth: 160 }}>
-          <InputLabel>Payment Status</InputLabel>
+          <InputLabel>Verification</InputLabel>
           <Select
-            value={filterPaymentStatus}
-            label="Payment Status"
-            onChange={(e) => setFilterPaymentStatus(e.target.value)}
+            value={filterVerification}
+            label="Verification"
+            onChange={(e) => {
+              setFilterVerification(e.target.value);
+              setCurrentPage(1);
+            }}
           >
             <MenuItem value="all">All</MenuItem>
-            <MenuItem value="false">Unpaid</MenuItem>
-            <MenuItem value="true">Paid</MenuItem>
+            <MenuItem value="verified">Verified</MenuItem>
+            <MenuItem value="notVerified">Not Verified</MenuItem>
+          </Select>
+        </FormControl>
+
+        <FormControl size="small" sx={{ minWidth: 120 }}>
+          <InputLabel>Gender</InputLabel>
+          <Select
+            value={filterGender}
+            label="Gender"
+            onChange={(e) => {
+              setFilterGender(e.target.value);
+              setCurrentPage(1);
+            }}
+          >
+            <MenuItem value="all">All</MenuItem>
+            <MenuItem value="male">Male</MenuItem>
+            <MenuItem value="female">Female</MenuItem>
+            <MenuItem value="other">Other</MenuItem>
           </Select>
         </FormControl>
 
@@ -247,7 +214,7 @@ const ManageBookings = () => {
           <Typography sx={{ color: "red", fontSize: "13px" }}>
             Search Result:{" "}
             <span style={{ color: "green", fontWeight: "bold" }}>
-              {filteredBookings?.length}
+              {filteredUsers?.length}
             </span>
           </Typography>
         </Box>
@@ -257,209 +224,139 @@ const ManageBookings = () => {
 
       {error && !loading && <Error errMessage={error} />}
 
+      {/* =========================
+          Table view for Desktop
+      =========================== */}
       {!loading && !error && (
-        <TableContainer
-          component={Paper}
-          sx={{ display: { xs: "none", md: "block" } }}
-        >
-          <Table>
-            <TableHead>
-              <TableRow sx={{ backgroundColor: "#f3f3f3" }}>
-                <TableCell align="center">Client</TableCell>
-                <TableCell align="center">Photogs</TableCell>
-                <TableCell align="center">B.Status</TableCell>
-                <TableCell align="center">Price</TableCell>
-                <TableCell align="center">Payment</TableCell>
-                <TableCell align="center">Booked</TableCell>
-                <TableCell align="center">Program</TableCell>
-                <TableCell align="center">Action</TableCell>
-              </TableRow>
-            </TableHead>
-
-            <TableBody>
-              {filteredBookings?.map((booking) => (
-                <TableRow key={booking?._id} hover>
-                  <TableCell sx={{ padding: "2px 10px" }}>
-                    {renderClientInfo(booking)}
-                  </TableCell>
-
-                  <TableCell sx={{ padding: "2px 10px" }}>
-                    {renderPhotogInfo(booking)}
-                  </TableCell>
-
-                  <TableCell align="center">
-                    <Typography
-                      variant="body2"
-                      sx={{
-                        color:
-                          booking?.status === "pending"
-                            ? "orange"
-                            : booking?.status === "approved"
-                            ? "green"
-                            : booking?.status === "completed"
-                            ? "blue"
-                            : "black",
-                      }}
-                    >
-                      {booking?.status?.charAt(0).toUpperCase() +
-                        booking?.status?.slice(1)}
-                    </Typography>
-                  </TableCell>
-
-                  <TableCell align="center">${booking?.servicePrice}</TableCell>
-                  <TableCell align="center">
-                    {booking?.isPaid ? (
-                      <Box
-                        display="flex"
-                        alignItems="center"
-                        justifyContent="center"
-                        color="green"
-                      >
-                        <CheckCircleIcon sx={{ mr: 1 }} /> Paid
-                      </Box>
-                    ) : (
-                      <Box
-                        display="flex"
-                        alignItems="center"
-                        justifyContent="center"
-                        color="red"
-                      >
-                        <CancelIcon sx={{ mr: 1 }} /> Unpaid
-                      </Box>
-                    )}
-                  </TableCell>
-
-                  <TableCell align="center">
-                    <Typography variant="body2">
-                      {booking?.createdAt
-                        ? formatDate(booking.createdAt)
-                        : "???"}
-                    </Typography>
-                  </TableCell>
-                  <TableCell align="center">
-                    <Typography variant="body2">
-                      {booking?.programDate
-                        ? formatDate(booking.programDate)
-                        : "???"}
-                    </Typography>
-                  </TableCell>
-                  <TableCell align="center" sx={{ padding: "2px" }}>
-                    {renderBookingAction(booking)}
-                  </TableCell>
+        <>
+          <TableContainer
+            component={Paper}
+            sx={{ display: { xs: "none", md: "block" } }}
+          >
+            <Table>
+              <TableHead>
+                <TableRow sx={{ backgroundColor: "#f3f3f3" }}>
+                  <TableCell align="center">Client</TableCell>
+                  <TableCell align="center">Role</TableCell>
+                  <TableCell align="center">V. Status</TableCell>
+                  <TableCell align="center">Phone</TableCell>
+                  <TableCell align="center">Gender</TableCell>
+                  <TableCell align="center">Registered</TableCell>
+                  <TableCell align="center">Action</TableCell>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+              </TableHead>
+              <TableBody>
+                {paginatedUsers?.map((user) => (
+                  <TableRow key={user._id} hover>
+                    <TableCell sx={{ padding: "2px 10px" }}>
+                      {renderUserInfo(user)}
+                    </TableCell>
+                    <TableCell
+                      align="center"
+                      sx={{ textTransform: "capitalize" }}
+                    >
+                      {user?.role}
+                    </TableCell>
+                    <TableCell align="center">
+                      {user?.isVerified ? "Verified" : "Not Verify"}
+                    </TableCell>
+                    <TableCell align="center">{user?.phone}</TableCell>
+                    <TableCell align="center">{user?.gender}</TableCell>
+                    <TableCell align="center">
+                      {formatDate(user?.createdAt)}
+                    </TableCell>
+                    <TableCell align="center" sx={{ padding: "6px" }}>
+                      {renderUserActions(user)}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+
+          {/* ============================
+             Card view for small screens
+          ============================== */}
+          <Box
+            sx={{
+              display: { xs: "flex", md: "none" },
+              flexDirection: "column",
+              gap: 2,
+              mt: 2,
+            }}
+          >
+            {paginatedUsers?.map((user) => (
+              <Paper key={user?._id} elevation={3} sx={{ p: 2 }}>
+                {renderUserInfo(user)}
+                <Typography>
+                  <strong>Role:</strong> {user?.role?.toUpperCase()}
+                </Typography>
+                <Typography>
+                  <strong>Status:</strong>{" "}
+                  {user?.isVerified ? "Verified" : "Not Verify"}
+                </Typography>
+                <Typography>
+                  <strong>Phone:</strong> {user?.phone}
+                </Typography>
+                <Typography>
+                  <strong>Gender:</strong> {user?.gender}
+                </Typography>
+                <Typography>
+                  <strong>Registered:</strong> {formatDate(user?.createdAt)}
+                </Typography>
+                <Box mt={1}>{renderUserActions(user)}</Box>
+              </Paper>
+            ))}
+          </Box>
+
+          {paginatedUsers?.length === 0 && (
+            <Typography
+              variant="body1"
+              color="error"
+              sx={{
+                textAlign: "center",
+                mt: 1,
+                animation: "pulse 1s infinite",
+              }}
+            >
+              No users available.
+            </Typography>
+          )}
+
+          {/* ===========
+                    pagination
+                ============= */}
+          {totalPages > 1 && (
+            <Box display="flex" justifyContent="center" mt={2}>
+              <Pagination
+                count={totalPages}
+                page={currentPage}
+                onChange={handlePageChange}
+                color="primary"
+                shape="rounded"
+                variant="outlined"
+                size="medium"
+              />
+            </Box>
+          )}
+        </>
       )}
 
-      {/* ===============================
-           Card View for Small Screens
-      =================================== */}
-      <Box
-        sx={{
-          display: { xs: "flex", md: "none" },
-          flexDirection: "column",
-          gap: 2,
-          mt: 2,
-        }}
-      >
-        {paginatedBookings?.map((booking) => (
-          <Paper key={booking?._id} elevation={3} sx={{ p: 2 }}>
-            <Box marginY={1} boxShadow={1} p={1}>
-              {renderClientInfo(booking)}
-            </Box>
-            <Box marginY={1} boxShadow={1} p={1}>
-              {renderPhotogInfo(booking)}
-            </Box>
-            <Typography display="flex">
-              <strong>B.Status:</strong>
-              <Typography
-                sx={{
-                  pl: 1,
-                  color:
-                    booking?.status === "pending"
-                      ? "orange"
-                      : booking?.status === "approved"
-                      ? "green"
-                      : booking?.status === "completed"
-                      ? "blue"
-                      : "black",
-                }}
-              >
-                {booking?.status?.charAt(0).toUpperCase() +
-                  booking?.status?.slice(1)}
-              </Typography>
-            </Typography>
-            <Typography>
-              <strong>Price:</strong> ${booking?.servicePrice}
-            </Typography>
-            <Typography display="flex" alignItems="center">
-              <strong>Payment:</strong>{" "}
-              {booking?.isPaid ? (
-                <Box
-                  paddingLeft={1}
-                  display="flex"
-                  alignItems="center"
-                  justifyContent="center"
-                  color="green"
-                >
-                  <CheckCircleIcon sx={{ mr: 1 }} /> Paid
-                </Box>
-              ) : (
-                <Box
-                  display="flex"
-                  alignItems="center"
-                  justifyContent="center"
-                  color="red"
-                >
-                  <CancelIcon sx={{ mr: 1 }} /> Unpaid
-                </Box>
-              )}
-            </Typography>
-            <Typography>
-              <strong>Booked:</strong>{" "}
-              {booking?.createdAt ? formatDate(booking.createdAt) : "???"}
-            </Typography>
-            <Typography>
-              <strong>Program:</strong>{" "}
-              {booking?.programDate ? formatDate(booking.programDate) : "???"}
-            </Typography>
-            <Box mt={1}>{renderBookingAction(booking)}</Box>
-          </Paper>
-        ))}
-      </Box>
-
-      {bookings?.length > itemsPerPage && (
-        <PaginationComponent
-          totalItems={bookings?.length}
-          itemsPerPage={itemsPerPage}
-          currentPage={currentPage}
-          onPageChange={setCurrentPage}
+      {/* Modals */}
+      {selectedUser && (
+        <UpdateUserModal
+          user={selectedUser}
+          onClose={() => setSelectedUser(null)}
         />
       )}
-
-      {bookings?.length === 0 && (
-        <Typography
-          variant="h6"
-          color="error"
-          sx={{ textAlign: "center", mt: 2, animation: "pulse 1s infinite" }}
-        >
-          No bookings available.
-        </Typography>
-      )}
-
-      {/* =======================
-          Update booking Modal
-      ======================= */}
-      {selectedBooking && (
-        <UpdateBookingModal
-          booking={selectedBooking}
-          onClose={() => setSelectedBooking(null)}
+      {deleteUser && (
+        <DeleteUserModal
+          user={deleteUser}
+          onClose={() => setDeleteUser(null)}
         />
       )}
     </Box>
   );
 };
 
-export default ManageBookings;
+export default ManageUsers;
