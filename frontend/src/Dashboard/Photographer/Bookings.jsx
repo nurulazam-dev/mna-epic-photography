@@ -9,14 +9,18 @@ import {
   Typography,
   Avatar,
   Box,
-  // Container,
+  TextField,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  Pagination,
 } from "@mui/material";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { formatDate } from "../../utils/formatDate";
 import { GppBad, VerifiedUser } from "@mui/icons-material";
 import { getShortEmail } from "../../utils/getShortEmail";
-import PaginationComponent from "../../components/Shared/PaginationComponent";
 import { useState } from "react";
 import { BASE_URL } from "../../../config";
 import Loading from "../../components/Shared/Loading";
@@ -32,12 +36,85 @@ const Bookings = () => {
 
   const bookings = photogData?.bookings || [];
 
+  const [searchText, setSearchText] = useState("");
+  const [filterPaymentStatus, setFilterPaymentStatus] = useState("all");
+  const [filterBStatus, setFilterBStatus] = useState("all");
+
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 4;
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const paginatedBookings = bookings?.slice(
-    startIndex,
-    startIndex + itemsPerPage
+
+  const filteredBookings = bookings?.filter((booking) => {
+    const matchesSearch = [
+      booking?.user?.name,
+      booking?.user?.email,
+      booking?.user?.phone,
+    ].some((field) => field?.toLowerCase().includes(searchText.toLowerCase()));
+
+    const matchesPaymentStatus =
+      filterPaymentStatus === "all"
+        ? true
+        : filterPaymentStatus === "true"
+        ? booking?.isPaid === true
+        : booking?.isPaid === false;
+
+    const matchesBStutus =
+      filterBStatus === "all" || booking?.status === filterBStatus;
+
+    return matchesSearch && matchesPaymentStatus && matchesBStutus;
+  });
+
+  const itemsPerPage = 5;
+  const totalPages = Math.ceil(filteredBookings?.length / itemsPerPage);
+  const paginatedBookings = filteredBookings?.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
+  const handlePageChange = (event, value) => {
+    setCurrentPage(value);
+  };
+
+  const renderClientInfo = (booking) => (
+    <Box display="flex" alignItems="center" gap={1}>
+      <Avatar src={booking?.user?.photo} alt={booking?.user?.name} />
+      <Box>
+        <Typography variant="body2" fontWeight="bold" display="flex">
+          {booking?.user?.name}
+          {booking?.user?.isVerified === true ? (
+            <Box
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+              color="green"
+              height={16}
+              width={16}
+              sx={{ marginLeft: "3px" }}
+            >
+              <VerifiedUser fontSize="10px" />
+            </Box>
+          ) : (
+            <Box
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+              color="red"
+              height={16}
+              width={16}
+              sx={{ marginLeft: "3px" }}
+            >
+              <GppBad fontSize="10px" />
+            </Box>
+          )}
+        </Typography>
+        <Typography
+          variant="caption"
+          color="textSecondary"
+          component="div"
+          sx={{ textOverflow: "ellipsis" }}
+        >
+          {getShortEmail(booking?.user?.email)}
+        </Typography>
+      </Box>
+    </Box>
   );
 
   return (
@@ -61,12 +138,85 @@ const Bookings = () => {
         Bookings ({bookings?.length})
       </Typography>
 
+      <Box
+        display="flex"
+        flexDirection={{ xs: "column", sm: "row" }}
+        gap={2}
+        my={2}
+      >
+        <TextField
+          label="Search (Name, Email, Phone)"
+          variant="outlined"
+          size="small"
+          value={searchText}
+          sx={{ flex: 1 }}
+          onChange={(e) => {
+            setSearchText(e.target.value);
+            setCurrentPage(1);
+          }}
+        />
+
+        <FormControl size="small" sx={{ minWidth: 120 }}>
+          <InputLabel>Booking Status</InputLabel>
+          <Select
+            value={filterBStatus}
+            label="Booking Status"
+            onChange={(e) => {
+              setFilterBStatus(e.target.value);
+              setCurrentPage(1);
+            }}
+          >
+            <MenuItem value="all">All</MenuItem>
+            <MenuItem value="pending">Pending</MenuItem>
+            <MenuItem value="approved">Approved</MenuItem>
+            <MenuItem value="completed">Completed</MenuItem>
+          </Select>
+        </FormControl>
+
+        <FormControl size="small" sx={{ minWidth: 160 }}>
+          <InputLabel>Payment Status</InputLabel>
+          <Select
+            value={filterPaymentStatus}
+            label="Payment Status"
+            onChange={(e) => {
+              setFilterPaymentStatus(e.target.value);
+              setCurrentPage(1);
+            }}
+          >
+            <MenuItem value="all">All</MenuItem>
+            <MenuItem value="false">Unpaid</MenuItem>
+            <MenuItem value="true">Paid</MenuItem>
+          </Select>
+        </FormControl>
+
+        <Box
+          sx={{
+            border: 1,
+            borderRadius: 1,
+            borderColor: "red",
+            px: 2,
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
+          <Typography sx={{ color: "red", fontSize: "13px" }}>
+            Search Result:{" "}
+            <span style={{ color: "green", fontWeight: "bold" }}>
+              {filteredBookings?.length}
+            </span>
+          </Typography>
+        </Box>
+      </Box>
+
       {loading && !error && <Loading />}
 
       {error && !loading && <Error errMessage={error} />}
 
       {!loading && !error && (
-        <TableContainer component={Paper}>
+        <TableContainer
+          component={Paper}
+          sx={{ display: { xs: "none", md: "block" } }}
+        >
           <Table>
             <TableHead>
               <TableRow sx={{ backgroundColor: "#f3f3f3" }}>
@@ -81,53 +231,16 @@ const Bookings = () => {
             </TableHead>
 
             <TableBody>
-              {paginatedBookings?.map((item) => (
-                <TableRow key={item?._id} hover>
+              {paginatedBookings?.map((booking) => (
+                <TableRow key={booking?._id} hover>
                   <TableCell sx={{ padding: "2px 10px" }}>
-                    <Box display="flex" alignItems="center" gap={2}>
-                      <Avatar src={item?.user?.photo} alt={item?.user?.name} />
-                      <Box>
-                        <Typography fontWeight="bold" display="flex">
-                          {item?.user?.name}
-                          {item?.user?.isVerified === true ? (
-                            <Box
-                              display="flex"
-                              alignItems="center"
-                              justifyContent="center"
-                              color="green"
-                              height={16}
-                              width={16}
-                              sx={{ marginLeft: "3px" }}
-                            >
-                              <VerifiedUser fontSize="10px" />
-                              {/* <CheckCircleIcon fontSize="10px" /> */}
-                            </Box>
-                          ) : (
-                            <Box
-                              display="flex"
-                              alignItems="center"
-                              justifyContent="center"
-                              color="red"
-                              height={16}
-                              width={16}
-                              sx={{ marginLeft: "3px" }}
-                            >
-                              <GppBad fontSize="10px" />
-                              {/* <CancelIcon fontSize="10px" /> */}
-                            </Box>
-                          )}
-                        </Typography>
-                        <Typography variant="body2" color="textSecondary">
-                          {getShortEmail(item?.user?.email)}
-                        </Typography>
-                      </Box>
-                    </Box>
+                    {renderClientInfo(booking)}
                   </TableCell>
 
-                  <TableCell align="center">{item?.user?.phone}</TableCell>
+                  <TableCell align="center">{booking?.user?.phone}</TableCell>
 
                   <TableCell align="center">
-                    {item?.isPaid ? (
+                    {booking?.isPaid ? (
                       <Box
                         display="flex"
                         alignItems="center"
@@ -153,26 +266,28 @@ const Bookings = () => {
                       variant="body2"
                       sx={{
                         color:
-                          item?.status === "pending"
+                          booking?.status === "pending"
                             ? "orange"
-                            : item?.status === "approved"
+                            : booking?.status === "approved"
                             ? "green"
-                            : item?.status === "completed"
+                            : booking?.status === "completed"
                             ? "blue"
                             : "black",
                       }}
                     >
-                      {item?.status?.charAt(0).toUpperCase() +
-                        item?.status?.slice(1)}
+                      {booking?.status?.charAt(0).toUpperCase() +
+                        booking?.status?.slice(1)}
                     </Typography>
                   </TableCell>
-                  <TableCell align="center">$ {item?.servicePrice}</TableCell>
+                  <TableCell align="center">
+                    $ {booking?.servicePrice}
+                  </TableCell>
 
                   <TableCell align="center">
-                    {formatDate(item?.createdAt)}
+                    {formatDate(booking?.createdAt)}
                   </TableCell>
                   <TableCell align="center">
-                    {formatDate(item?.programDate)}
+                    {formatDate(booking?.programDate)}
                   </TableCell>
                 </TableRow>
               ))}
@@ -180,16 +295,104 @@ const Bookings = () => {
           </Table>
         </TableContainer>
       )}
-      {bookings?.length > itemsPerPage && (
-        <PaginationComponent
-          totalItems={bookings?.length}
-          itemsPerPage={itemsPerPage}
-          currentPage={currentPage}
-          onPageChange={setCurrentPage}
-        />
+
+      {/* ===============================
+           Card View for Small Screens
+      =================================== */}
+      <Box
+        sx={{
+          display: { xs: "flex", md: "none" },
+          flexDirection: "column",
+          gap: 2,
+          mt: 2,
+        }}
+      >
+        {paginatedBookings?.map((booking) => (
+          <Paper key={booking?._id} elevation={3} sx={{ p: 2 }}>
+            <Box
+              marginY={1}
+              boxShadow={1}
+              p={1}
+              display="flex"
+              justifyContent="center"
+            >
+              {renderClientInfo(booking)}
+            </Box>
+            <Typography display="flex">
+              <strong>B.Status:</strong>
+              <Typography
+                sx={{
+                  pl: 1,
+                  color:
+                    booking?.status === "pending"
+                      ? "orange"
+                      : booking?.status === "approved"
+                      ? "green"
+                      : booking?.status === "completed"
+                      ? "blue"
+                      : "black",
+                }}
+              >
+                {booking?.status?.charAt(0).toUpperCase() +
+                  booking?.status?.slice(1)}
+              </Typography>
+            </Typography>
+            <Typography>
+              <strong>Price:</strong> ${booking?.servicePrice}
+            </Typography>
+            <Typography display="flex" alignItems="center">
+              <strong>Payment:</strong>{" "}
+              {booking?.isPaid ? (
+                <Box
+                  paddingLeft={1}
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                  color="green"
+                >
+                  <CheckCircleIcon sx={{ mr: 1 }} /> Paid
+                </Box>
+              ) : (
+                <Box
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                  color="red"
+                >
+                  <CancelIcon sx={{ mr: 1 }} /> Unpaid
+                </Box>
+              )}
+            </Typography>
+            <Typography>
+              <strong>Booked:</strong>{" "}
+              {booking?.createdAt ? formatDate(booking.createdAt) : "???"}
+            </Typography>
+            <Typography>
+              <strong>Program:</strong>{" "}
+              {booking?.programDate ? formatDate(booking.programDate) : "???"}
+            </Typography>
+          </Paper>
+        ))}
+      </Box>
+
+      {/* ===========
+          pagination
+      ============= */}
+      {totalPages > 1 && (
+        <Box display="flex" justifyContent="center" mt={2}>
+          <Pagination
+            count={totalPages}
+            page={currentPage}
+            onChange={handlePageChange}
+            color="primary"
+            shape="rounded"
+            variant="outlined"
+            size="medium"
+          />
+        </Box>
       )}
 
-      {bookings?.length === 0 && (
+      {paginatedBookings?.length === 0 && (
         <Typography
           variant="h6"
           color="error"
