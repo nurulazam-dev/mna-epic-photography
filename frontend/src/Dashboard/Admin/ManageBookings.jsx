@@ -52,7 +52,11 @@ const ManageBookings = () => {
     ].some((field) => field?.toLowerCase().includes(searchText.toLowerCase()));
 
     const matchesPaymentStatus =
-      filterPaymentStatus === "all" || booking?.isPaid === filterPaymentStatus;
+      filterPaymentStatus === "all"
+        ? true
+        : filterPaymentStatus === "true"
+        ? booking?.isPaid === true
+        : booking?.isPaid === false;
 
     const matchesBStutus =
       filterBStatus === "all" || booking?.status === filterBStatus;
