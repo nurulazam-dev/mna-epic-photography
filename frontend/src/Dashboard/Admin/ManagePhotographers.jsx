@@ -308,7 +308,7 @@ const ManagePhotographers = () => {
             animation: "pulse 1s infinite",
           }}
         >
-          No photographers available.
+          No photographer available.
         </Typography>
       )}
 

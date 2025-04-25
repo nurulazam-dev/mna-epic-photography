@@ -319,7 +319,7 @@ const ManageUsers = () => {
                 animation: "pulse 1s infinite",
               }}
             >
-              No users available.
+              No user available.
             </Typography>
           )}
 

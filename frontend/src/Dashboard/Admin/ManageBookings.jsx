@@ -469,7 +469,7 @@ const ManageBookings = () => {
           color="error"
           sx={{ textAlign: "center", mt: 2, animation: "pulse 1s infinite" }}
         >
-          No bookings available.
+          No booking available.
         </Typography>
       )}
 
