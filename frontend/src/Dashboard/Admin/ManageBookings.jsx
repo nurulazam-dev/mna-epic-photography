@@ -10,6 +10,11 @@ import {
   Avatar,
   Box,
   Button,
+  TextField,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
 } from "@mui/material";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
@@ -21,7 +26,6 @@ import Error from "../../components/Shared/Error";
 import useBookings from "../../hooks/useFetchData";
 import { formatDate } from "../../utils/formatDate";
 import { getShortEmail } from "../../utils/getShortEmail";
-import PaginationComponent from "../../components/Shared/PaginationComponent";
 import Loading from "../../components/Shared/Loading";
 
 const ManageBookings = () => {
@@ -32,17 +36,26 @@ const ManageBookings = () => {
   } = useBookings(`${BASE_URL}/bookings`);
 
   const [selectedBooking, setSelectedBooking] = useState(null);
-  /* const [searchText, setSearchText] = useState("");
-  const [filterPayment, setFilterPayment] = useState("all");
-  const [filterBStatus, setFilterBStatus] = useState("all"); */
+  const [searchText, setSearchText] = useState("");
+  const [filterPaymentStatus, setFilterPaymentStatus] = useState("all");
+  const [filterBStatus, setFilterBStatus] = useState("all");
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 5;
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const paginatedBookings = bookings?.slice(
-    startIndex,
-    startIndex + itemsPerPage
-  );
+  const filteredBookings = bookings?.filter((booking) => {
+    const matchesSearch = [
+      booking?.user?.name,
+      booking?.user?.email,
+      booking?.photographer?.name,
+      booking?.photographer?.email,
+    ].some((field) => field?.toLowerCase().includes(searchText.toLowerCase()));
+
+    const matchesPaymentStatus =
+      filterPaymentStatus === "all" || booking?.isPaid === filterPaymentStatus;
+
+    const matchesBStutus =
+      filterBStatus === "all" || booking?.status === filterBStatus;
+
+    return matchesSearch && matchesPaymentStatus && matchesBStutus;
+  });
 
   const getPhotogLastName = (fullName) => {
     const nameParts = fullName.trim().split(" ");
@@ -66,7 +79,6 @@ const ManageBookings = () => {
               sx={{ marginLeft: "3px" }}
             >
               <VerifiedUser fontSize="10px" />
-              {/* <CheckCircleIcon fontSize="10px" /> */}
             </Box>
           ) : (
             <Box
@@ -79,7 +91,6 @@ const ManageBookings = () => {
               sx={{ marginLeft: "3px" }}
             >
               <GppBad fontSize="10px" />
-              {/* <CancelIcon fontSize="10px" /> */}
             </Box>
           )}
         </Typography>
@@ -115,7 +126,6 @@ const ManageBookings = () => {
               sx={{ marginLeft: "3px" }}
             >
               <VerifiedUser fontSize="10px" />
-              {/* <CheckCircleIcon fontSize="10px" /> */}
             </Box>
           ) : (
             <Box
@@ -128,7 +138,6 @@ const ManageBookings = () => {
               sx={{ marginLeft: "3px" }}
             >
               <GppBad fontSize="10px" />
-              {/* <CancelIcon fontSize="10px" /> */}
             </Box>
           )}
         </Typography>
@@ -172,6 +181,67 @@ const ManageBookings = () => {
         Manage Bookings ({bookings?.length})
       </Typography>
 
+      <Box
+        display="flex"
+        flexDirection={{ xs: "column", sm: "row" }}
+        gap={2}
+        my={2}
+      >
+        <TextField
+          label="Search (Name, Email, Phone)"
+          variant="outlined"
+          size="small"
+          value={searchText}
+          sx={{ flex: 1 }}
+          onChange={(e) => setSearchText(e.target.value)}
+        />
+
+        <FormControl size="small" sx={{ minWidth: 120 }}>
+          <InputLabel>Booking Status</InputLabel>
+          <Select
+            value={filterBStatus}
+            label="Booking Status"
+            onChange={(e) => setFilterBStatus(e.target.value)}
+          >
+            <MenuItem value="all">All</MenuItem>
+            <MenuItem value="pending">Pending</MenuItem>
+            <MenuItem value="approved">Approved</MenuItem>
+            <MenuItem value="completed">Completed</MenuItem>
+          </Select>
+        </FormControl>
+
+        <FormControl size="small" sx={{ minWidth: 160 }}>
+          <InputLabel>Payment Status</InputLabel>
+          <Select
+            value={filterPaymentStatus}
+            label="Payment Status"
+            onChange={(e) => setFilterPaymentStatus(e.target.value)}
+          >
+            <MenuItem value="all">All</MenuItem>
+            <MenuItem value="false">Unpaid</MenuItem>
+            <MenuItem value="true">Paid</MenuItem>
+          </Select>
+        </FormControl>
+
+        <Box
+          sx={{
+            border: 1,
+            borderRadius: 1,
+            borderColor: "red",
+            px: 2,
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
+          <Typography sx={{ color: "red", fontSize: "13px" }}>
+            Search Result:{" "}
+            <span style={{ color: "green", fontWeight: "bold" }}>
+              {filteredBookings?.length}
+            </span>
+          </Typography>
+        </Box>
+      </Box>
+
       {loading && !error && <Loading />}
 
       {error && !loading && <Error errMessage={error} />}
@@ -196,7 +266,7 @@ const ManageBookings = () => {
             </TableHead>
 
             <TableBody>
-              {paginatedBookings?.map((booking) => (
+              {filteredBookings?.map((booking) => (
                 <TableRow key={booking?._id} hover>
                   <TableCell sx={{ padding: "2px 10px" }}>
                     {renderClientInfo(booking)}
@@ -272,7 +342,9 @@ const ManageBookings = () => {
         </TableContainer>
       )}
 
-      {/* Card View for Small Screens */}
+      {/* ===============================
+           Card View for Small Screens
+      =================================== */}
       <Box
         sx={{
           display: { xs: "flex", md: "none" },
@@ -281,7 +353,7 @@ const ManageBookings = () => {
           mt: 2,
         }}
       >
-        {paginatedBookings?.map((booking) => (
+        {filteredBookings?.map((booking) => (
           <Paper key={booking?._id} elevation={3} sx={{ p: 2 }}>
             <Box marginY={1} boxShadow={1} p={1}>
               {renderClientInfo(booking)}
@@ -346,15 +418,6 @@ const ManageBookings = () => {
           </Paper>
         ))}
       </Box>
-
-      {bookings?.length > itemsPerPage && (
-        <PaginationComponent
-          totalItems={bookings?.length}
-          itemsPerPage={itemsPerPage}
-          currentPage={currentPage}
-          onPageChange={setCurrentPage}
-        />
-      )}
 
       {bookings?.length === 0 && (
         <Typography
