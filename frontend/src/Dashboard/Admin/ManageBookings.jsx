@@ -15,6 +15,7 @@ import {
   InputLabel,
   Select,
   MenuItem,
+  Pagination,
 } from "@mui/material";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
@@ -28,6 +29,8 @@ import { formatDate } from "../../utils/formatDate";
 import { getShortEmail } from "../../utils/getShortEmail";
 import Loading from "../../components/Shared/Loading";
 
+const ITEMS_PER_PAGE = 2;
+
 const ManageBookings = () => {
   const {
     data: bookings,
@@ -39,6 +42,8 @@ const ManageBookings = () => {
   const [searchText, setSearchText] = useState("");
   const [filterPaymentStatus, setFilterPaymentStatus] = useState("all");
   const [filterBStatus, setFilterBStatus] = useState("all");
+
+  const [currentPage, setCurrentPage] = useState(1);
 
   const filteredBookings = bookings?.filter((booking) => {
     const matchesSearch = [
@@ -56,6 +61,16 @@ const ManageBookings = () => {
 
     return matchesSearch && matchesPaymentStatus && matchesBStutus;
   });
+
+  const totalPages = Math.ceil(filteredBookings?.length / ITEMS_PER_PAGE);
+  const paginatedBookings = filteredBookings?.slice(
+    (currentPage - 1) * ITEMS_PER_PAGE,
+    currentPage * ITEMS_PER_PAGE
+  );
+
+  const handlePageChange = (event, value) => {
+    setCurrentPage(value);
+  };
 
   const getPhotogLastName = (fullName) => {
     const nameParts = fullName.trim().split(" ");
@@ -193,7 +208,10 @@ const ManageBookings = () => {
           size="small"
           value={searchText}
           sx={{ flex: 1 }}
-          onChange={(e) => setSearchText(e.target.value)}
+          onChange={(e) => {
+            setSearchText(e.target.value);
+            setCurrentPage(1);
+          }}
         />
 
         <FormControl size="small" sx={{ minWidth: 120 }}>
@@ -201,7 +219,11 @@ const ManageBookings = () => {
           <Select
             value={filterBStatus}
             label="Booking Status"
-            onChange={(e) => setFilterBStatus(e.target.value)}
+            // onChange={(e) => setFilterBStatus(e.target.value)}
+            onChange={(e) => {
+              setFilterBStatus(e.target.value);
+              setCurrentPage(1);
+            }}
           >
             <MenuItem value="all">All</MenuItem>
             <MenuItem value="pending">Pending</MenuItem>
@@ -215,7 +237,11 @@ const ManageBookings = () => {
           <Select
             value={filterPaymentStatus}
             label="Payment Status"
-            onChange={(e) => setFilterPaymentStatus(e.target.value)}
+            // onChange={(e) => setFilterPaymentStatus(e.target.value)}
+            onChange={(e) => {
+              setFilterPaymentStatus(e.target.value);
+              setCurrentPage(1);
+            }}
           >
             <MenuItem value="all">All</MenuItem>
             <MenuItem value="false">Unpaid</MenuItem>
@@ -266,7 +292,7 @@ const ManageBookings = () => {
             </TableHead>
 
             <TableBody>
-              {filteredBookings?.map((booking) => (
+              {paginatedBookings?.map((booking) => (
                 <TableRow key={booking?._id} hover>
                   <TableCell sx={{ padding: "2px 10px" }}>
                     {renderClientInfo(booking)}
@@ -353,7 +379,7 @@ const ManageBookings = () => {
           mt: 2,
         }}
       >
-        {filteredBookings?.map((booking) => (
+        {paginatedBookings?.map((booking) => (
           <Paper key={booking?._id} elevation={3} sx={{ p: 2 }}>
             <Box marginY={1} boxShadow={1} p={1}>
               {renderClientInfo(booking)}
@@ -419,7 +445,24 @@ const ManageBookings = () => {
         ))}
       </Box>
 
-      {bookings?.length === 0 && (
+      {/* ===========
+          paginated
+      ============= */}
+      {totalPages > 1 && (
+        <Box display="flex" justifyContent="center" mt={2}>
+          <Pagination
+            count={totalPages}
+            page={currentPage}
+            onChange={handlePageChange}
+            color="primary"
+            shape="rounded"
+            variant="outlined"
+            size="medium"
+          />
+        </Box>
+      )}
+
+      {paginatedBookings?.length === 0 && (
         <Typography
           variant="h6"
           color="error"
