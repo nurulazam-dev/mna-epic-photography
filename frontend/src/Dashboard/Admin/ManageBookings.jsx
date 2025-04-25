@@ -443,7 +443,7 @@ const ManageBookings = () => {
       </Box>
 
       {/* ===========
-          paginated
+          pagination
       ============= */}
       {totalPages > 1 && (
         <Box display="flex" justifyContent="center" mt={2}>

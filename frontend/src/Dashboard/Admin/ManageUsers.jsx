@@ -15,6 +15,7 @@ import {
   Typography,
   Paper,
   Box,
+  Pagination,
 } from "@mui/material";
 import { VerifiedUser, GppBad } from "@mui/icons-material";
 import { useState } from "react";
@@ -24,7 +25,6 @@ import { formatDate } from "../../utils/formatDate";
 import { getShortEmail } from "../../utils/getShortEmail";
 import { BASE_URL } from "../../../config";
 
-import PaginationComponent from "../../components/Shared/PaginationComponent";
 import Loading from "../../components/Shared/Loading";
 import Error from "../../components/Shared/Error";
 import UpdateUserModal from "./UpdateModal/UpdateUserModal";
@@ -40,7 +40,6 @@ const ManageUsers = () => {
   const [filterVerification, setFilterVerification] = useState("all");
   const [filterGender, setFilterGender] = useState("all");
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 5;
 
   const filteredUsers = users?.filter((user) => {
     const matchesSearch = [user.name, user.email, user.phone].some((field) =>
@@ -59,10 +58,16 @@ const ManageUsers = () => {
     return matchesSearch && matchesRole && matchesVerification && matchesGender;
   });
 
+  const itemsPerPage = 5;
+  const totalPages = Math.ceil(filteredUsers?.length / itemsPerPage);
   const paginatedUsers = filteredUsers?.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
+
+  const handlePageChange = (event, value) => {
+    setCurrentPage(value);
+  };
 
   const renderUserInfo = (user) => (
     <>
@@ -141,7 +146,10 @@ const ManageUsers = () => {
           size="small"
           value={searchText}
           sx={{ flex: 1 }}
-          onChange={(e) => setSearchText(e.target.value)}
+          onChange={(e) => {
+            setSearchText(e.target.value);
+            setCurrentPage(1);
+          }}
         />
 
         <FormControl size="small" sx={{ minWidth: 120 }}>
@@ -149,7 +157,10 @@ const ManageUsers = () => {
           <Select
             value={filterRole}
             label="Role"
-            onChange={(e) => setFilterRole(e.target.value)}
+            onChange={(e) => {
+              setFilterRole(e.target.value);
+              setCurrentPage(1);
+            }}
           >
             <MenuItem value="all">All</MenuItem>
             <MenuItem value="client">Client</MenuItem>
@@ -162,7 +173,10 @@ const ManageUsers = () => {
           <Select
             value={filterVerification}
             label="Verification"
-            onChange={(e) => setFilterVerification(e.target.value)}
+            onChange={(e) => {
+              setFilterVerification(e.target.value);
+              setCurrentPage(1);
+            }}
           >
             <MenuItem value="all">All</MenuItem>
             <MenuItem value="verified">Verified</MenuItem>
@@ -175,7 +189,10 @@ const ManageUsers = () => {
           <Select
             value={filterGender}
             label="Gender"
-            onChange={(e) => setFilterGender(e.target.value)}
+            onChange={(e) => {
+              setFilterGender(e.target.value);
+              setCurrentPage(1);
+            }}
           >
             <MenuItem value="all">All</MenuItem>
             <MenuItem value="male">Male</MenuItem>
@@ -292,7 +309,7 @@ const ManageUsers = () => {
             ))}
           </Box>
 
-          {filteredUsers?.length === 0 && (
+          {paginatedUsers?.length === 0 && (
             <Typography
               variant="body1"
               color="error"
@@ -306,15 +323,22 @@ const ManageUsers = () => {
             </Typography>
           )}
 
-          {/* ===========================
-                    Pagination
-          =========================== */}
-          <PaginationComponent
-            currentPage={currentPage}
-            setCurrentPage={setCurrentPage}
-            totalItems={filteredUsers?.length || 0}
-            itemsPerPage={itemsPerPage}
-          />
+          {/* ===========
+                    pagination
+                ============= */}
+          {totalPages > 1 && (
+            <Box display="flex" justifyContent="center" mt={2}>
+              <Pagination
+                count={totalPages}
+                page={currentPage}
+                onChange={handlePageChange}
+                color="primary"
+                shape="rounded"
+                variant="outlined"
+                size="medium"
+              />
+            </Box>
+          )}
         </>
       )}
 
